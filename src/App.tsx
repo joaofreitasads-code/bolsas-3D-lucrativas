@@ -1,0 +1,1537 @@
+import React, { useState, useEffect, useRef } from "react";
+import { 
+  Check, 
+  X, 
+  ChevronDown, 
+  ChevronUp, 
+  ChevronLeft,
+  ChevronRight,
+  Star, 
+  Award, 
+  Zap, 
+  Download, 
+  Sparkles, 
+  TrendingUp, 
+  Coins, 
+  Lock, 
+  ShieldCheck, 
+  Instagram, 
+  Printer, 
+  FolderKanban, 
+  Clock, 
+  Smartphone, 
+  Plus, 
+  ArrowRight, 
+  DollarSign, 
+  Flame,
+  CreditCard,
+  QrCode,
+  CheckCircle,
+  Copy,
+  Sliders,
+  AlertCircle,
+  Gem
+} from "lucide-react";
+import { 
+  BONUSES, 
+  FAQS, 
+  TESTIMONIALS, 
+  BAG_MODELS, 
+  SIMULATED_PURCHASES,
+  BagModel
+} from "./data";
+import ImageCarousel from "./components/ImageCarousel";
+import WhatsAppTestimonials from "./components/WhatsAppTestimonials";
+import MarketplaceCarousel from "./components/MarketplaceCarousel";
+import { getOptimizedImageProps } from "./utils/image";
+
+export default function App() {
+  // Video sales presentation states
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
+  const [hasVideoStarted, setHasVideoStarted] = useState(false);
+  const [hasVideoEnded, setHasVideoEnded] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  // Lazy load state for smartphone mockup video to speed up initial mobile loading
+  const [isMockupVideoVisible, setIsMockupVideoVisible] = useState(false);
+  const mockupContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsMockupVideoVisible(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "300px" } // trigger load slightly before it scrolls into view
+    );
+
+    if (mockupContainerRef.current) {
+      observer.observe(mockupContainerRef.current);
+    }
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
+  // Synchronize raw video DOM muted property with React state to prevent browser-specific override issues
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.muted = isMuted;
+    }
+  }, [isMuted]);
+
+  const handleStartWithSound = (e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
+    setIsMuted(false);
+    if (videoRef.current) {
+      videoRef.current.muted = false;
+      videoRef.current.play()
+        .then(() => {
+          setHasVideoStarted(true);
+          setIsVideoPlaying(true);
+          setHasVideoEnded(false);
+        })
+        .catch((err) => {
+          console.warn("Unmuted play blocked by browser, falling back to muted play:", err);
+          if (videoRef.current) {
+            videoRef.current.muted = true;
+            setIsMuted(true);
+            videoRef.current.play()
+              .then(() => {
+                setHasVideoStarted(true);
+                setIsVideoPlaying(true);
+                setHasVideoEnded(false);
+              })
+              .catch((err2) => {
+                console.error("Muted play also failed:", err2);
+              });
+          }
+        });
+    }
+  };
+
+  const handleReplayVideo = (e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
+    if (videoRef.current) {
+      videoRef.current.currentTime = 0;
+      videoRef.current.muted = false;
+      setIsMuted(false);
+      videoRef.current.play()
+        .then(() => {
+          setHasVideoStarted(true);
+          setIsVideoPlaying(true);
+          setHasVideoEnded(false);
+        })
+        .catch((err) => {
+          console.warn("Replay play with sound failed, trying muted replay:", err);
+          if (videoRef.current) {
+            videoRef.current.muted = true;
+            setIsMuted(true);
+            videoRef.current.play()
+              .then(() => {
+                setHasVideoStarted(true);
+                setIsVideoPlaying(true);
+                setHasVideoEnded(false);
+              })
+              .catch((err2) => {
+                console.error("Muted replay also failed:", err2);
+              });
+          }
+        });
+    }
+  };
+
+  const handlePlayVideo = () => {
+    handleStartWithSound();
+  };
+
+  const handleVideoClick = () => {
+    if (!videoRef.current) return;
+    
+    // If video has finished, clicking should trigger replay.
+    if (hasVideoEnded) {
+      handleReplayVideo();
+      return;
+    }
+
+    if (hasVideoStarted) {
+      // User is not allowed to pause during active playback to maximize completion rates,
+      // so we do absolutely nothing on click!
+      return;
+    }
+
+    if (videoRef.current.paused) {
+      videoRef.current.play()
+        .then(() => {
+          setIsVideoPlaying(true);
+          setHasVideoStarted(true);
+          setHasVideoEnded(false);
+        })
+        .catch((err) => {
+          console.warn("Play on click failed:", err);
+          if (videoRef.current) {
+            videoRef.current.muted = true;
+            setIsMuted(true);
+            videoRef.current.play()
+              .then(() => {
+                setIsVideoPlaying(true);
+                setHasVideoStarted(true);
+                setHasVideoEnded(false);
+              })
+              .catch((err2) => {
+                console.error("Fallback play click failed:", err2);
+              });
+          }
+        });
+    }
+  };
+
+  // Active FAQ IDs
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
+  
+  // Selected category filter for Demo/Catalog
+  const [selectedCategory, setSelectedCategory] = useState<string>("Todos");
+
+  // Checkout Modal State
+  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
+  const [selectedPack, setSelectedPack] = useState<"basico" | "completo" | "diamante">("completo");
+  const [checkoutStep, setCheckoutStep] = useState<"upsell_diamond" | "payment_method" | "pix_code" | "success">("payment_method");
+  const [copiedPix, setCopiedPix] = useState(false);
+
+  // Notification Toast state (Social Proof)
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const [toastPack, setToastPack] = useState<string>("");
+
+  // Countdown Timer
+  const [timeLeft, setTimeLeft] = useState({ hours: 0, minutes: 24, seconds: 45 });
+
+  // Get unique categories
+  const categories = ["Todos", "Bolsas Femininas", "Bolsas Modernas", "Bolsas Pequenas", "Modelos Multipartes", "Acessórios 3D"];
+
+  // Filtered models
+  const filteredModels = selectedCategory === "Todos" 
+    ? BAG_MODELS 
+    : BAG_MODELS.filter(m => m.category === selectedCategory);
+
+  // Countdown timer logic
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeLeft(prev => {
+        if (prev.seconds > 0) {
+          return { ...prev, seconds: prev.seconds - 1 };
+        } else if (prev.minutes > 0) {
+          return { ...prev, minutes: prev.minutes - 1, seconds: 59 };
+        } else if (prev.hours > 0) {
+          return { hours: prev.hours - 1, minutes: 59, seconds: 59 };
+        } else {
+          // Reset relative loop
+          return { hours: 1, minutes: 15, seconds: 0 };
+        }
+      });
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  // Live social proof popups
+  useEffect(() => {
+    let isMounted = true;
+    let timerId: NodeJS.Timeout;
+
+    const runToastCycle = () => {
+      if (!isMounted) return;
+      const randomPurchase = SIMULATED_PURCHASES[Math.floor(Math.random() * SIMULATED_PURCHASES.length)];
+      setToastMessage(`${randomPurchase.name} (${randomPurchase.city})`);
+      setToastPack(randomPurchase.pack);
+      
+      // Hide after 10 seconds (10000ms)
+      timerId = setTimeout(() => {
+        if (!isMounted) return;
+        setToastMessage(null);
+        // Wait 3 seconds (3000ms) before displaying the next one
+        timerId = setTimeout(runToastCycle, 3000);
+      }, 10000);
+    };
+
+    // First toast appears 3 seconds after loading
+    timerId = setTimeout(runToastCycle, 3000);
+
+    return () => {
+      isMounted = false;
+      clearTimeout(timerId);
+    };
+  }, []);
+
+
+
+  // Format countdown string
+  const formatTime = (val: number) => String(val).padStart(2, "0");
+
+  // Open simulated checkout flow
+  const handleOpenCheckout = (pack: "basico" | "completo") => {
+    setSelectedPack(pack);
+    if (pack === "basico") {
+      setCheckoutStep("upsell_diamond");
+    } else {
+      setCheckoutStep("payment_method");
+    }
+    setCopiedPix(false);
+    setIsCheckoutOpen(true);
+  };
+
+  // Scroll to pricing section smoothly
+  const scrollToPricing = (e?: React.MouseEvent) => {
+    if (e) e.preventDefault();
+    const element = document.getElementById("pricing");
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
+  const copyPixKey = () => {
+    navigator.clipboard.writeText("00020126580014br.gov.bcb.pix0136abc12345-lucrativas-3dbags-9999");
+    setCopiedPix(true);
+    setTimeout(() => {
+      setCheckoutStep("success");
+    }, 2000);
+  };
+
+  return (
+    <div className="min-h-screen w-full overflow-x-hidden flex flex-col items-center bg-[#F8F6F3] text-[#1B1B1B] font-sans antialiased pb-24 md:pb-8 selection:bg-[#B45F4D]/20 selection:text-[#B45F4D]">
+      
+      {/* 1. TOPO DE URGÊNCIA / TIMER */}
+      <div className="w-full bg-[#111111] text-[#F8F6F3] py-2 px-4 text-center text-xs md:text-sm flex flex-wrap items-center justify-center gap-2 font-display uppercase tracking-wider font-semibold z-40 sticky top-0 border-b border-[#B45F4D]/20">
+        <span className="inline-flex items-center gap-1.5 text-rose-500 animate-pulse">
+          <Flame className="w-4 h-4 fill-rose-500" />
+          OFERTA DE LANÇAMENTO EXPIRA EM:
+        </span>
+        <span className="font-mono bg-[#B45F4D] px-2 py-0.5 rounded text-white font-bold tracking-widest text-sm shadow-sm">
+          {formatTime(timeLeft.hours)}:{formatTime(timeLeft.minutes)}:{formatTime(timeLeft.seconds)}
+        </span>
+        <span className="hidden sm:inline-block text-[#5F5F5F]">•</span>
+        <span className="hidden sm:inline-block text-emerald-400 font-medium text-xs">Apenas 14 vagas restantes com desconto</span>
+      </div>
+
+      <main className="w-full max-w-lg md:max-w-2xl lg:max-w-5xl px-4 md:px-6 pt-6 flex flex-col gap-10 md:gap-14">
+        
+        {/* =======================================
+            SECTION 1 & 2: HEADLINE & BADGES & VIDEO
+           ======================================= */}
+        <section id="headline" className="text-center mt-2 flex flex-col items-center gap-2.5">
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold font-display leading-[1.1] text-stone-900 tracking-tight text-center max-w-3xl mt-1">
+            Transforme sua impressora 3D em uma{" "}
+            <span className="text-[#B45F4D] relative inline-block">
+              vitrine de bolsas
+              <span className="absolute left-0 bottom-1 w-full h-1.5 bg-[#B45F4D]/15 rounded-full"></span>
+            </span>{" "}
+            prontas para vender
+          </h1>
+
+          <div className="relative w-full rounded-2xl overflow-hidden mt-1 select-none" onContextMenu={(e) => e.preventDefault()}>
+            {/* Sales video player with smooth styling - 9:16 Portrait Ratio */}
+            <div className="relative w-full max-w-sm mx-auto overflow-hidden bg-black rounded-2xl aspect-[9/16] border-4 border-[#B45F4D]/80 ring-8 ring-[#B45F4D]/10 shadow-[0_10px_40px_-10px_rgba(180,95,77,0.3)] group select-none touch-none">
+              <video 
+                ref={videoRef}
+                autoPlay={false}
+                preload="auto"
+                muted={isMuted}
+                loop={false}
+                controls={false}
+                controlsList="nodownload nofullscreen noremoteplayback"
+                disablePictureInPicture
+                disableRemotePlayback
+                playsInline
+                webkit-playsinline="true"
+                x5-playsinline="true"
+                referrerPolicy="no-referrer"
+                className="w-full h-full object-cover rounded-2xl bg-black cursor-pointer select-none outline-hidden active:outline-hidden focus:outline-hidden"
+                style={{ WebkitTapHighlightColor: "transparent" }}
+                onPlay={() => {
+                  setIsVideoPlaying(true);
+                  setHasVideoStarted(true);
+                  setHasVideoEnded(false);
+                }}
+                onPause={() => {
+                  setIsVideoPlaying(false);
+                  // Auto-resume playing if the video is active, has not finished, and is not at the end
+                  if (
+                    hasVideoStarted && 
+                    !hasVideoEnded && 
+                    videoRef.current && 
+                    !videoRef.current.ended && 
+                    videoRef.current.currentTime < videoRef.current.duration - 0.2
+                  ) {
+                    videoRef.current.play()
+                      .then(() => {
+                        setIsVideoPlaying(true);
+                      })
+                      .catch((err) => {
+                        console.warn("Auto-resume failed: ", err);
+                      });
+                  }
+                }}
+                onEnded={() => {
+                  setIsVideoPlaying(false);
+                  setHasVideoEnded(true);
+                }}
+                onClick={handleVideoClick}
+                onContextMenu={(e) => e.preventDefault()}
+              >
+                <source src="https://i.imgur.com/mC573pR.mp4" type="video/mp4" />
+                Seu navegador não suporta vídeos.
+              </video>
+              
+              {!hasVideoStarted && !hasVideoEnded && (
+                <div 
+                  onClick={handleStartWithSound}
+                  className="absolute inset-0 bg-black/45 flex flex-col items-center justify-center cursor-pointer transition-all duration-300 z-20"
+                >
+                  <div className="flex flex-col items-center gap-4">
+                    {/* YouTube style Red Play Button */}
+                    <div className="w-20 h-14 bg-[#FF0000] rounded-2xl flex items-center justify-center shadow-2xl transition-all duration-300 scale-100 hover:scale-110 active:scale-95 relative group/btn">
+                      {/* Pulsing red ring for organic video touch engagement */}
+                      <span className="absolute -inset-2 rounded-2xl bg-[#FF0000]/30 animate-ping opacity-60" />
+                      {/* Play Icon */}
+                      <svg className="w-8 h-8 text-white fill-current ml-1" viewBox="0 0 24 24">
+                        <path d="M8 5v14l11-7z" />
+                      </svg>
+                    </div>
+                    <span className="text-white font-extrabold text-xs tracking-widest uppercase px-4 py-1.5 rounded-full bg-black/60 shadow-md border border-white/10 backdrop-blur-xs">
+                      CLIQUE PARA ASSISTIR
+                    </span>
+                  </div>
+                </div>
+              )}
+
+              {hasVideoEnded && (
+                <div 
+                  onClick={handleReplayVideo}
+                  className="absolute inset-0 bg-black/80 flex flex-col items-center justify-center cursor-pointer transition-all duration-300 z-20 animate-fade-in"
+                >
+                  <div className="flex flex-col items-center gap-4 text-center px-6">
+                    {/* Pulsing orange/red replay button */}
+                    <div className="w-16 h-16 bg-[#B45F4D] rounded-full flex items-center justify-center shadow-2xl transition-all duration-300 scale-100 hover:scale-110 active:scale-95 relative">
+                      <span className="absolute -inset-2 rounded-full bg-[#B45F4D]/35 animate-ping opacity-70" />
+                      {/* Replay Icon */}
+                      <svg className="w-8 h-8 text-white fill-none stroke-current stroke-2" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+                      </svg>
+                    </div>
+                    
+                    <div className="flex flex-col gap-1.5 mt-2">
+                      <span className="text-white font-black text-sm tracking-wider uppercase bg-[#B45F4D]/80 px-4 py-1.5 rounded-full border border-white/20 shadow-md">
+                        ASSISTIR NOVAMENTE
+                      </span>
+                      <p className="text-stone-300 text-xs font-semibold leading-relaxed max-w-[240px]">
+                        O vídeo terminou! Deseja assistir de novo para rever as bolsas e bônus?
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+
+          <p className="text-sm md:text-base text-[#5F5F5F] max-w-2xl leading-relaxed font-medium mt-3 px-4">
+            Receba modelos prontos de bolsas e acessórios 3D para imprimir, divulgar e vender, sem precisar modelar absolutamente nada do zero.
+          </p>
+        </section>
+
+        {/* =======================================
+            SECTION 3: HERO ACTION CTA
+           ======================================= */}
+        <section id="hero-cta" className="flex flex-col gap-6">
+          {/* CTA Principal da Hero */}
+          <div className="flex flex-col items-center gap-2 mt-2">
+            <button 
+              id="cta-hero"
+              onClick={(e) => scrollToPricing(e)}
+              className="w-full sm:w-auto sm:px-12 py-4 bg-[#B45F4D] hover:bg-[#a04e3e] active:scale-[0.98] transition-all text-white font-bold font-display uppercase tracking-wide rounded-xl shadow-lg shadow-[#B45F4D]/25 text-base text-center cursor-pointer flex items-center justify-center gap-2 group"
+            >
+              <Zap className="w-5 h-5 fill-white animate-pulse" />
+              QUERO ACESSAR OS MODELOS AGORA
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </button>
+            
+            {/* Microcopy de confiança */}
+            <div className="flex flex-wrap items-center justify-center gap-4 text-[10px] md:text-xs text-[#5F5F5F] mt-1 font-medium">
+              <span className="flex items-center gap-1 text-emerald-600">
+                <Check className="w-4.5 h-4.5" /> Acesso imediato
+              </span>
+              <span className="flex items-center gap-1">
+                <Check className="w-4.5 h-4.5 text-[#B45F4D]" /> Arquivos vitalícios
+              </span>
+              <span className="flex items-center gap-1">
+                <Check className="w-4.5 h-4.5 text-[#B45F4D]" /> Permissão comercial inclusa
+              </span>
+            </div>
+          </div>
+        </section>
+
+        {/* =======================================
+            INFINITE BRAND MARQUEE TICKER (LINHA INFINITA DE MARCAS)
+           ======================================= */}
+        <div className="w-[calc(100%+2rem)] -ml-4 md:w-[calc(100%+3rem)] md:-ml-6 overflow-hidden border-y border-stone-200/50 bg-[#111111] py-1.5 md:py-2 shadow-sm">
+          <div className="animate-marquee whitespace-nowrap flex gap-12 text-[9px] md:text-[10px] font-mono uppercase tracking-[0.3em] text-stone-200 font-medium items-center">
+            {/* First Sequence */}
+            <div className="flex gap-12 items-center shrink-0">
+              <span>PRADA</span> <span className="text-[#B45F4D] font-bold">•</span>
+              <span>CHANEL</span> <span className="text-[#B45F4D] font-bold">•</span>
+              <span>GUCCI</span> <span className="text-[#B45F4D] font-bold">•</span>
+              <span>LOUIS VUITTON</span> <span className="text-[#B45F4D] font-bold">•</span>
+              <span>DIOR</span> <span className="text-[#B45F4D] font-bold">•</span>
+              <span>HERMÈS</span> <span className="text-[#B45F4D] font-bold">•</span>
+              <span>BALENCIAGA</span> <span className="text-[#B45F4D] font-bold">•</span>
+              <span>SAINT LAURENT</span> <span className="text-[#B45F4D] font-bold">•</span>
+              <span>BOTTEGA VENETA</span> <span className="text-[#B45F4D] font-bold">•</span>
+              <span>FENDI</span> <span className="text-[#B45F4D] font-bold">•</span>
+              <span>JACQUEMUS</span> <span className="text-[#B45F4D] font-bold">•</span>
+              <span>VALENTINO</span> <span className="text-[#B45F4D] font-bold">•</span>
+            </div>
+            {/* Second Sequence for continuous seamless scrolling */}
+            <div className="flex gap-12 items-center shrink-0">
+              <span>PRADA</span> <span className="text-[#B45F4D] font-bold">•</span>
+              <span>CHANEL</span> <span className="text-[#B45F4D] font-bold">•</span>
+              <span>GUCCI</span> <span className="text-[#B45F4D] font-bold">•</span>
+              <span>LOUIS VUITTON</span> <span className="text-[#B45F4D] font-bold">•</span>
+              <span>DIOR</span> <span className="text-[#B45F4D] font-bold">•</span>
+              <span>HERMÈS</span> <span className="text-[#B45F4D] font-bold">•</span>
+              <span>BALENCIAGA</span> <span className="text-[#B45F4D] font-bold">•</span>
+              <span>SAINT LAURENT</span> <span className="text-[#B45F4D] font-bold">•</span>
+              <span>BOTTEGA VENETA</span> <span className="text-[#B45F4D] font-bold">•</span>
+              <span>FENDI</span> <span className="text-[#B45F4D] font-bold">•</span>
+              <span>JACQUEMUS</span> <span className="text-[#B45F4D] font-bold">•</span>
+              <span>VALENTINO</span> <span className="text-[#B45F4D] font-bold">•</span>
+            </div>
+          </div>
+        </div>
+
+        {/* =======================================
+            SECTION 4 & 5: MARKETPLACES BESTSELLERS
+           ======================================= */}
+        <section id="mais-vendidos-marketplaces" className="flex flex-col gap-6 w-full py-6 text-center">
+          <div className="max-w-2xl mx-auto flex flex-col gap-1.5 px-4">
+            <span className="text-xs font-mono uppercase text-[#B45F4D] font-bold tracking-wider">Demanda Comprovada</span>
+            <h2 className="text-lg md:text-xl font-bold font-display text-stone-900 leading-tight uppercase">
+              Os Produtos Que Mais Vendem no Mercado Livre, Shopee e Marketplaces
+            </h2>
+            <p className="text-xs text-[#5F5F5F] leading-relaxed">
+              Veja a altíssima procura e o sucesso de vendas desses produtos nos maiores marketplaces do Brasil.
+            </p>
+          </div>
+
+          <MarketplaceCarousel />
+        </section>
+
+        {/* =======================================
+            SECTION 7.5: ROTATING SHOWCASE CAROUSEL (MIDDLE OF THE PAGE)
+           ======================================= */}
+        <section id="galeria-rotativa" className="flex flex-col gap-5 w-full py-2">
+          <div className="text-center max-w-xl mx-auto flex flex-col gap-1 px-4">
+            <span className="text-xs font-mono uppercase text-[#B45F4D] font-bold tracking-wider">Catálogo de Modelos Reais</span>
+            <h2 className="text-lg md:text-xl font-bold font-display text-stone-900 leading-tight">
+              Galeria de Modelos Premium
+            </h2>
+            <p className="text-xs text-[#5F5F5F] leading-relaxed">
+              Explore os detalhes e texturas dos modelos reais inclusos no pack completo.
+            </p>
+          </div>
+
+          <div className="w-full">
+            <ImageCarousel />
+          </div>
+        </section>
+
+        {/* =======================================
+            SECTION 8: PROVAS E VALIDAÇÃO (SOCIAL PROOF)
+           ======================================= */}
+        <section id="provas" className="w-full">
+          <WhatsAppTestimonials />
+        </section>
+
+        {/* =======================================
+            SECTION 8.5: ÁREA DE MEMBROS EXCLUSIVA (MEMBERS AREA)
+           ======================================= */}
+        <section id="area-de-membros" className="bg-white text-stone-900 rounded-3xl p-6 md:p-10 border border-stone-200/80 shadow-sm flex flex-col gap-8 w-full relative overflow-hidden">
+          {/* Subtle background glow effects */}
+          <div className="absolute top-0 right-0 w-64 h-64 bg-[#B45F4D]/5 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-64 h-64 bg-pink-500/5 rounded-full blur-3xl pointer-events-none" />
+
+          <div className="text-center max-w-2xl mx-auto flex flex-col items-center z-10">
+            <span className="text-xs font-mono uppercase text-[#B45F4D] font-extrabold tracking-widest bg-[#B45F4D]/10 px-3.5 py-1.5 rounded-full border border-[#B45F4D]/20">
+              Plataforma VIP de Alunos
+            </span>
+            <h2 className="text-2xl md:text-3xl font-extrabold font-display text-stone-900 mt-4 leading-tight uppercase tracking-tight">
+              ÁREA DE MEMBROS EXCLUSIVA & ORGANIZADA
+            </h2>
+            <p className="text-sm text-stone-600 mt-2 font-medium leading-relaxed max-w-lg">
+              Veja por dentro como funciona o nosso portal de alunos. Uma experiência premium com acesso imediato e vitalício para você começar a faturar hoje!
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center z-10">
+            {/* Video Column */}
+            <div className="lg:col-span-6 xl:col-span-7 flex flex-col items-center justify-center w-full">
+              {/* Sleek Modern High-Fidelity Smartphone Mockup Frame in standard 9:16 Aspect Ratio */}
+              <div ref={mockupContainerRef} className="relative mx-auto w-full max-w-[290px] sm:max-w-[310px] aspect-[9/16] bg-gradient-to-b from-[#cbb19b] via-[#dfd0c0] to-[#b89c84] rounded-[36px] p-[5px] shadow-[0_25px_60px_-15px_rgba(45,35,30,0.3),0_0_40px_rgba(180,95,77,0.06),inset_0_0_10px_rgba(255,255,255,0.7)] border-[5px] border-[#cfbea9] ring-4 ring-[#eadfcb]/50 transition-all duration-500 hover:scale-[1.03] hover:shadow-[0_30px_70px_-10px_rgba(45,35,30,0.4)]">
+                
+                {/* Screen Reflection Accent */}
+                <div className="absolute -top-[30%] -left-[50%] w-[200%] h-[90%] bg-gradient-to-tr from-transparent via-white/[0.06] to-white/[0.18] transform rotate-[25deg] pointer-events-none z-30" />
+                
+                {/* Display Container with Slim Uniform Bezel */}
+                <div className="relative w-full h-full rounded-[30px] p-[2.5px] bg-black z-20 border border-[#b29780]/30 shadow-inner flex flex-col overflow-hidden isolate">
+                  
+                  {/* Subtle Speaker Grill Line */}
+                  <div className="absolute top-1.5 left-1/2 transform -translate-x-1/2 h-1 w-12 bg-stone-900 rounded-full z-40" />
+
+                  {/* Absolute Full Screen Display Container */}
+                  <div className="relative w-full h-full rounded-[27px] overflow-hidden bg-black z-20 shadow-inner flex-1 flex flex-col isolate">
+                    {isMockupVideoVisible ? (
+                      <video 
+                        src="https://i.imgur.com/vBV9KeN.mp4" 
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                        referrerPolicy="no-referrer"
+                        className="w-full h-full object-contain bg-black flex-1 rounded-[27px]"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-black flex-1 rounded-[27px] flex items-center justify-center">
+                        <div className="w-6 h-6 border-2 border-[#B45F4D] border-t-transparent rounded-full animate-spin" />
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Features Column */}
+            <div className="lg:col-span-6 xl:col-span-5 flex flex-col gap-5 text-left">
+              <div className="flex items-center gap-2 text-[#B45F4D]">
+                <Sparkles className="w-5 h-5 shrink-0" />
+                <span className="text-xs font-bold uppercase tracking-wider font-mono">Praticidade Absoluta</span>
+              </div>
+
+              <h3 className="text-xl md:text-2xl font-black font-display text-stone-900 leading-tight">
+                Seu aprendizado e downloads em um portal de luxo
+              </h3>
+
+              <div className="flex flex-col gap-4">
+                <div className="flex items-start gap-3 bg-stone-50/60 p-3.5 rounded-xl border border-stone-100 transition-all hover:bg-stone-100/50">
+                  <div className="w-8 h-8 rounded-lg bg-[#B45F4D]/10 flex items-center justify-center text-[#B45F4D] shrink-0 font-bold">
+                    <FolderKanban className="w-4.5 h-4.5" />
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-extrabold text-stone-900">Organização Impecável por Categorias</h4>
+                    <p className="text-xs text-stone-600 mt-1 font-medium leading-relaxed">
+                      Chega de confusão ou pastas de drive bagunçadas. Nossos arquivos STL estão divididos por modelos de bolsas, alças, fechos e acessórios prontos.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3 bg-stone-50/60 p-3.5 rounded-xl border border-stone-100 transition-all hover:bg-stone-100/50">
+                  <div className="w-8 h-8 rounded-lg bg-[#B45F4D]/10 flex items-center justify-center text-[#B45F4D] shrink-0 font-bold">
+                    <Download className="w-4.5 h-4.5" />
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-extrabold text-stone-900">Download Instantâneo em 1 Clique</h4>
+                    <p className="text-xs text-stone-600 mt-1 font-medium leading-relaxed">
+                      Acesso imediato após o pagamento. Baixe seus arquivos direto na nuvem sem propagandas, links complicados ou telas de espera chatas.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3 bg-stone-50/60 p-3.5 rounded-xl border border-stone-100 transition-all hover:bg-stone-100/50">
+                  <div className="w-8 h-8 rounded-lg bg-[#B45F4D]/10 flex items-center justify-center text-[#B45F4D] shrink-0 font-bold">
+                    <Smartphone className="w-4.5 h-4.5" />
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-extrabold text-stone-900">100% Compatível e Responsivo</h4>
+                    <p className="text-xs text-stone-600 mt-1 font-medium leading-relaxed">
+                      Acesse com toda a comodidade diretamente pelo seu smartphone, tablet ou computador, permitindo que você assista e acompanhe de onde preferir.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* =======================================
+            SECTION 13: BÔNUS
+           ======================================= */}
+        <section id="bonus" className="bg-pink-50/50 rounded-3xl p-6 md:p-10 border border-pink-100/80 shadow-xs flex flex-col gap-8 w-full">
+          <div className="text-center max-w-2xl mx-auto">
+            <span className="text-xs font-mono uppercase text-emerald-600 font-extrabold tracking-wider bg-emerald-50 px-3 py-1 rounded-full border border-emerald-100">
+              Bônus Exclusivos
+            </span>
+            <h2 className="text-2xl md:text-3xl font-extrabold font-display text-stone-900 mt-3.5 leading-tight">
+              E VOCÊ AINDA VAI RECEBER BÔNUS EXCLUSIVOS E LUCRATIVOS
+            </h2>
+            <p className="text-sm md:text-base text-stone-600 mt-2 font-medium leading-relaxed">
+              Arquivos extras selecionados para aumentar suas possibilidades de criação, venda e personalização com impressão 3D.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {[
+              {
+                id: 1,
+                title: "PACK DE JOIAS E ACESSÓRIOS 3D",
+                description: "Modelos prontos de brincos, anéis, pingentes, pulseiras e acessórios estilosos para impressão 3D. Peças leves, bonitas e com alto potencial para venda em feiras, redes sociais e encomendas personalizadas.",
+                originalPrice: "R$ 49,90",
+                image: "https://i.imgur.com/1A1KyZC.webp"
+              },
+              {
+                id: 4,
+                title: "MEGA PACK DE ARTES E VETORES PARA ESTAMPAS DE CAMISETAS FEMININAS",
+                description: "Uma coleção exclusiva de estampas e vetores em alta definição prontos para estampar camisetas femininas. Designs modernos, line art minimalista, florais elegantes, frases inspiradoras e artes de alta tendência de vendas.",
+                originalPrice: "R$ 97,00",
+                image: "https://i.imgur.com/VCkOTx6.webp"
+              },
+              {
+                id: 5,
+                title: "GUIA DE FILAMENTOS E CONFIGURAÇÕES PARA BOLSAS 3D FEMININAS",
+                description: "O manual definitivo explicando os melhores filamentos (PLA Silk, TPU, Flex) e as configurações de fatiamento ideais (temperatura, velocidade, suporte, perímetros) para criar bolsas perfeitas, resistentes e articuladas.",
+                originalPrice: "R$ 49,90",
+                image: "https://i.imgur.com/JxmeFMO.webp"
+              },
+              {
+                id: 6,
+                title: "COLEÇÃO DE CANECAS E PORTA-COPOS PREMIUM",
+                description: "Modelos decorativos de canecas, porta-copos e acessórios para cozinha com visual moderno. Ótimos para presentes personalizados, kits criativos e datas comemorativas.",
+                originalPrice: "R$ 49,90",
+                image: "https://i.imgur.com/w82oftQ.webp"
+              },
+              {
+                id: 7,
+                title: "STL ANÉIS DE LUXO KIT PROFISSIONAL",
+                description: "Uma seleção exclusiva de altíssimo padrão com arquivos STL de anéis de luxo, anatômicos e modernos de alta joalheria. Designs sofisticados prontos para impressão 3D de altíssima definição, perfeitos para criar coleções exclusivas de alto valor agregado.",
+                originalPrice: "R$ 59,90",
+                image: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=400&h=400&q=80"
+              },
+              {
+                id: 8,
+                title: "GUIA DE COMBINAÇÕES DE CORES",
+                description: "Um guia completo e prático para combinar cores de filamentos de forma harmoniosa, moderna e profissional. Aprenda a valorizar o design de cada bolsa e acessório impresso para atrair olhares e aumentar suas vendas.",
+                originalPrice: "R$ 39,90",
+                image: "https://i.imgur.com/BmwbPhI.webp"
+              }
+            ].map((bonus) => (
+              <div 
+                key={bonus.id} 
+                className="flex flex-col sm:flex-row gap-5 p-6 bg-[#FFF0F2] hover:bg-[#FFE3E7] rounded-2xl border-2 border-pink-300 shadow-xs hover:shadow-xl hover:border-pink-400 transition-all duration-300 text-left items-start group relative overflow-hidden"
+              >
+                {/* Image Section */}
+                <div className="w-full h-52 sm:w-40 sm:h-40 md:w-48 md:h-48 bg-stone-50 rounded-xl border border-stone-200/80 flex items-center justify-center shrink-0 overflow-hidden shadow-xs relative">
+                  <img 
+                    {...getOptimizedImageProps(bonus.image, "l", "(max-width: 640px) 100vw, 192px")}
+                    alt={bonus.title} 
+                    loading="lazy"
+                    decoding="async"
+                    width={192}
+                    height={192}
+                    className={`w-full h-full transition-transform duration-500 group-hover:scale-105 ${
+                      bonus.image.includes('.png') || bonus.image.includes('.webp') && !bonus.image.includes('unsplash') ? 'object-contain p-3 bg-white' : 'object-cover'
+                    }`}
+                    referrerPolicy="no-referrer"
+                  />
+                </div>
+
+                {/* Content Section */}
+                <div className="flex flex-col gap-2 flex-1 justify-between h-full">
+                  <div className="flex flex-col gap-1">
+                    <h3 className="font-extrabold text-stone-900 text-sm md:text-base font-display leading-tight uppercase tracking-tight">
+                      {bonus.title}
+                    </h3>
+                    <p className="text-xs text-stone-600 leading-relaxed font-medium">
+                      {bonus.description}
+                    </p>
+                  </div>
+
+                  {/* Pricing/Tags Footer */}
+                  <div className="flex items-center gap-3.5 mt-1.5 pt-2 border-t border-stone-100">
+                    <span className="text-xs text-stone-400 line-through font-semibold">
+                      De {bonus.originalPrice}
+                    </span>
+                    <span className="inline-flex items-center gap-1 bg-emerald-50 border border-emerald-200 text-emerald-700 font-extrabold text-[10px] tracking-wider uppercase px-2.5 py-0.5 rounded-md shadow-3xs">
+                      GRÁTIS
+                    </span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Closing copy */}
+          <div className="mt-4 p-5 bg-stone-100/50 border border-stone-200/60 rounded-2xl text-center max-w-xl mx-auto shadow-3xs">
+            <p className="text-xs md:text-sm text-stone-700 leading-relaxed font-bold">
+              “Todos esses bônus entram junto com o seu acesso hoje, sem custo adicional. É mais variedade, mais possibilidades de venda e mais arquivos prontos para você começar a usar.”
+            </p>
+          </div>
+        </section>
+
+        {/* =======================================
+            SECTION 10: DEMONSTRAÇÃO VISUAL (CATALOGO DE IMAGENS)
+           ======================================= */}
+        <section id="demonstracao-visual" className="flex flex-col gap-5 bg-gradient-to-b from-stone-50/50 via-stone-100/30 to-stone-50/50 px-3.5 py-6 sm:p-6 md:p-8 rounded-3xl border border-stone-200/60 shadow-inner w-full overflow-hidden">
+          <div className="text-center max-w-xl mx-auto flex flex-col items-center w-full px-2">
+            <div className="bg-gradient-to-tr from-cyan-100 via-[#B45F4D]/10 to-pink-100 p-2.5 rounded-full shadow-xs mb-3 flex items-center justify-center">
+              <Gem className="w-5 h-5 text-cyan-600 animate-pulse" />
+            </div>
+            <span className="text-[10px] xs:text-xs font-mono uppercase text-[#B45F4D] font-extrabold tracking-widest text-center">Variedade Inclusa</span>
+            <h2 className="text-lg xs:text-xl md:text-2xl font-black font-display text-stone-950 mt-1.5 uppercase text-center tracking-tight break-words px-1 leading-tight">
+              COLEÇÃO DE MODELOS 3D
+            </h2>
+          </div>
+
+          {/* Category Filter Tabs (Centered, fully responsive, wraps elegantly on mobile) */}
+          <div className="flex flex-wrap justify-center items-center gap-1.5 sm:gap-2 max-w-2xl mx-auto w-full px-1 mt-1 mb-2">
+            {categories.map((category) => (
+              <button
+                key={category}
+                onClick={() => setSelectedCategory(category)}
+                className={`px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full text-[9px] xs:text-[10px] sm:text-xs font-bold tracking-normal uppercase transition-all duration-300 border cursor-pointer ${
+                  selectedCategory === category
+                    ? "bg-[#B45F4D] text-white border-[#B45F4D] shadow-sm scale-[1.02]"
+                    : "bg-white text-stone-600 border-stone-200/80 hover:bg-stone-50"
+                }`}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+
+          {/* Catalog Grid of Images with beautiful diamond styled cards (Dynamically Filtered) */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-5 max-w-5xl mx-auto w-full">
+            {[
+              { url: "https://i.imgur.com/DnuaZYa.webp", category: "Bolsas Femininas" },
+              { url: "https://i.imgur.com/kA3oDNb.webp", category: "Bolsas Modernas" },
+              { url: "https://i.imgur.com/ucxS8av.webp", category: "Bolsas Pequenas" },
+              { url: "https://i.imgur.com/owlo85R.webp", category: "Bolsas Femininas" },
+              { url: "https://i.imgur.com/1ZrOAYg.webp", category: "Bolsas Modernas" },
+              { url: "https://i.imgur.com/0OYGdYF.webp", category: "Modelos Multipartes" },
+              { url: "https://i.imgur.com/UlVdHnP.webp", category: "Bolsas Modernas" },
+              { url: "https://i.imgur.com/WpXschZ.webp", category: "Bolsas Femininas" },
+              { url: "https://i.imgur.com/jHAsRHH.webp", category: "Bolsas Pequenas" },
+              { url: "https://i.imgur.com/anSVxa9.webp", category: "Bolsas Femininas" },
+              { url: "https://i.imgur.com/xoF6qS6.webp", category: "Acessórios 3D" },
+              { url: "https://i.imgur.com/rZY2UF7.webp", category: "Acessórios 3D" },
+              { url: "https://i.imgur.com/cjuNzSh.webp", category: "Acessórios 3D" },
+              { url: "https://i.imgur.com/r0cHyEm.webp", category: "Modelos Multipartes" },
+              { url: "https://i.imgur.com/bQrYZiv.webp", category: "Bolsas Pequenas" },
+              { url: "https://i.imgur.com/LMSAGTN.webp", category: "Modelos Multipartes" }
+            ]
+              .filter((item) => selectedCategory === "Todos" || item.category === selectedCategory)
+              .map((item, index) => (
+                <div 
+                  key={index} 
+                  className="group relative aspect-square bg-stone-900 rounded-2xl shadow-lg border border-stone-800 transition-all duration-500 hover:scale-[1.04] hover:shadow-cyan-400/10 hover:shadow-xl hover:border-cyan-500/40 p-1 bg-gradient-to-tr from-stone-900 via-stone-800 to-stone-900"
+                >
+                  <div className="relative w-full h-full bg-white rounded-xl overflow-hidden flex items-center justify-center">
+                    {/* High luxury reflection overlay on hover */}
+                    <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-white/30 pointer-events-none z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+
+                    {/* Zooming Cover Image */}
+                    <img 
+                      {...getOptimizedImageProps(item.url, "m", "(max-width: 640px) 50vw, 240px")}
+                      alt={`Modelo exclusivo ${index + 1}`} 
+                      referrerPolicy="no-referrer"
+                      loading="lazy"
+                      decoding="async"
+                      width={240}
+                      height={240}
+                      className="w-full h-full object-cover z-0 transition-transform duration-700 group-hover:scale-105"
+                    />
+                    
+                    {/* Hover Overlay with text */}
+                    <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-stone-900/95 via-stone-900/70 to-transparent p-1.5 sm:p-2 text-center transition-all duration-300 transform translate-y-1.5 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 z-10">
+                      <span className="text-[8px] sm:text-[9.5px] font-mono tracking-normal sm:tracking-wider text-cyan-200 font-extrabold uppercase flex items-center justify-center gap-1 flex-wrap px-1 leading-tight">
+                        <Gem className="w-2 h-2 sm:w-2.5 sm:h-2.5 shrink-0 text-cyan-300 animate-bounce" />
+                        Acabamento Diamante
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+          </div>
+
+          <div className="bg-white/85 rounded-2xl p-4 border border-stone-200/80 text-center max-w-xl mx-auto shadow-xs">
+            <p className="text-xs text-[#5F5F5F] leading-relaxed font-medium">
+              *Quanto mais modelos você tem no seu catálogo digital, mais possibilidades e nichos de mercado você consegue divulgar, testar e vender sem custos de modelagem.
+            </p>
+          </div>
+        </section>
+
+        {/* =======================================
+            SECTION 11: OPORTUNIDADE E LUCRATIVIDADE (REPLACES COMPARISON)
+           ======================================= */}
+        <section id="comparacao" className="bg-white rounded-2xl p-6 md:p-8 border border-stone-200 shadow-sm w-full">
+          <div className="text-center max-w-2xl mx-auto mb-8">
+            <span className="text-xs font-mono uppercase text-[#B45F4D] font-extrabold tracking-wider bg-[#B45F4D]/10 px-3 py-1 rounded-full">O Segredo Revelado</span>
+            <h2 className="text-2xl md:text-3xl font-extrabold font-display text-stone-900 mt-3 leading-tight">
+              A Decisão que Separa Amadores de Profissionais Altamente Lucrativos
+            </h2>
+            <p className="text-sm md:text-base text-stone-700 mt-3 font-medium leading-relaxed">
+              O mercado de impressão 3D tradicional está saturado de pessoas vendendo chaveiros e vasinhos por centavos. Descubra a rota do luxo e posicione-se no topo.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            {/* Infographic / Main Image Column */}
+            <div className="lg:col-span-7 flex justify-center">
+              <div className="relative rounded-2xl overflow-hidden border border-stone-200 bg-stone-50 shadow-lg group w-full">
+                <img 
+                  {...getOptimizedImageProps("https://i.imgur.com/gGPzfLr.webp", "l", "(max-width: 1024px) 100vw, 640px")}
+                  alt="Comparação de Lucratividade na Impressão 3D" 
+                  referrerPolicy="no-referrer"
+                  loading="lazy"
+                  decoding="async"
+                  width={640}
+                  height={400}
+                  className="w-full h-auto block transition-transform duration-500 ease-out group-hover:scale-[1.01]"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
+              </div>
+            </div>
+
+            {/* Persuasive Copy Column */}
+            <div className="lg:col-span-5 flex flex-col gap-5 text-left">
+              <div className="flex items-center gap-2 text-[#B45F4D]">
+                <Gem className="w-5 h-5 shrink-0" />
+                <span className="text-xs font-bold uppercase tracking-wider font-mono">Por que vender Bolsas de Grife 3D?</span>
+              </div>
+
+              <h3 className="text-xl md:text-2xl font-black font-display text-stone-900 leading-tight">
+                Venda Menos Unidades, Ganhe Muito Mais Dinheiro
+              </h3>
+
+              <div className="flex flex-col gap-4">
+                <div className="flex items-start gap-3 bg-stone-50 p-3.5 rounded-xl border border-stone-150 transition-all hover:bg-stone-100/50">
+                  <div className="w-8 h-8 rounded-lg bg-[#B45F4D]/10 flex items-center justify-center text-[#B45F4D] shrink-0 font-bold">
+                    <TrendingUp className="w-4.5 h-4.5" />
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-extrabold text-stone-900">Margens Brutais de Lucro</h4>
+                    <p className="text-xs md:text-sm text-stone-600 mt-1 font-medium leading-relaxed">
+                      Enquanto peças genéricas geram centavos de lucro, cada Bolsa 3D do nosso Pack é vendida de <strong className="text-stone-900 font-bold">R$ 180 a R$ 350</strong> com custo de produção baixíssimo.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3 bg-stone-50 p-3.5 rounded-xl border border-stone-150 transition-all hover:bg-stone-100/50">
+                  <div className="w-8 h-8 rounded-lg bg-[#B45F4D]/10 flex items-center justify-center text-[#B45F4D] shrink-0 font-bold">
+                    <Sparkles className="w-4.5 h-4.5" />
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-extrabold text-stone-900">Mercado com Desejo Imediato</h4>
+                    <p className="text-xs md:text-sm text-stone-600 mt-1 font-medium leading-relaxed">
+                      Bolsas de design despertam o desejo de compra imediato no público feminino. Elas compram pela exclusividade e beleza do produto final, não pelo preço.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3 bg-stone-50 p-3.5 rounded-xl border border-stone-150 transition-all hover:bg-stone-100/50">
+                  <div className="w-8 h-8 rounded-lg bg-[#B45F4D]/10 flex items-center justify-center text-[#B45F4D] shrink-0 font-bold">
+                    <ShieldCheck className="w-4.5 h-4.5" />
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-extrabold text-stone-900">Oceano Azul sem Concorrência</h4>
+                    <p className="text-xs md:text-sm text-stone-600 mt-1 font-medium leading-relaxed">
+                      Quase ninguém produz ou sabe produzir essas bolsas no Brasil. Ao adquirir o nosso Pack, você dita os preços na sua região com zero concorrência.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-2 p-3 bg-emerald-50 border border-emerald-500/10 rounded-xl flex items-center gap-2.5">
+                <CheckCircle className="w-5 h-5 text-emerald-600 shrink-0" />
+                <span className="text-xs font-bold text-emerald-800">
+                  Diferencie-se hoje mesmo e fature alto com a revolução da moda em 3D.
+                </span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* =======================================
+            SECTION 12: PLANOS & PREÇOS (PRICING)
+           ======================================= */}
+        <section id="pricing" className="flex flex-col gap-5">
+          <div className="text-center max-w-xl mx-auto">
+            <span className="text-xs font-mono uppercase text-[#B45F4D] font-bold">Planos Disponíveis</span>
+            <h2 className="text-lg md:text-xl font-bold font-display text-stone-950 mt-1">
+              Escolha o pack ideal para começar hoje
+            </h2>
+            <p className="text-xs text-[#5F5F5F] mt-1">
+              Escolha a opção perfeita para o seu momento. O acesso é liberado em menos de 1 minuto.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 items-stretch">
+            {/* CARD 1: PACK BÁSICO */}
+            <div className="bg-white rounded-2xl border border-stone-200 p-4 flex flex-col gap-3.5 relative shadow-sm text-left md:self-start">
+              <div className="flex flex-col gap-2.5">
+                <div className="flex flex-col gap-0.5">
+                  <span className="text-[10px] font-mono tracking-widest text-stone-400 font-bold uppercase">Pacote Inicial</span>
+                  <h3 className="text-base font-extrabold font-display text-stone-900">PACK BÁSICO</h3>
+                  <p className="text-xs text-[#5F5F5F]">
+                    Ideal para dar os primeiros passos e testar a lucratividade das bolsas 3D.
+                  </p>
+                </div>
+
+                {/* Preço */}
+                <div className="py-2.5 border-t border-b border-stone-200 flex flex-col bg-stone-50/50 -mx-4 px-4 my-0.5">
+                  <span className="text-[9px] text-[#B45F4D] uppercase font-extrabold tracking-wider">Oferta de Entrada</span>
+                  <div className="flex items-baseline gap-1 mt-0.5">
+                    <span className="text-xs text-stone-900 font-extrabold">R$</span>
+                    <span className="text-3xl font-black text-stone-950 font-display tracking-tight">10,90</span>
+                    <span className="text-[11px] text-stone-700 font-bold ml-1">único / à vista</span>
+                  </div>
+                  <span className="text-[9px] text-emerald-700 font-extrabold mt-0.5 flex items-center gap-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                    ✓ Sem taxas ou mensalidades adicionais
+                  </span>
+                </div>
+
+                {/* Itens Inclusos */}
+                <div className="flex flex-col gap-1.5">
+                  <span className="text-[9px] font-bold text-stone-700 uppercase tracking-wider">Itens Inclusos:</span>
+                  {[
+                    "10 modelos selecionados a dedo",
+                    "Licença comercial para venda física",
+                    "Acesso vitalício aos arquivos STL",
+                    "Download 100% imediato pós Pix"
+                  ].map((item, i) => (
+                    <div key={i} className="flex items-start gap-1.5">
+                      <Check className="w-3.5 h-3.5 text-[#B45F4D] shrink-0 mt-0.5" />
+                      <span className="text-xs text-stone-700">{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <button 
+                onClick={() => handleOpenCheckout("basico")}
+                className="w-full py-2.5 bg-stone-900 hover:bg-stone-850 text-white font-extrabold font-display uppercase tracking-wider rounded-xl transition-all cursor-pointer text-xs text-center shadow-sm active:scale-[0.98]"
+              >
+                COMEÇAR COM O PLANO BÁSICO
+              </button>
+            </div>
+
+            {/* CARD 2: PACK COMPLETO / PREMIUM */}
+            <div className="relative rounded-2xl p-[3px] bg-gradient-to-br from-[#00f2fe] via-[#9be3f9] to-[#4facfe] shadow-2xl shadow-cyan-500/20 scale-100 flex flex-col justify-between transition-all duration-300 hover:scale-[1.02] hover:shadow-cyan-400/35">
+              <div className="bg-[#111111] text-[#F8F6F3] rounded-[14px] p-5 flex flex-col justify-between gap-5 h-full relative text-left">
+                <div className="absolute -top-4 bg-gradient-to-r from-[#00f2fe] to-[#4facfe] text-stone-950 text-xs sm:text-sm font-black uppercase py-2 px-6 rounded-full tracking-widest shadow-xl border-2 border-white/40 left-1/2 transform -translate-x-1/2 flex items-center gap-2 z-10 whitespace-nowrap scale-105">
+                  <Sparkles className="w-4 h-4 text-stone-950 fill-stone-950" />
+                  O MAIS ESCOLHIDO
+                </div>
+
+                <div className="flex flex-col gap-3">
+                  {/* Image placed on top, nicely framed */}
+                  <div className="relative rounded-xl overflow-hidden border border-stone-800 bg-[#080808] mb-1.5 mt-2.5 shadow-md">
+                    <img 
+                      {...getOptimizedImageProps("https://i.imgur.com/WXWw5vE.webp", "l", "(max-width: 640px) 100vw, 400px")}
+                      alt="Pack Completo Premium" 
+                      referrerPolicy="no-referrer"
+                      loading="eager"
+                      fetchPriority="high"
+                      width={400}
+                      height={250}
+                      className="w-full h-auto block"
+                    />
+                  </div>
+
+                  {/* Preço */}
+                  <div className="py-3 border-t border-b border-stone-800 flex flex-col">
+                    <span className="text-[9px] text-[#00f2fe] uppercase font-black tracking-wider">Desconto de lançamento</span>
+                    <div className="flex items-baseline gap-1 mt-1">
+                      <span className="text-sm text-stone-300 font-black">R$</span>
+                      <span className="text-4xl sm:text-5xl font-black text-white font-display tracking-tight drop-shadow-[0_0_10px_rgba(0,242,254,0.4)]">29,90</span>
+                      <span className="text-xs text-stone-300 font-bold ml-1">ou até em 5x</span>
+                    </div>
+                    <span className="text-[10px] text-emerald-400 font-black mt-1 flex items-center gap-1">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span>
+                      ✓ Acesso vitalício e sem assinaturas
+                    </span>
+                  </div>
+
+                  {/* Itens Inclusos */}
+                  <div className="flex flex-col gap-2">
+                    <span className="text-[10px] font-bold text-[#00f2fe] uppercase tracking-wider">O que você vai receber:</span>
+                    {[
+                      "Mais de 70 modelos de bolsas e acessórios",
+                      "Licença comercial vitalícia inclusa",
+                      "Bônus: Pack de Joias e Acessórios 3D",
+                      "Bônus: Guia de Combinações de Cores",
+                      "Bônus: Chaveiros em 3D Personalizados",
+                      "Bônus: Guia Rápido de Organização de Arquivos",
+                      "Bônus: Lista de Públicos para Vender",
+                      "Bônus: Checklist de Postagem no Instagram e Redes Sociais",
+                      "Bônus: Plano Prático de 7 Dias para Começar",
+                      "Bônus: Tabela de Precificação de Bolsas 3D",
+                      "Atualizações futuras 100% gratuitas",
+                      "Suporte individual no WhatsApp",
+                      "Download 100% imediato"
+                    ].map((item, i) => (
+                      <div key={i} className="flex items-start gap-1.5 text-stone-100 font-semibold">
+                        <Check className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                        <span className="text-xs sm:text-sm">{item}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <button 
+                  onClick={() => handleOpenCheckout("completo")}
+                  className="w-full py-4 bg-gradient-to-r from-[#00f2fe] to-[#4facfe] hover:from-[#00d2de] hover:to-[#3fa8de] text-stone-950 font-black font-display uppercase tracking-wider rounded-xl transition-all cursor-pointer text-xs text-center shadow-lg shadow-[#00f2fe]/20 active:scale-[0.98]"
+                >
+                  QUERO TODAS AS BOLSAS
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+
+        {/* =======================================
+            SECTION 15: GARANTIA & SEGURANÇA
+           ======================================= */}
+        <section id="garantia" className="bg-stone-50 rounded-2xl p-5 border border-stone-200/80 shadow-sm max-w-xl mx-auto flex items-center gap-4 text-left">
+          <div className="w-12 h-12 bg-[#B45F4D]/10 rounded-full flex items-center justify-center text-[#B45F4D] shrink-0">
+            <ShieldCheck className="w-7 h-7 stroke-1" />
+          </div>
+
+          <div className="flex flex-col gap-1">
+            <h3 className="text-xs md:text-sm font-bold font-display text-stone-900 leading-tight">
+              Acesso imediato & Garantia incondicional de 7 dias
+            </h3>
+            <p className="text-[10px] md:text-xs text-[#5F5F5F] leading-relaxed">
+              Você recebe na hora o acesso digital para baixar todos os arquivos organizados. Caso mude de ideia, garantimos reembolso total em até 7 dias sem qualquer complicação!
+            </p>
+          </div>
+        </section>
+
+        {/* =======================================
+            SECTION 16: FAQ (ACCORDION)
+           ======================================= */}
+        <section id="faq" className="flex flex-col gap-6">
+          <div className="text-center max-w-2xl mx-auto">
+            <span className="text-xs font-mono uppercase text-[#B45F4D] font-bold">Dúvidas Frequentes</span>
+            <h2 className="text-xl md:text-2xl font-bold font-display text-stone-900 mt-1">
+              Perguntas frequentes sobre o pack de bolsas
+            </h2>
+            <p className="text-xs text-[#5F5F5F] mt-1">
+              Ainda com dúvidas? Veja as respostas para as principais dúvidas dos clientes abaixo.
+            </p>
+          </div>
+
+          <div className="flex flex-col gap-3 max-w-2xl mx-auto w-full">
+            {FAQS.map((faq) => {
+              const isOpen = openFaq === faq.id;
+              return (
+                <div 
+                  key={faq.id} 
+                  className="bg-white rounded-xl border border-stone-200/80 shadow-sm overflow-hidden transition-all text-left"
+                >
+                  <button
+                    onClick={() => setOpenFaq(isOpen ? null : faq.id)}
+                    className="w-full p-4 flex justify-between items-center gap-3 font-semibold text-xs md:text-sm text-stone-900 hover:bg-stone-50 transition-colors text-left font-display cursor-pointer"
+                  >
+                    <span>{faq.question}</span>
+                    {isOpen 
+                      ? <ChevronUp className="w-4 h-4 text-[#B45F4D] shrink-0" /> 
+                      : <ChevronDown className="w-4 h-4 text-[#5F5F5F] shrink-0" />
+                    }
+                  </button>
+
+                  <div 
+                    className={`transition-all duration-300 ${
+                      isOpen ? "max-h-60 opacity-100 border-t border-stone-100 p-4" : "max-h-0 opacity-0 pointer-events-none"
+                    }`}
+                  >
+                    <p className="text-xs md:text-sm text-[#5F5F5F] leading-relaxed">
+                      {faq.answer}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* =======================================
+            SECTION 17: CTA FINAL
+           ======================================= */}
+        <section id="cta-final" className="text-center bg-[#B45F4D]/5 p-6 md:p-8 rounded-2xl border border-[#B45F4D]/25 flex flex-col items-center gap-4">
+          <h2 className="text-xl md:text-2xl font-bold font-display text-stone-950 max-w-xl leading-tight">
+            Você pode continuar imprimindo o comum… ou começar a mostrar peças que fazem as pessoas pararem para olhar
+          </h2>
+          
+          <p className="text-xs md:text-sm text-[#5F5F5F] max-w-lg leading-relaxed">
+            O Pack Bolsas 3D Lucrativas foi desenvolvido estrategicamente para quem deseja transformar sua impressora 3D comum em uma verdadeira vitrine geradora de orçamentos e vendas de alto valor agregado.
+          </p>
+
+          <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto mt-2">
+            <button 
+              onClick={(e) => scrollToPricing(e)}
+              className="px-8 py-3.5 bg-[#B45F4D] hover:bg-[#a04e3e] text-white font-extrabold font-display text-xs uppercase tracking-wider rounded-xl transition-all cursor-pointer shadow-md active:scale-95 flex items-center justify-center gap-1.5"
+            >
+              <Sparkles className="w-4 h-4 text-amber-300 fill-amber-300" />
+              QUERO TODAS AS BOLSAS
+            </button>
+            
+            <button 
+              onClick={(e) => scrollToPricing(e)}
+              className="px-8 py-3.5 bg-stone-900 hover:bg-stone-850 text-white font-extrabold font-display text-xs uppercase tracking-wider rounded-xl transition-all cursor-pointer shadow-md active:scale-95"
+            >
+              COMEÇAR COM O BÁSICO
+            </button>
+          </div>
+
+          <div className="flex flex-col gap-1 text-[10px] text-[#5F5F5F] mt-2 font-medium">
+            <span>⏱️ Preço promocional disponível por tempo estritamente limitado.</span>
+            <span>🔒 Transação assegurada e criptografada com segurança de ponta.</span>
+          </div>
+        </section>
+
+        {/* FOOTER */}
+        <footer className="text-center text-[10px] text-stone-400 mt-6 pt-6 border-t border-stone-200 flex flex-col gap-1.5">
+          <p className="font-semibold text-stone-500">Pack Bolsas 3D Lucrativas • Todos os direitos reservados © 2026</p>
+          <p className="max-w-md mx-auto leading-relaxed text-[9px]">
+            Aviso de responsabilidade: Os resultados financeiros exibidos neste site são simulações de potencial e dependem exclusivamente da qualidade de sua fabricação física, preços locais, margem de filamento e competência na divulgação.
+          </p>
+        </footer>
+
+      </main>
+
+      {/* MOBILE FIXED FOOTER BAR REMOVED */}
+
+      {/* =======================================
+          INTERACTIVE CHECKOUT MODAL (SIMULADOR)
+         ======================================= */}
+      {isCheckoutOpen && (
+        <div className="fixed inset-0 bg-black/75 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto">
+          <div className="bg-white rounded-2xl w-full max-w-md border border-stone-200 shadow-2xl overflow-hidden relative text-left">
+            
+            {/* Botão de Fechar */}
+            <button 
+              onClick={() => setIsCheckoutOpen(false)}
+              className="absolute top-4 right-4 text-stone-400 hover:text-stone-700 w-8 h-8 rounded-full bg-stone-100 flex items-center justify-center cursor-pointer"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            {/* Cabeçalho do Checkout */}
+            {checkoutStep === "upsell_diamond" ? (
+              <div className="bg-amber-500 text-stone-950 p-5 pr-12 flex items-center gap-3 relative overflow-hidden">
+                <div className="absolute -right-6 -top-6 w-20 h-20 bg-amber-400/30 rounded-full blur-xl animate-pulse"></div>
+                <div className="w-10 h-10 rounded-lg bg-stone-950/10 flex items-center justify-center shrink-0">
+                  <Gem className="w-5 h-5 text-stone-950" />
+                </div>
+                <div className="flex flex-col z-10">
+                  <span className="text-[9px] font-mono uppercase font-black tracking-wider bg-stone-950 text-amber-400 px-1.5 py-0.5 rounded self-start mb-1">
+                    OFERTA ÚNICA &amp; EXCLUSIVA 💎
+                  </span>
+                  <h3 className="text-sm font-extrabold font-display leading-none text-stone-950">
+                    Oportunidade Imperdível!
+                  </h3>
+                </div>
+              </div>
+            ) : (
+              <div className="bg-[#B45F4D] text-white p-5 pr-12 flex items-center gap-3">
+                <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center text-white shrink-0">
+                  <Lock className="w-5 h-5" />
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-[10px] text-white/80 font-mono uppercase font-bold tracking-wider">Ambiente de Compra Seguro</span>
+                  <h3 className="text-base font-bold font-display leading-tight text-white">
+                    {selectedPack === "basico" 
+                      ? "Finalizar Pack Básico" 
+                      : selectedPack === "diamante" 
+                      ? "Finalizar Plano Diamante" 
+                      : "Finalizar Pack Completo"}
+                  </h3>
+                </div>
+              </div>
+            )}
+
+            {/* Conteúdo do Checkout com base no passo */}
+            <div className="p-5 flex flex-col gap-4">
+
+              {/* PASSO DE UPSELL: Plano Diamante */}
+              {checkoutStep === "upsell_diamond" && (
+                <div className="flex flex-col gap-4 text-center animate-fade-in">
+                  <div className="bg-gradient-to-br from-[#FFFDF9] via-amber-500/5 to-[#FFF9EE] border-2 border-amber-500/50 rounded-2xl p-5 shadow-[0_12px_28px_rgba(245,158,11,0.12)] flex flex-col gap-3.5 relative overflow-hidden">
+                    
+                    {/* Decorative glowing background elements */}
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-amber-400/10 rounded-full blur-2xl pointer-events-none" />
+                    <div className="absolute bottom-0 left-0 w-24 h-24 bg-amber-300/10 rounded-full blur-xl pointer-events-none" />
+
+                    <div className="flex justify-center z-10">
+                      <span className="bg-gradient-to-r from-amber-500 to-amber-600 text-stone-950 text-[10px] font-black uppercase tracking-wider px-3.5 py-1.5 rounded-full flex items-center gap-1.5 shadow-[0_4px_12px_rgba(245,158,11,0.35)]">
+                        <Gem className="w-3.5 h-3.5 animate-bounce text-stone-950 fill-stone-950" />
+                        ★ RECOMENDADO POR 94% DAS COMPRADORAS
+                      </span>
+                    </div>
+
+                    <h4 className="text-base sm:text-lg font-black text-stone-900 font-display tracking-tight leading-snug z-10">
+                      Por que levar apenas 10 arquivos se você pode levar o <span className="text-amber-600 font-extrabold underline decoration-amber-400/50 underline-offset-4">PLANO DIAMANTE</span> completo por apenas <span className="text-emerald-600 font-black">R$ 18,90</span>?
+                    </h4>
+
+                    <p className="text-xs text-[#4F4F4F] leading-relaxed text-center font-medium max-w-sm mx-auto z-10">
+                      Adicione todos os <strong className="text-stone-950 font-bold">70+ modelos de bolsas</strong> + o super bônus de <strong className="text-stone-950 font-bold">+300 Vasos de Luxo</strong> + todos os bônus de venda + suporte VIP pelo WhatsApp por apenas <strong className="text-emerald-700 font-black">R$ 8,00 a mais</strong>!
+                    </p>
+
+                    <div className="grid grid-cols-2 gap-3.5 my-1 text-left z-10">
+                      {/* Plano Básico */}
+                      <div className="bg-stone-50/80 p-3 rounded-xl border border-stone-200 opacity-65 flex flex-col justify-between transition-all hover:opacity-75">
+                        <div>
+                          <span className="text-[8px] font-black text-stone-500 uppercase tracking-widest block">PLANO BÁSICO</span>
+                          <span className="text-base font-black text-stone-700 block mt-0.5">R$ 10,90</span>
+                          <span className="text-[9px] text-stone-400 font-medium block mt-0.5">Apenas uma amostra...</span>
+                        </div>
+                        <ul className="text-[10px] text-stone-500 mt-3 flex flex-col gap-1.5 border-t border-stone-200/60 pt-2.5">
+                          <li className="flex items-center gap-1.5"><X className="w-3 h-3 text-red-500 shrink-0" /> Apenas 10 Modelos</li>
+                          <li className="flex items-center gap-1.5"><X className="w-3 h-3 text-red-500 shrink-0" /> Sem Vasos de Luxo</li>
+                          <li className="flex items-center gap-1.5"><X className="w-3 h-3 text-red-500 shrink-0" /> Sem Suporte VIP</li>
+                          <li className="flex items-center gap-1.5"><X className="w-3 h-3 text-red-500 shrink-0" /> Sem os 8 Bônus</li>
+                        </ul>
+                      </div>
+
+                      {/* Plano Diamante */}
+                      <div className="bg-gradient-to-br from-amber-500/10 via-amber-100/40 to-amber-500/20 p-3 rounded-xl border-2 border-amber-400 ring-4 ring-amber-400/10 flex flex-col justify-between relative shadow-md transition-all hover:scale-[1.02]">
+                        <div className="absolute -top-2 right-2 bg-amber-500 text-stone-950 text-[7px] font-black uppercase px-1.5 py-0.5 rounded-md shadow-sm">
+                          SUPER VANTAGEM
+                        </div>
+                        <div>
+                          <span className="text-[8px] font-black text-amber-800 uppercase tracking-widest block">PLANO DIAMANTE</span>
+                          <div className="flex items-baseline gap-1 mt-0.5">
+                            <span className="text-base font-black text-amber-950">R$ 18,90</span>
+                            <span className="text-[9px] text-emerald-600 font-bold bg-emerald-50 px-1 rounded">SÓ + R$ 8!</span>
+                          </div>
+                          <span className="text-[9px] text-amber-800 font-bold block mt-0.5">Acesso completo e imediato</span>
+                        </div>
+                        <ul className="text-[10px] text-stone-900 mt-3 flex flex-col gap-1.5 border-t border-amber-200/80 pt-2.5 font-medium">
+                          <li className="flex items-center gap-1.5 text-amber-950"><Check className="w-3 h-3 text-emerald-600 shrink-0" /> <strong>70+ Modelos de Bolsas</strong></li>
+                          <li className="flex items-center gap-1.5 text-amber-950"><Check className="w-3 h-3 text-emerald-600 shrink-0" /> <strong>+300 Vasos de Luxo</strong></li>
+                          <li className="flex items-center gap-1.5 text-amber-950"><Check className="w-3 h-3 text-emerald-600 shrink-0" /> Suporte VIP WhatsApp</li>
+                          <li className="flex items-center gap-1.5 text-amber-950"><Check className="w-3 h-3 text-emerald-600 shrink-0" /> Todos os 8 Bônus Inclusos</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col gap-2 w-full mt-1.5">
+                    {/* Botão de Upgrade */}
+                    <button
+                      onClick={() => {
+                        setSelectedPack("diamante");
+                        setCheckoutStep("payment_method");
+                      }}
+                      className="w-full py-3.5 bg-gradient-to-r from-emerald-500 via-emerald-600 to-emerald-500 hover:from-emerald-600 hover:to-emerald-700 text-white font-black text-xs sm:text-sm uppercase tracking-wider rounded-xl flex flex-col items-center justify-center gap-0.5 cursor-pointer shadow-[0_6px_20px_rgba(16,185,129,0.3)] transform hover:scale-[1.02] active:scale-[0.98] transition-all hover:shadow-[0_8px_24px_rgba(16,185,129,0.4)] animate-pulse"
+                    >
+                      <span className="flex items-center gap-1.5">
+                        <Sparkles className="w-4 h-4 text-amber-300 fill-amber-300" />
+                        SIM! QUERO O PLANO DIAMANTE POR R$ 18,90
+                      </span>
+                      <span className="text-[9px] text-white/90 font-bold lowercase tracking-normal">
+                        (adicionar apenas R$ 8,00 à minha compra)
+                      </span>
+                    </button>
+
+                    {/* Botão para manter o básico */}
+                    <button
+                      onClick={() => {
+                        setSelectedPack("basico");
+                        setCheckoutStep("payment_method");
+                      }}
+                      className="w-full py-2.5 bg-stone-100 hover:bg-stone-200 text-stone-500 hover:text-stone-700 font-bold text-[10px] uppercase rounded-xl cursor-pointer transition-all border border-stone-200/50"
+                    >
+                      Não, obrigado. Prefiro continuar com o plano limitado por R$ 10,90
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* PASSO 1: Selecionar método de pagamento */}
+              {checkoutStep === "payment_method" && (
+                <div className="flex flex-col gap-4">
+                  <div className="bg-[#F8F6F3] p-3 rounded-lg border border-stone-200/60 flex justify-between items-center">
+                    <span className="text-xs font-semibold text-stone-700">Pacote Escolhido:</span>
+                    <span className="text-xs font-bold text-[#B45F4D] font-mono">
+                      {selectedPack === "basico" 
+                        ? "BÁSICO (R$ 10,90)" 
+                        : selectedPack === "diamante" 
+                        ? "PLANO DIAMANTE (R$ 18,90)" 
+                        : "COMPLETO (R$ 29,90)"}
+                    </span>
+                  </div>
+
+                  <p className="text-xs text-stone-500 text-center leading-relaxed">
+                    Selecione abaixo a forma fictícia de pagamento para simular a conclusão de compra imediatamente:
+                  </p>
+
+                  <div className="flex flex-col gap-2">
+                    {/* Botão PIX */}
+                    <button 
+                      onClick={() => setCheckoutStep("pix_code")}
+                      className="w-full p-4 border-2 border-[#1F9D55] bg-emerald-500/5 hover:bg-emerald-500/10 rounded-xl flex items-center justify-between transition-colors cursor-pointer text-left group"
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className="w-9 h-9 rounded-lg bg-[#1F9D55]/10 flex items-center justify-center text-[#1F9D55]">
+                          <QrCode className="w-5 h-5" />
+                        </div>
+                        <div className="flex flex-col">
+                          <span className="text-xs font-bold text-stone-900 group-hover:text-[#1F9D55] transition-colors">Pagar com PIX</span>
+                          <span className="text-[10px] text-stone-400">Liberação e download 100% instantâneos</span>
+                        </div>
+                      </div>
+                      <ArrowRight className="w-4 h-4 text-[#1F9D55] group-hover:translate-x-1 transition-transform" />
+                    </button>
+
+                    {/* Botão Cartão */}
+                    <button 
+                      onClick={() => setCheckoutStep("success")}
+                      className="w-full p-4 border border-stone-200 bg-white hover:bg-stone-50 rounded-xl flex items-center justify-between transition-colors cursor-pointer text-left group"
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className="w-9 h-9 rounded-lg bg-stone-100 flex items-center justify-center text-stone-600">
+                          <CreditCard className="w-5 h-5" />
+                        </div>
+                        <div className="flex flex-col">
+                          <span className="text-xs font-bold text-stone-800">Pagar com Cartão</span>
+                          <span className="text-[10px] text-stone-400">Crédito imediato em até 12x</span>
+                        </div>
+                      </div>
+                      <ArrowRight className="w-4 h-4 text-stone-400" />
+                    </button>
+                  </div>
+
+                  <div className="flex items-center justify-center gap-1.5 text-[10px] text-[#5F5F5F] mt-2">
+                    <ShieldCheck className="w-4.5 h-4.5 text-emerald-600" />
+                    <span>Seus dados simulados estão 100% protegidos e seguros.</span>
+                  </div>
+                </div>
+              )}
+
+              {/* PASSO 2: Código PIX */}
+              {checkoutStep === "pix_code" && (
+                <div className="flex flex-col items-center gap-4 text-center">
+                  <div className="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 animate-pulse">
+                    <QrCode className="w-6 h-6" />
+                  </div>
+
+                  <div className="flex flex-col gap-1">
+                    <h4 className="font-bold text-stone-900 text-sm">Escaneie ou copie a chave PIX</h4>
+                    <p className="text-xs text-[#5F5F5F] max-w-xs leading-relaxed">
+                      Para simular o pagamento, copie a chave pix abaixo ou espere o cronômetro para aprovar automaticamente.
+                    </p>
+                  </div>
+
+                  {/* QRCode Fictício */}
+                  <div className="bg-stone-50 p-4 rounded-xl border border-stone-200">
+                    <div className="w-36 h-36 bg-stone-200 flex flex-col items-center justify-center border border-dashed border-stone-300 relative">
+                      <QrCode className="w-16 h-16 text-stone-400" />
+                      <span className="text-[8px] font-mono font-bold text-stone-500 absolute bottom-2">MOCK QRCODE</span>
+                    </div>
+                  </div>
+
+                  {/* Pix Copy and Paste Button */}
+                  <div className="w-full flex flex-col gap-2">
+                    <button
+                      onClick={copyPixKey}
+                      className="w-full py-3 bg-[#1F9D55] hover:bg-emerald-600 text-white font-bold text-xs rounded-lg flex items-center justify-center gap-2 cursor-pointer"
+                    >
+                      {copiedPix ? (
+                        <>
+                          <CheckCircle className="w-4.5 h-4.5" />
+                          PIX Copiado! Simulando aprovação...
+                        </>
+                      ) : (
+                        <>
+                          <Copy className="w-4.5 h-4.5" />
+                          COPIAR CÓDIGO PIX COPIA E COLA
+                        </>
+                      )}
+                    </button>
+                    <p className="text-[9px] text-[#5F5F5F]">
+                      *Após clicar em copiar, o simulador avançará automaticamente para o painel de entrega de arquivos!
+                    </p>
+                  </div>
+                </div>
+              )}
+
+              {/* PASSO 3: Sucesso de Compra e download */}
+              {checkoutStep === "success" && (
+                <div className="flex flex-col items-center gap-4 text-center">
+                  <div className="w-14 h-14 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600">
+                    <CheckCircle className="w-8 h-8" />
+                  </div>
+
+                  <div className="flex flex-col gap-1">
+                    <h4 className="font-bold text-stone-900 text-base">Pagamento Aprovado com Sucesso! 🎉</h4>
+                    <p className="text-xs text-[#5F5F5F] leading-relaxed">
+                      Seu pagamento simulado foi processado. Você acabou de garantir acesso vitalício e ilimitado ao pack!
+                    </p>
+                  </div>
+
+                  <div className="bg-emerald-500/10 border border-emerald-500/20 p-3 rounded-lg w-full text-left text-xs text-stone-800 leading-snug">
+                    <span className="font-bold text-emerald-700 block mb-1">📦 Informações de Acesso Simuladas:</span>
+                    <div>• <strong>Área de membros:</strong> link enviado no seu e-mail</div>
+                    <div>• <strong>Acesso:</strong> joao.freitas.ads@gmail.com</div>
+                    <div>• <strong>Quantidade:</strong> {selectedPack === "basico" ? "10 arquivos selecionados" : selectedPack === "diamante" ? "Plano Diamante com todos os 70+ arquivos + bônus vitalícios!" : "Mais de 70 arquivos + todos os bônus desbloqueados!"}</div>
+                  </div>
+
+                  <div className="w-full flex flex-col gap-2.5">
+                    {/* Botão de download simulado */}
+                    <a
+                      href="data:text/plain;charset=utf-8,Parabéns%20pelo%20Pack%20Bolsas%203D%20Lucrativas!%20Seu%20acesso%20completo%20foi%20liberado."
+                      download="Acesso_Pack_Bolsas_3D_Lucrativas.txt"
+                      className="w-full py-3 bg-[#B45F4D] hover:bg-[#a04e3e] text-white font-extrabold text-xs uppercase tracking-wider rounded-lg flex items-center justify-center gap-1.5 cursor-pointer text-center shadow-md"
+                    >
+                      <Download className="w-4 h-4" />
+                      BAIXAR GUIA DE BOAS-VINDAS (PDF SIMULADO)
+                    </a>
+                    
+                    <button
+                      onClick={() => setIsCheckoutOpen(false)}
+                      className="text-xs text-[#5F5F5F] underline hover:text-stone-800 cursor-pointer"
+                    >
+                      Voltar para a página de vendas
+                    </button>
+                  </div>
+                </div>
+              )}
+
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* =======================================
+          SOCIAL PROOF LIVE TOAST POPUP (Toast)
+         ======================================= */}
+      {toastMessage && (
+        <div className="fixed bottom-16 sm:bottom-4 left-4 z-40 bg-gradient-to-r from-[#00f2fe] to-[#4facfe] border-2 border-white/50 rounded-xl p-3 shadow-2xl flex items-center gap-2.5 max-w-[290px] animate-fade-in-up text-stone-950">
+          <div className="w-8 h-8 rounded-full bg-stone-950/15 flex items-center justify-center shrink-0 text-stone-950 text-base animate-pulse">
+            🛍️
+          </div>
+          <div className="flex flex-col text-left">
+            <span className="text-[11px] font-bold text-stone-950 leading-normal flex items-center gap-1">
+              <span>
+                <strong className="font-black">{toastMessage}</strong> adquiriu o <span className="font-black underline decoration-stone-950/20">Plano Diamante</span>
+              </span>
+            </span>
+          </div>
+        </div>
+      )}
+
+    </div>
+  );
+}

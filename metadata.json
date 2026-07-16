@@ -1,0 +1,6 @@
+{
+  "name": "Pack Bolsas 3D Lucrativas",
+  "description": "Página de vendas de alta conversão para o Pack Bolsas 3D Lucrativas. Modelos prontos de bolsas e acessórios 3D prontos para imprimir, divulgar e vender.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
