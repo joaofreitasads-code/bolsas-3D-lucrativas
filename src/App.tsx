@@ -159,8 +159,18 @@ export default function App() {
     }
 
     if (hasVideoStarted) {
-      // User is not allowed to pause during active playback to maximize completion rates,
-      // so we do absolutely nothing on click!
+      if (isVideoPlaying) {
+        videoRef.current.pause();
+        setIsVideoPlaying(false);
+      } else {
+        videoRef.current.play()
+          .then(() => {
+            setIsVideoPlaying(true);
+          })
+          .catch((err) => {
+            console.warn("Play on click failed:", err);
+          });
+      }
       return;
     }
 
@@ -247,17 +257,17 @@ export default function App() {
       setToastMessage(`${randomPurchase.name} (${randomPurchase.city})`);
       setToastPack(randomPurchase.pack);
       
-      // Hide after 10 seconds (10000ms)
+      // Hide after 5 seconds (5000ms)
       timerId = setTimeout(() => {
         if (!isMounted) return;
         setToastMessage(null);
-        // Wait 3 seconds (3000ms) before displaying the next one
-        timerId = setTimeout(runToastCycle, 3000);
-      }, 10000);
+        // Wait 13 seconds (13000ms) before displaying the next one
+        timerId = setTimeout(runToastCycle, 13000);
+      }, 5000);
     };
 
-    // First toast appears 3 seconds after loading
-    timerId = setTimeout(runToastCycle, 3000);
+    // First toast appears 13 seconds after loading
+    timerId = setTimeout(runToastCycle, 13000);
 
     return () => {
       isMounted = false;
@@ -348,22 +358,6 @@ export default function App() {
                 }}
                 onPause={() => {
                   setIsVideoPlaying(false);
-                  // Auto-resume playing if the video is active, has not finished, and is not at the end
-                  if (
-                    hasVideoStarted && 
-                    !hasVideoEnded && 
-                    videoRef.current && 
-                    !videoRef.current.ended && 
-                    videoRef.current.currentTime < videoRef.current.duration - 0.2
-                  ) {
-                    videoRef.current.play()
-                      .then(() => {
-                        setIsVideoPlaying(true);
-                      })
-                      .catch((err) => {
-                        console.warn("Auto-resume failed: ", err);
-                      });
-                  }
                 }}
                 onEnded={() => {
                   setIsVideoPlaying(false);
@@ -402,6 +396,36 @@ export default function App() {
                       CLIQUE PARA ASSISTIR
                     </span>
                   </div>
+                </div>
+              )}
+
+              {hasVideoStarted && !isVideoPlaying && !hasVideoEnded && (
+                <div 
+                  onClick={handleVideoClick}
+                  className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center cursor-pointer transition-all duration-300 z-20 animate-fade-in"
+                  style={{ touchAction: "pan-y" }}
+                >
+                  <div className="flex flex-col items-center gap-3">
+                    {/* Semi-transparent circular play button */}
+                    <div className="w-16 h-16 bg-[#B45F4D] rounded-full flex items-center justify-center shadow-2xl transition-all duration-300 scale-100 hover:scale-110 active:scale-95 relative">
+                      <span className="absolute -inset-1.5 rounded-full bg-[#B45F4D]/40 animate-ping opacity-60" />
+                      <svg className="w-6 h-6 text-white fill-current ml-1" viewBox="0 0 24 24">
+                        <path d="M8 5v14l11-7z" />
+                      </svg>
+                    </div>
+                    <span className="text-white font-black text-xs tracking-wider uppercase px-4 py-1.5 rounded-full bg-black/75 border border-white/10 shadow-md backdrop-blur-xs">
+                      VÍDEO PAUSADO - CLIQUE PARA RETOMAR
+                    </span>
+                  </div>
+                </div>
+              )}
+
+              {hasVideoStarted && isVideoPlaying && !hasVideoEnded && (
+                <div className="absolute bottom-3 right-3 z-20 bg-black/60 backdrop-blur-xs px-2.5 py-1 rounded-md border border-white/10 text-white text-[10px] font-bold opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none flex items-center gap-1.5">
+                  <svg className="w-3 h-3 text-white fill-current" viewBox="0 0 24 24">
+                    <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+                  </svg>
+                  CLIQUE PARA PAUSAR
                 </div>
               )}
 
@@ -785,22 +809,6 @@ export default function App() {
             </h2>
           </div>
 
-          {/* Category Filter Tabs (Centered, fully responsive, wraps elegantly on mobile) */}
-          <div className="flex flex-wrap justify-center items-center gap-1.5 sm:gap-2 max-w-2xl mx-auto w-full px-1 mt-1 mb-2">
-            {categories.map((category) => (
-              <button
-                key={category}
-                onClick={() => setSelectedCategory(category)}
-                className={`px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full text-[9px] xs:text-[10px] sm:text-xs font-bold tracking-normal uppercase transition-all duration-300 border cursor-pointer ${
-                  selectedCategory === category
-                    ? "bg-[#B45F4D] text-white border-[#B45F4D] shadow-sm scale-[1.02]"
-                    : "bg-white text-stone-600 border-stone-200/80 hover:bg-stone-50"
-                }`}
-              >
-                {category}
-              </button>
-            ))}
-          </div>
 
           {/* Catalog Grid of Images with beautiful diamond styled cards (Dynamically Filtered) */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-5 max-w-5xl mx-auto w-full">
@@ -1012,7 +1020,9 @@ export default function App() {
               </div>
 
               <button 
-                onClick={() => handleOpenCheckout("basico")}
+                onClick={() => {
+                  window.location.href = "https://checkout.wiven.com.br/checkout/cmrfreasu03hz01pw13vbxi28?offer=3GVBBZV";
+                }}
                 className="w-full py-2.5 bg-stone-900 hover:bg-stone-850 text-white font-extrabold font-display uppercase tracking-wider rounded-xl transition-all cursor-pointer text-xs text-center shadow-sm active:scale-[0.98]"
               >
                 COMEÇAR COM O PLANO BÁSICO
@@ -1101,9 +1111,12 @@ export default function App() {
             SECTION 15: GARANTIA & SEGURANÇA
            ======================================= */}
         <section id="garantia" className="bg-stone-50 rounded-2xl p-5 border border-stone-200/80 shadow-sm max-w-xl mx-auto flex items-center gap-4 text-left">
-          <div className="w-12 h-12 bg-[#B45F4D]/10 rounded-full flex items-center justify-center text-[#B45F4D] shrink-0">
-            <ShieldCheck className="w-7 h-7 stroke-1" />
-          </div>
+          <img 
+            src="https://i.imgur.com/8srQFdp.png" 
+            alt="Garantia de 7 dias" 
+            className="w-16 sm:w-20 h-auto shrink-0 object-contain"
+            referrerPolicy="no-referrer"
+          />
 
           <div className="flex flex-col gap-1">
             <h3 className="text-xs md:text-sm font-bold font-display text-stone-900 leading-tight">
@@ -1495,14 +1508,18 @@ export default function App() {
           SOCIAL PROOF LIVE TOAST POPUP (Toast)
          ======================================= */}
       {toastMessage && (
-        <div className="fixed bottom-16 sm:bottom-4 left-4 z-40 bg-gradient-to-r from-[#00f2fe] to-[#4facfe] border-2 border-white/50 rounded-xl p-3 shadow-2xl flex items-center gap-2.5 max-w-[290px] animate-fade-in-up text-stone-950">
-          <div className="w-8 h-8 rounded-full bg-stone-950/15 flex items-center justify-center shrink-0 text-stone-950 text-base animate-pulse">
-            🛍️
+        <div className="fixed bottom-16 sm:bottom-6 left-6 z-40 bg-white border-2 border-emerald-500 rounded-xl p-4 shadow-2xl flex items-center gap-3.5 max-w-[320px] animate-fade-in-up text-stone-900">
+          <div className="w-10 h-10 rounded-full bg-emerald-100 border border-emerald-200 flex items-center justify-center shrink-0 text-lg shadow-xs">
+            🎉
           </div>
           <div className="flex flex-col text-left">
-            <span className="text-[11px] font-bold text-stone-950 leading-normal flex items-center gap-1">
-              <span>
-                <strong className="font-black">{toastMessage}</strong> adquiriu o <span className="font-black underline decoration-stone-950/20">Plano Diamante</span>
+            <span className="text-sm font-black text-stone-950 leading-tight">
+              {toastMessage}
+            </span>
+            <span className="text-xs text-stone-700 font-semibold mt-0.5 leading-normal">
+              acabou de adquirir a{" "}
+              <span className="text-emerald-700 font-extrabold underline decoration-emerald-500/20">
+                Oferta Diamante
               </span>
             </span>
           </div>
