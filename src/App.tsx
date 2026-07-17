@@ -303,16 +303,8 @@ export default function App() {
     <div className="min-h-screen w-full overflow-x-hidden flex flex-col items-center bg-[#F8F6F3] text-[#1B1B1B] font-sans antialiased pb-24 md:pb-8 selection:bg-[#B45F4D]/20 selection:text-[#B45F4D]">
       
       {/* 1. TOPO DE URGÊNCIA / TIMER */}
-      <div className="w-full bg-[#111111] text-[#F8F6F3] py-2 px-4 text-center text-xs md:text-sm flex flex-wrap items-center justify-center gap-2 font-display uppercase tracking-wider font-semibold z-40 sticky top-0 border-b border-[#B45F4D]/20">
-        <span className="inline-flex items-center gap-1.5 text-rose-500 animate-pulse">
-          <Flame className="w-4 h-4 fill-rose-500" />
-          OFERTA DE LANÇAMENTO EXPIRA EM:
-        </span>
-        <span className="font-mono bg-[#B45F4D] px-2 py-0.5 rounded text-white font-bold tracking-widest text-sm shadow-sm">
-          {formatTime(timeLeft.hours)}:{formatTime(timeLeft.minutes)}:{formatTime(timeLeft.seconds)}
-        </span>
-        <span className="hidden sm:inline-block text-[#5F5F5F]">•</span>
-        <span className="hidden sm:inline-block text-emerald-400 font-medium text-xs">Apenas 14 vagas restantes com desconto</span>
+      <div className="w-full bg-[#111111] text-[#F8F6F3] py-2 px-4 text-center text-xs md:text-sm flex items-center justify-center gap-2 font-display uppercase tracking-wider font-semibold z-40 sticky top-0 border-b border-[#B45F4D]/20">
+        <span className="text-emerald-400 font-extrabold text-xs">DESCONTO DE 84%, COMPRANDO HOJE</span>
       </div>
 
       <main className="w-full max-w-lg md:max-w-2xl lg:max-w-5xl px-4 md:px-6 pt-6 flex flex-col gap-10 md:gap-14">
@@ -331,8 +323,8 @@ export default function App() {
           </h1>
 
           <div className="relative w-full rounded-2xl overflow-hidden mt-1 select-none" onContextMenu={(e) => e.preventDefault()}>
-            {/* Sales video player with smooth styling - 9:16 Portrait Ratio */}
-            <div className="relative w-full max-w-sm mx-auto overflow-hidden bg-black rounded-2xl aspect-[9/16] border-4 border-[#B45F4D]/80 ring-8 ring-[#B45F4D]/10 shadow-[0_10px_40px_-10px_rgba(180,95,77,0.3)] group select-none touch-none">
+            {/* Sales video player with smooth styling - 9:16 Portrait Ratio, optimized to be sleeker on mobile */}
+            <div className="relative w-full max-w-[260px] xs:max-w-[290px] sm:max-w-sm mx-auto overflow-hidden bg-black rounded-2xl aspect-[9/16] border-4 border-[#B45F4D]/80 ring-8 ring-[#B45F4D]/10 shadow-[0_10px_40px_-10px_rgba(180,95,77,0.3)] group select-none">
               <video 
                 ref={videoRef}
                 autoPlay={false}
@@ -347,7 +339,7 @@ export default function App() {
                 webkit-playsinline="true"
                 x5-playsinline="true"
                 referrerPolicy="no-referrer"
-                className="w-full h-full object-cover rounded-2xl bg-black cursor-pointer select-none outline-hidden active:outline-hidden focus:outline-hidden"
+                className="w-full h-full object-cover rounded-2xl bg-black select-none pointer-events-none outline-hidden active:outline-hidden focus:outline-hidden"
                 style={{ WebkitTapHighlightColor: "transparent" }}
                 onPlay={() => {
                   setIsVideoPlaying(true);
@@ -377,12 +369,18 @@ export default function App() {
                   setIsVideoPlaying(false);
                   setHasVideoEnded(true);
                 }}
-                onClick={handleVideoClick}
                 onContextMenu={(e) => e.preventDefault()}
               >
                 <source src="https://i.imgur.com/mC573pR.mp4" type="video/mp4" />
                 Seu navegador não suporta vídeos.
               </video>
+
+              {/* Invisible interactive overlay: intercepts click/tap to toggle playback while allowing normal browser scrolling */}
+              <div 
+                onClick={handleVideoClick}
+                className="absolute inset-0 z-10 cursor-pointer bg-transparent"
+                style={{ WebkitTapHighlightColor: "transparent" }}
+              />
               
               {!hasVideoStarted && !hasVideoEnded && (
                 <div 
@@ -575,18 +573,17 @@ export default function App() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center z-10">
             {/* Video Column */}
             <div className="lg:col-span-6 xl:col-span-7 flex flex-col items-center justify-center w-full">
-              {/* Sleek Modern High-Fidelity Smartphone Mockup Frame in standard 9:16 Aspect Ratio */}
-              <div ref={mockupContainerRef} className="relative mx-auto w-full max-w-[290px] sm:max-w-[310px] aspect-[9/16] bg-gradient-to-b from-[#cbb19b] via-[#dfd0c0] to-[#b89c84] rounded-[36px] p-[5px] shadow-[0_25px_60px_-15px_rgba(45,35,30,0.3),0_0_40px_rgba(180,95,77,0.06),inset_0_0_10px_rgba(255,255,255,0.7)] border-[5px] border-[#cfbea9] ring-4 ring-[#eadfcb]/50 transition-all duration-500 hover:scale-[1.03] hover:shadow-[0_30px_70px_-10px_rgba(45,35,30,0.4)]">
+              {/* Sleek Modern High-Fidelity Smartphone Mockup Frame in standard 9:16 Aspect Ratio with an Elegant Feminine Rose Gold / Champagne Pink finish */}
+              <div ref={mockupContainerRef} className="relative mx-auto w-full max-w-[290px] sm:max-w-[310px] aspect-[9/16] bg-gradient-to-b from-[#fcd3de] via-[#f7cbd6] to-[#e4a0b2] rounded-[36px] p-[5px] shadow-[0_25px_60px_-15px_rgba(228,160,178,0.35),0_0_40px_rgba(251,195,208,0.25),inset_0_0_12px_rgba(255,255,255,0.9)] border-[5px] border-[#fbc3d0] ring-4 ring-[#ffeef2]/60 transition-all duration-500 hover:scale-[1.03] hover:shadow-[0_30px_70px_-10px_rgba(228,160,178,0.45)]">
                 
-                {/* Screen Reflection Accent */}
-                <div className="absolute -top-[30%] -left-[50%] w-[200%] h-[90%] bg-gradient-to-tr from-transparent via-white/[0.06] to-white/[0.18] transform rotate-[25deg] pointer-events-none z-30" />
+                {/* Screen Reflection Accent removed to keep the video extremely clear, with no glare or reflection */}
                 
                 {/* Display Container with Slim Uniform Bezel */}
-                <div className="relative w-full h-full rounded-[30px] p-[2.5px] bg-black z-20 border border-[#b29780]/30 shadow-inner flex flex-col overflow-hidden isolate">
+                <div className="relative w-full h-full rounded-[30px] p-[2.5px] bg-black z-20 border border-[#e4a0b2]/30 shadow-inner flex flex-col overflow-hidden isolate">
                   
                   {/* Subtle Speaker Grill Line */}
                   <div className="absolute top-1.5 left-1/2 transform -translate-x-1/2 h-1 w-12 bg-stone-900 rounded-full z-40" />
-
+ 
                   {/* Absolute Full Screen Display Container */}
                   <div className="relative w-full h-full rounded-[27px] overflow-hidden bg-black z-20 shadow-inner flex-1 flex flex-col isolate">
                     {isMockupVideoVisible ? (
@@ -597,11 +594,11 @@ export default function App() {
                         loop
                         playsInline
                         referrerPolicy="no-referrer"
-                        className="w-full h-full object-contain bg-black flex-1 rounded-[27px]"
+                        className="w-full h-full object-contain bg-black flex-1 rounded-[27px] pointer-events-none select-none"
                       />
                     ) : (
                       <div className="w-full h-full bg-black flex-1 rounded-[27px] flex items-center justify-center">
-                        <div className="w-6 h-6 border-2 border-[#B45F4D] border-t-transparent rounded-full animate-spin" />
+                        <div className="w-6 h-6 border-2 border-[#e4a0b2] border-t-transparent rounded-full animate-spin" />
                       </div>
                     )}
                   </div>
@@ -661,104 +658,101 @@ export default function App() {
           </div>
         </section>
 
-        {/* =======================================
-            SECTION 13: BÔNUS
-           ======================================= */}
-        <section id="bonus" className="bg-pink-50/50 rounded-3xl p-6 md:p-10 border border-pink-100/80 shadow-xs flex flex-col gap-8 w-full">
-          <div className="text-center max-w-2xl mx-auto">
-            <span className="text-xs font-mono uppercase text-emerald-600 font-extrabold tracking-wider bg-emerald-50 px-3 py-1 rounded-full border border-emerald-100">
+          {/* =======================================
+              SECTION 13: BÔNUS
+             ======================================= */}
+        <section id="bonus" className="bg-pink-50/50 rounded-2xl p-4 sm:p-5 md:p-8 border border-pink-100/85 shadow-xs flex flex-col gap-5 w-full">
+          <div className="text-center max-w-xl mx-auto">
+            <span className="text-[10px] sm:text-xs font-mono uppercase text-emerald-600 font-extrabold tracking-wider bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-100">
               Bônus Exclusivos
             </span>
-            <h2 className="text-2xl md:text-3xl font-extrabold font-display text-stone-900 mt-3.5 leading-tight">
-              E VOCÊ AINDA VAI RECEBER BÔNUS EXCLUSIVOS E LUCRATIVOS
+            <h2 className="text-lg sm:text-xl md:text-2xl font-black font-display text-stone-950 mt-2 leading-snug">
+              BÔNUS INCLUSOS NO SEU ACESSO HOJE
             </h2>
-            <p className="text-sm md:text-base text-stone-600 mt-2 font-medium leading-relaxed">
-              Arquivos extras selecionados para aumentar suas possibilidades de criação, venda e personalização com impressão 3D.
-            </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {[
               {
                 id: 1,
                 title: "PACK DE JOIAS E ACESSÓRIOS 3D",
-                description: "Modelos prontos de brincos, anéis, pingentes, pulseiras e acessórios estilosos para impressão 3D. Peças leves, bonitas e com alto potencial para venda em feiras, redes sociais e encomendas personalizadas.",
+                description: "Arquivos de brincos, anéis, pingentes e pulseiras de alto padrão prontos para imprimir e vender.",
                 originalPrice: "R$ 49,90",
                 image: "https://i.imgur.com/1A1KyZC.webp"
               },
               {
                 id: 4,
-                title: "MEGA PACK DE ARTES E VETORES PARA ESTAMPAS DE CAMISETAS FEMININAS",
-                description: "Uma coleção exclusiva de estampas e vetores em alta definição prontos para estampar camisetas femininas. Designs modernos, line art minimalista, florais elegantes, frases inspiradoras e artes de alta tendência de vendas.",
+                title: "ARTES E VETORES PARA ESTAMPAS",
+                description: "Artes e estampas femininas minimalistas de alta qualidade, perfeitas para personalização.",
                 originalPrice: "R$ 97,00",
                 image: "https://i.imgur.com/VCkOTx6.webp"
               },
               {
                 id: 5,
-                title: "GUIA DE FILAMENTOS E CONFIGURAÇÕES PARA BOLSAS 3D FEMININAS",
-                description: "O manual definitivo explicando os melhores filamentos (PLA Silk, TPU, Flex) e as configurações de fatiamento ideais (temperatura, velocidade, suporte, perímetros) para criar bolsas perfeitas, resistentes e articuladas.",
+                title: "GUIA COMPLETO DE FATIAMENTO",
+                description: "As melhores configurações e filamentos (PLA Silk, TPU, Flex) para criar bolsas perfeitas.",
                 originalPrice: "R$ 49,90",
                 image: "https://i.imgur.com/JxmeFMO.webp"
               },
               {
                 id: 6,
-                title: "COLEÇÃO DE CANECAS E PORTA-COPOS PREMIUM",
-                description: "Modelos decorativos de canecas, porta-copos e acessórios para cozinha com visual moderno. Ótimos para presentes personalizados, kits criativos e datas comemorativas.",
+                title: "CANECA E PORTA-COPOS PREMIUM",
+                description: "Modelos modernos e decorativos de copos, canecas e suportes criativos de alta tendência.",
                 originalPrice: "R$ 49,90",
                 image: "https://i.imgur.com/w82oftQ.webp"
               },
               {
                 id: 7,
-                title: "STL ANÉIS DE LUXO KIT PROFISSIONAL",
-                description: "Uma seleção exclusiva de altíssimo padrão com arquivos STL de anéis de luxo, anatômicos e modernos de alta joalheria. Designs sofisticados prontos para impressão 3D de altíssima definição, perfeitos para criar coleções exclusivas de alto valor agregado.",
+                title: "KIT STL ANÉIS DE LUXO",
+                description: "Arquivos de anéis sofisticados com anatomia moderna e alto apelo comercial.",
                 originalPrice: "R$ 59,90",
                 image: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=400&h=400&q=80"
               },
               {
                 id: 8,
-                title: "GUIA DE COMBINAÇÕES DE CORES",
-                description: "Um guia completo e prático para combinar cores de filamentos de forma harmoniosa, moderna e profissional. Aprenda a valorizar o design de cada bolsa e acessório impresso para atrair olhares e aumentar suas vendas.",
+                title: "HARMONIA E COMBINAÇÃO DE CORES",
+                description: "Guia prático para combinar cores de filamentos e valorizar ainda mais o design das suas peças.",
                 originalPrice: "R$ 39,90",
                 image: "https://i.imgur.com/BmwbPhI.webp"
               }
             ].map((bonus) => (
               <div 
                 key={bonus.id} 
-                className="flex flex-col sm:flex-row gap-5 p-6 bg-[#FFF0F2] hover:bg-[#FFE3E7] rounded-2xl border-2 border-pink-300 shadow-xs hover:shadow-xl hover:border-pink-400 transition-all duration-300 text-left items-start group relative overflow-hidden"
+                className="flex flex-col sm:flex-row gap-3 p-3 bg-[#FFF0F2] hover:bg-[#FFE3E7] rounded-xl border border-pink-200 hover:border-pink-300 transition-all duration-300 text-left items-start sm:items-center group relative overflow-hidden"
               >
                 {/* Image Section */}
-                <div className="w-full h-52 sm:w-40 sm:h-40 md:w-48 md:h-48 bg-stone-50 rounded-xl border border-stone-200/80 flex items-center justify-center shrink-0 overflow-hidden shadow-xs relative">
+                <div className="w-full h-36 sm:w-24 sm:h-24 md:w-28 md:h-28 bg-stone-50 rounded-lg border border-stone-200/80 flex items-center justify-center shrink-0 overflow-hidden shadow-2xs relative">
                   <img 
-                    {...getOptimizedImageProps(bonus.image, "l", "(max-width: 640px) 100vw, 192px")}
+                    {...getOptimizedImageProps(bonus.image, "l", "(max-width: 640px) 100vw, 112px")}
                     alt={bonus.title} 
                     loading="lazy"
                     decoding="async"
-                    width={192}
-                    height={192}
+                    width={112}
+                    height={112}
                     className={`w-full h-full transition-transform duration-500 group-hover:scale-105 ${
-                      bonus.image.includes('.png') || bonus.image.includes('.webp') && !bonus.image.includes('unsplash') ? 'object-contain p-3 bg-white' : 'object-cover'
+                      bonus.image.includes('.png') || bonus.image.includes('.webp') && !bonus.image.includes('unsplash') ? 'object-contain p-2 bg-white' : 'object-cover'
                     }`}
                     referrerPolicy="no-referrer"
                   />
                 </div>
 
                 {/* Content Section */}
-                <div className="flex flex-col gap-2 flex-1 justify-between h-full">
-                  <div className="flex flex-col gap-1">
-                    <h3 className="font-extrabold text-stone-900 text-sm md:text-base font-display leading-tight uppercase tracking-tight">
+                <div className="flex flex-col gap-1.5 flex-1 justify-between h-full w-full">
+                  <div className="flex flex-col gap-0.5">
+                    <h3 className="font-extrabold text-stone-900 text-xs sm:text-xs font-display leading-tight uppercase tracking-tight">
                       {bonus.title}
                     </h3>
-                    <p className="text-xs text-stone-600 leading-relaxed font-medium">
+                    <p className="text-[11px] text-stone-600 leading-tight font-medium">
                       {bonus.description}
                     </p>
                   </div>
 
                   {/* Pricing/Tags Footer */}
-                  <div className="flex items-center gap-3.5 mt-1.5 pt-2 border-t border-stone-100">
-                    <span className="text-xs text-stone-400 line-through font-semibold">
+                  <div className="flex items-center gap-2 pt-1 border-t border-stone-200/40 w-full justify-between sm:justify-start">
+                    <span className="text-[10px] text-stone-400 line-through font-semibold">
                       De {bonus.originalPrice}
                     </span>
-                    <span className="inline-flex items-center gap-1 bg-emerald-50 border border-emerald-200 text-emerald-700 font-extrabold text-[10px] tracking-wider uppercase px-2.5 py-0.5 rounded-md shadow-3xs">
+                    <span className="inline-flex items-center bg-emerald-50 border border-emerald-200 text-emerald-700 font-extrabold text-[9px] tracking-wider uppercase px-2 py-0.5 rounded shadow-3xs">
                       GRÁTIS
                     </span>
                   </div>
@@ -768,9 +762,9 @@ export default function App() {
           </div>
 
           {/* Closing copy */}
-          <div className="mt-4 p-5 bg-stone-100/50 border border-stone-200/60 rounded-2xl text-center max-w-xl mx-auto shadow-3xs">
-            <p className="text-xs md:text-sm text-stone-700 leading-relaxed font-bold">
-              “Todos esses bônus entram junto com o seu acesso hoje, sem custo adicional. É mais variedade, mais possibilidades de venda e mais arquivos prontos para você começar a usar.”
+          <div className="mt-1 p-3 bg-stone-100/50 border border-stone-200/60 rounded-xl text-center max-w-md mx-auto shadow-3xs">
+            <p className="text-[11px] text-stone-700 leading-normal font-bold">
+              “Todos esses bônus são adicionados ao seu acesso imediatamente, sem nenhum custo extra.”
             </p>
           </div>
         </section>
@@ -1231,16 +1225,16 @@ export default function App() {
 
             {/* Cabeçalho do Checkout */}
             {checkoutStep === "upsell_diamond" ? (
-              <div className="bg-amber-500 text-stone-950 p-5 pr-12 flex items-center gap-3 relative overflow-hidden">
-                <div className="absolute -right-6 -top-6 w-20 h-20 bg-amber-400/30 rounded-full blur-xl animate-pulse"></div>
-                <div className="w-10 h-10 rounded-lg bg-stone-950/10 flex items-center justify-center shrink-0">
-                  <Gem className="w-5 h-5 text-stone-950" />
+              <div className="bg-gradient-to-r from-cyan-400 via-sky-400 to-blue-500 text-stone-950 p-3 pr-12 flex items-center gap-3 relative overflow-hidden">
+                <div className="absolute -right-6 -top-6 w-20 h-20 bg-white/30 rounded-full blur-xl animate-pulse"></div>
+                <div className="w-8 h-8 rounded-lg bg-stone-950/15 flex items-center justify-center shrink-0">
+                  <Gem className="w-4 h-4 text-stone-950 animate-pulse" />
                 </div>
                 <div className="flex flex-col z-10">
-                  <span className="text-[9px] font-mono uppercase font-black tracking-wider bg-stone-950 text-amber-400 px-1.5 py-0.5 rounded self-start mb-1">
+                  <span className="text-[8px] font-mono uppercase font-black tracking-wider bg-stone-950 text-cyan-300 px-1.5 py-0.5 rounded self-start mb-0.5">
                     OFERTA ÚNICA &amp; EXCLUSIVA 💎
                   </span>
-                  <h3 className="text-sm font-extrabold font-display leading-none text-stone-950">
+                  <h3 className="text-xs font-black font-display leading-none text-stone-950 uppercase tracking-tight">
                     Oportunidade Imperdível!
                   </h3>
                 </div>
@@ -1264,85 +1258,66 @@ export default function App() {
             )}
 
             {/* Conteúdo do Checkout com base no passo */}
-            <div className="p-5 flex flex-col gap-4">
+            <div className="p-4 flex flex-col gap-3">
 
               {/* PASSO DE UPSELL: Plano Diamante */}
               {checkoutStep === "upsell_diamond" && (
-                <div className="flex flex-col gap-4 text-center animate-fade-in">
-                  <div className="bg-gradient-to-br from-[#FFFDF9] via-amber-500/5 to-[#FFF9EE] border-2 border-amber-500/50 rounded-2xl p-5 shadow-[0_12px_28px_rgba(245,158,11,0.12)] flex flex-col gap-3.5 relative overflow-hidden">
+                <div className="flex flex-col gap-2 text-center animate-fade-in">
+                  <div className="bg-gradient-to-br from-[#F0F9FF] via-cyan-400/5 to-[#F6FBFD] border-2 border-cyan-400/80 rounded-xl p-2.5 sm:p-3 shadow-[0_6px_20px_rgba(6,182,212,0.1)] flex flex-col gap-1.5 relative overflow-hidden">
                     
                     {/* Decorative glowing background elements */}
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-amber-400/10 rounded-full blur-2xl pointer-events-none" />
-                    <div className="absolute bottom-0 left-0 w-24 h-24 bg-amber-300/10 rounded-full blur-xl pointer-events-none" />
+                    <div className="absolute top-0 right-0 w-24 h-24 bg-cyan-400/5 rounded-full blur-2xl pointer-events-none" />
+                    <div className="absolute bottom-0 left-0 w-20 h-20 bg-sky-300/5 rounded-full blur-xl pointer-events-none" />
 
                     <div className="flex justify-center z-10">
-                      <span className="bg-gradient-to-r from-amber-500 to-amber-600 text-stone-950 text-[10px] font-black uppercase tracking-wider px-3.5 py-1.5 rounded-full flex items-center gap-1.5 shadow-[0_4px_12px_rgba(245,158,11,0.35)]">
-                        <Gem className="w-3.5 h-3.5 animate-bounce text-stone-950 fill-stone-950" />
-                        ★ RECOMENDADO POR 94% DAS COMPRADORAS
+                      <span className="bg-gradient-to-r from-cyan-500 via-sky-500 to-blue-600 text-white text-[8px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full flex items-center gap-1 shadow-[0_2px_8px_rgba(6,182,212,0.25)]">
+                        <Gem className="w-2.5 h-2.5 animate-pulse text-cyan-200 fill-cyan-200" />
+                        ★ O MAIS ESCOLHIDO
                       </span>
                     </div>
 
-                    <h4 className="text-base sm:text-lg font-black text-stone-900 font-display tracking-tight leading-snug z-10">
-                      Por que levar apenas 10 arquivos se você pode levar o <span className="text-amber-600 font-extrabold underline decoration-amber-400/50 underline-offset-4">PLANO DIAMANTE</span> completo por apenas <span className="text-emerald-600 font-black">R$ 18,90</span>?
+                    <h4 className="text-xs sm:text-sm font-black text-stone-950 font-display tracking-tight leading-tight z-10 uppercase">
+                      Leve o <span className="text-cyan-700 font-extrabold underline decoration-cyan-400 underline-offset-2">Plano Diamante</span> completo por só <span className="text-emerald-700 font-black bg-emerald-50 px-1 py-0.5 rounded border border-emerald-200/50">R$ 18,90</span>!
                     </h4>
 
-                    <p className="text-xs text-[#4F4F4F] leading-relaxed text-center font-medium max-w-sm mx-auto z-10">
-                      Adicione todos os <strong className="text-stone-950 font-bold">70+ modelos de bolsas</strong> + o super bônus de <strong className="text-stone-950 font-bold">+300 Vasos de Luxo</strong> + todos os bônus de venda + suporte VIP pelo WhatsApp por apenas <strong className="text-emerald-700 font-black">R$ 8,00 a mais</strong>!
+                    <p className="text-[10px] sm:text-[11px] text-stone-800 leading-tight text-center font-semibold max-w-sm mx-auto z-10">
+                      Adicione todos os <strong className="text-stone-950 font-black bg-cyan-100/60 px-1 rounded">70+ modelos de bolsas</strong> + <strong className="text-stone-950 font-black bg-cyan-100/60 px-1 rounded">+300 Vasos de Luxo</strong> por <span className="text-cyan-700 font-black">apenas R$ 8,00 a mais</span>!
                     </p>
 
-                    <div className="grid grid-cols-2 gap-3.5 my-1 text-left z-10">
+                    <div className="grid grid-cols-2 gap-2 my-0.5 text-left z-10">
                       {/* Plano Básico */}
-                      <div className="bg-stone-50/80 p-3 rounded-xl border border-stone-200 opacity-65 flex flex-col justify-between transition-all hover:opacity-75">
-                        <div>
-                          <span className="text-[8px] font-black text-stone-500 uppercase tracking-widest block">PLANO BÁSICO</span>
-                          <span className="text-base font-black text-stone-700 block mt-0.5">R$ 10,90</span>
-                          <span className="text-[9px] text-stone-400 font-medium block mt-0.5">Apenas uma amostra...</span>
-                        </div>
-                        <ul className="text-[10px] text-stone-500 mt-3 flex flex-col gap-1.5 border-t border-stone-200/60 pt-2.5">
-                          <li className="flex items-center gap-1.5"><X className="w-3 h-3 text-red-500 shrink-0" /> Apenas 10 Modelos</li>
-                          <li className="flex items-center gap-1.5"><X className="w-3 h-3 text-red-500 shrink-0" /> Sem Vasos de Luxo</li>
-                          <li className="flex items-center gap-1.5"><X className="w-3 h-3 text-red-500 shrink-0" /> Sem Suporte VIP</li>
-                          <li className="flex items-center gap-1.5"><X className="w-3 h-3 text-red-500 shrink-0" /> Sem os 8 Bônus</li>
-                        </ul>
+                      <div className="bg-stone-50/90 p-2 rounded-lg border border-stone-200 opacity-60 flex flex-col justify-center items-center text-center">
+                        <span className="text-[7px] font-black text-stone-500 uppercase tracking-wider block">PLANO BÁSICO</span>
+                        <span className="text-xs font-black text-stone-400 line-through mt-0.5">R$ 10,90</span>
+                        <span className="text-[8px] text-red-500 font-bold block mt-0.5">Apenas 10 Modelos</span>
                       </div>
 
                       {/* Plano Diamante */}
-                      <div className="bg-gradient-to-br from-amber-500/10 via-amber-100/40 to-amber-500/20 p-3 rounded-xl border-2 border-amber-400 ring-4 ring-amber-400/10 flex flex-col justify-between relative shadow-md transition-all hover:scale-[1.02]">
-                        <div className="absolute -top-2 right-2 bg-amber-500 text-stone-950 text-[7px] font-black uppercase px-1.5 py-0.5 rounded-md shadow-sm">
-                          SUPER VANTAGEM
+                      <div className="bg-gradient-to-br from-cyan-50/80 via-white to-sky-50 p-2 rounded-lg border-2 border-cyan-400 ring-2 ring-cyan-400/10 flex flex-col justify-center items-center text-center relative shadow-sm">
+                        <div className="absolute -top-2 right-1/2 translate-x-1/2 bg-gradient-to-r from-cyan-500 to-blue-500 text-white text-[5px] font-black uppercase px-1 py-0.5 rounded shadow-sm whitespace-nowrap">
+                          RECOMENDADO
                         </div>
-                        <div>
-                          <span className="text-[8px] font-black text-amber-800 uppercase tracking-widest block">PLANO DIAMANTE</span>
-                          <div className="flex items-baseline gap-1 mt-0.5">
-                            <span className="text-base font-black text-amber-950">R$ 18,90</span>
-                            <span className="text-[9px] text-emerald-600 font-bold bg-emerald-50 px-1 rounded">SÓ + R$ 8!</span>
-                          </div>
-                          <span className="text-[9px] text-amber-800 font-bold block mt-0.5">Acesso completo e imediato</span>
+                        <span className="text-[7px] font-black text-cyan-800 uppercase tracking-wider block">PLANO DIAMANTE</span>
+                        <div className="flex items-center gap-1 mt-0.5">
+                          <span className="text-xs font-black text-cyan-950">R$ 18,90</span>
+                          <span className="text-[7px] text-white font-black bg-emerald-600 px-0.5 rounded-sm">SÓ +R$ 8!</span>
                         </div>
-                        <ul className="text-[10px] text-stone-900 mt-3 flex flex-col gap-1.5 border-t border-amber-200/80 pt-2.5 font-medium">
-                          <li className="flex items-center gap-1.5 text-amber-950"><Check className="w-3 h-3 text-emerald-600 shrink-0" /> <strong>70+ Modelos de Bolsas</strong></li>
-                          <li className="flex items-center gap-1.5 text-amber-950"><Check className="w-3 h-3 text-emerald-600 shrink-0" /> <strong>+300 Vasos de Luxo</strong></li>
-                          <li className="flex items-center gap-1.5 text-amber-950"><Check className="w-3 h-3 text-emerald-600 shrink-0" /> Suporte VIP WhatsApp</li>
-                          <li className="flex items-center gap-1.5 text-amber-950"><Check className="w-3 h-3 text-emerald-600 shrink-0" /> Todos os 8 Bônus Inclusos</li>
-                        </ul>
+                        <span className="text-[8px] text-cyan-800 font-bold block mt-0.5">70+ Modelos &amp; Bônus</span>
                       </div>
                     </div>
                   </div>
 
-                  <div className="flex flex-col gap-2 w-full mt-1.5">
+                  <div className="flex flex-col gap-1 w-full mt-0.5">
                     {/* Botão de Upgrade */}
                     <button
                       onClick={() => {
                         window.location.href = "https://checkout.wiven.com.br/checkout/cmrfreasu03hz01pw13vbxi28?offer=P5EIBXM";
                       }}
-                      className="w-full py-3.5 bg-gradient-to-r from-emerald-500 via-emerald-600 to-emerald-500 hover:from-emerald-600 hover:to-emerald-700 text-white font-black text-xs sm:text-sm uppercase tracking-wider rounded-xl flex flex-col items-center justify-center gap-0.5 cursor-pointer shadow-[0_6px_20px_rgba(16,185,129,0.3)] transform hover:scale-[1.02] active:scale-[0.98] transition-all hover:shadow-[0_8px_24px_rgba(16,185,129,0.4)] animate-pulse"
+                      className="w-full py-2.5 bg-gradient-to-r from-[#00f2fe] via-[#00c6ff] to-[#4facfe] hover:from-[#00d2de] hover:to-[#3fa8de] text-stone-950 font-black text-xs sm:text-sm uppercase tracking-wider rounded-lg flex flex-col items-center justify-center gap-0 cursor-pointer shadow-[0_4px_12px_rgba(0,198,255,0.25)] transform hover:scale-[1.01] active:scale-[0.99] transition-all hover:shadow-[0_5px_15px_rgba(0,198,255,0.3)] animate-pulse"
                     >
-                      <span className="flex items-center gap-1.5">
-                        <Sparkles className="w-4 h-4 text-amber-300 fill-amber-300" />
-                        SIM! QUERO O PLANO DIAMANTE POR R$ 18,90
-                      </span>
-                      <span className="text-[9px] text-white/90 font-bold lowercase tracking-normal">
-                        (adicionar apenas R$ 8,00 à minha compra)
+                      <span className="flex items-center gap-1 font-black text-stone-950">
+                        <Sparkles className="w-3 h-3 text-stone-950 fill-stone-950" />
+                        ADICIONAR PLANO DIAMANTE R$ 18,90
                       </span>
                     </button>
 
@@ -1351,9 +1326,9 @@ export default function App() {
                       onClick={() => {
                         window.location.href = "https://checkout.wiven.com.br/checkout/cmrfreasu03hz01pw13vbxi28?offer=KISQBO2";
                       }}
-                      className="w-full py-2.5 bg-stone-100 hover:bg-stone-200 text-stone-500 hover:text-stone-700 font-bold text-[10px] uppercase rounded-xl cursor-pointer transition-all border border-stone-200/50"
+                      className="w-full py-1.5 text-stone-400 hover:text-stone-600 font-bold text-[8px] uppercase rounded-lg cursor-pointer transition-all hover:underline"
                     >
-                      Não, obrigado. Prefiro continuar com o plano limitado por R$ 10,90
+                      Não, prefiro continuar com o básico de R$ 10,90
                     </button>
                   </div>
                 </div>
