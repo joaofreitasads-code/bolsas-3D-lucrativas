@@ -16,6 +16,30 @@ interface TestimonialSlide {
 
 const TESTIMONIALS: TestimonialSlide[] = [
   {
+    id: 10,
+    type: "image",
+    url: "https://i.imgur.com/XzJANpV.jpeg",
+    caption: "Depoimento de Sucesso no WhatsApp"
+  },
+  {
+    id: 11,
+    type: "image",
+    url: "https://i.imgur.com/sc7Y9DF.jpeg",
+    caption: "Depoimento de Sucesso no WhatsApp"
+  },
+  {
+    id: 12,
+    type: "image",
+    url: "https://i.imgur.com/YFQdiFG.jpeg",
+    caption: "Depoimento de Sucesso no WhatsApp"
+  },
+  {
+    id: 9,
+    type: "image",
+    url: "https://i.imgur.com/2KKcWRl.jpeg",
+    caption: "Depoimento de Sucesso no WhatsApp"
+  },
+  {
     id: 1,
     type: "image",
     url: "https://i.imgur.com/G8BEKkc.webp",
@@ -37,18 +61,6 @@ const TESTIMONIALS: TestimonialSlide[] = [
     id: 4,
     type: "image",
     url: "https://i.imgur.com/PaRDZN6.webp",
-    caption: "Depoimento de Sucesso no WhatsApp"
-  },
-  {
-    id: 5,
-    type: "image",
-    url: "https://i.imgur.com/3FZKGCe.webp",
-    caption: "Depoimento de Sucesso no WhatsApp"
-  },
-  {
-    id: 6,
-    type: "image",
-    url: "https://i.imgur.com/XsBaUIw.webp",
     caption: "Depoimento de Sucesso no WhatsApp"
   },
   {
@@ -89,40 +101,40 @@ export default function WhatsAppTestimonials() {
   const activeTestimonial = TESTIMONIALS[currentIndex];
 
   return (
-    <div className="w-full flex flex-col gap-8 bg-[#FAF9F6] p-5 md:p-8 rounded-2xl border border-stone-200/80 shadow-sm">
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+    <div className="w-full max-w-4xl mx-auto flex flex-col gap-6 bg-[#FAF9F6] p-4 md:p-6 rounded-2xl shadow-sm">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
         {/* Left Side: Text and Benefits */}
         <div className="lg:col-span-5 flex flex-col gap-4 text-left">
-          <div className="inline-flex items-center gap-1.5 bg-emerald-50 text-emerald-800 border border-emerald-100 px-3 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-wider self-start">
-            <CheckCheck className="w-3.5 h-3.5 text-emerald-600" />
+          <div className="inline-flex items-center gap-1.5 bg-emerald-50 text-emerald-800 border border-emerald-100 px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider self-start">
+            <CheckCheck className="w-4 h-4 text-emerald-600" />
             Depoimentos Reais do WhatsApp
           </div>
 
-          <h3 className="text-2xl md:text-3xl font-bold font-display text-stone-900 leading-tight">
+          <h3 className="text-2xl md:text-3xl font-black font-display text-stone-950 leading-tight">
             Veja o sucesso de quem já imprime e vende!
           </h3>
 
-          <p className="text-xs md:text-sm text-[#5F5F5F] leading-relaxed">
+          <p className="text-sm md:text-base text-stone-800 leading-relaxed font-medium">
             Nada fala mais alto do que resultados reais. Nossos clientes estão dominando as vendas locais de bolsas impressas em 3D, saindo de peças comuns para acessórios de alto valor agregado e alta lucratividade!
           </p>
 
-          <div className="flex flex-col gap-3.5 mt-2 bg-white p-4 rounded-xl border border-stone-200/60 shadow-sm">
+          <div className="flex flex-col gap-3.5 mt-1 bg-white p-4 rounded-xl shadow-sm">
             <div className="flex gap-2.5 items-start">
               <span className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold text-xs shrink-0">✓</span>
-              <div className="text-xs">
-                <strong className="text-stone-900">Retorno Rápido:</strong> Muitos alunos recuperam o valor total do Pack logo na primeira bolsa vendida.
+              <div className="text-xs md:text-sm text-stone-800 leading-relaxed">
+                <strong className="text-stone-950 font-extrabold">Retorno Rápido:</strong> Muitos alunos recuperam o valor total do Pack logo na primeira bolsa vendida.
               </div>
             </div>
             <div className="flex gap-2.5 items-start">
               <span className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold text-xs shrink-0">✓</span>
-              <div className="text-xs">
-                <strong className="text-stone-900">Designs Otimizados:</strong> Arquivos testados, criados para economizar filamento e evitar suportes chatos.
+              <div className="text-xs md:text-sm text-stone-800 leading-relaxed">
+                <strong className="text-stone-950 font-extrabold font-display">Designs Otimizados:</strong> Arquivos testados, criados para economizar filamento e evitar suportes chatos.
               </div>
             </div>
             <div className="flex gap-2.5 items-start">
               <span className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold text-xs shrink-0">✓</span>
-              <div className="text-xs">
-                <strong className="text-stone-900">Pronto para Lucrar:</strong> Comece a faturar imediatamente com modelos exclusivos de alta costura.
+              <div className="text-xs md:text-sm text-stone-800 leading-relaxed">
+                <strong className="text-stone-950 font-extrabold">Pronto para Lucrar:</strong> Comece a faturar imediatamente com modelos exclusivos de alta costura.
               </div>
             </div>
           </div>
@@ -130,7 +142,7 @@ export default function WhatsAppTestimonials() {
 
         {/* Right Side: Slider with Side Arrows */}
         <div className="lg:col-span-7 flex flex-col items-center w-full">
-          <div className="relative w-full max-w-[480px] flex items-center justify-center group">
+          <div className="relative w-full max-w-[350px] sm:max-w-[370px] flex items-center justify-center group">
             
             {/* Left Arrow Button */}
             <button
@@ -142,7 +154,7 @@ export default function WhatsAppTestimonials() {
             </button>
 
             {/* Testimonial Container Box */}
-            <div className="w-full bg-white rounded-xl border border-stone-200 shadow-md flex flex-col justify-center items-center overflow-hidden">
+            <div className="w-full bg-white rounded-xl shadow-md flex flex-col justify-center items-center overflow-hidden">
               <AnimatePresence mode="wait" initial={false}>
                 <motion.div
                   key={currentIndex}

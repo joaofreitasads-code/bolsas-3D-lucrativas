@@ -322,9 +322,9 @@ export default function App() {
             prontas para vender
           </h1>
 
-          <div className="relative w-full rounded-2xl overflow-hidden mt-1 select-none" onContextMenu={(e) => e.preventDefault()}>
+          <div className="relative w-full rounded-2xl overflow-hidden mt-1" onContextMenu={(e) => e.preventDefault()}>
             {/* Sales video player with smooth styling - 9:16 Portrait Ratio, optimized to be sleeker on mobile */}
-            <div className="relative w-full max-w-[260px] xs:max-w-[290px] sm:max-w-sm mx-auto overflow-hidden bg-black rounded-2xl aspect-[9/16] border-4 border-[#B45F4D]/80 ring-8 ring-[#B45F4D]/10 shadow-[0_10px_40px_-10px_rgba(180,95,77,0.3)] group select-none">
+            <div className="relative w-full max-w-[260px] xs:max-w-[290px] sm:max-w-sm mx-auto overflow-hidden bg-black rounded-2xl aspect-[9/16] border-4 border-[#B45F4D]/80 ring-8 ring-[#B45F4D]/10 shadow-[0_10px_40px_-10px_rgba(180,95,77,0.3)] group">
               <video 
                 ref={videoRef}
                 autoPlay={false}
@@ -339,8 +339,8 @@ export default function App() {
                 webkit-playsinline="true"
                 x5-playsinline="true"
                 referrerPolicy="no-referrer"
-                className="w-full h-full object-cover rounded-2xl bg-black select-none pointer-events-none outline-hidden active:outline-hidden focus:outline-hidden"
-                style={{ WebkitTapHighlightColor: "transparent" }}
+                className="w-full h-full object-cover rounded-2xl bg-black pointer-events-none outline-hidden active:outline-hidden focus:outline-hidden"
+                style={{ WebkitTapHighlightColor: "transparent", touchAction: "pan-y" }}
                 onPlay={() => {
                   setIsVideoPlaying(true);
                   setHasVideoStarted(true);
@@ -379,13 +379,14 @@ export default function App() {
               <div 
                 onClick={handleVideoClick}
                 className="absolute inset-0 z-10 cursor-pointer bg-transparent"
-                style={{ WebkitTapHighlightColor: "transparent" }}
+                style={{ WebkitTapHighlightColor: "transparent", touchAction: "pan-y" }}
               />
               
               {!hasVideoStarted && !hasVideoEnded && (
                 <div 
                   onClick={handleStartWithSound}
                   className="absolute inset-0 bg-black/45 flex flex-col items-center justify-center cursor-pointer transition-all duration-300 z-20"
+                  style={{ touchAction: "pan-y" }}
                 >
                   <div className="flex flex-col items-center gap-4">
                     {/* YouTube style Red Play Button */}
@@ -408,6 +409,7 @@ export default function App() {
                 <div 
                   onClick={handleReplayVideo}
                   className="absolute inset-0 bg-black/80 flex flex-col items-center justify-center cursor-pointer transition-all duration-300 z-20 animate-fade-in"
+                  style={{ touchAction: "pan-y" }}
                 >
                   <div className="flex flex-col items-center gap-4 text-center px-6">
                     {/* Pulsing orange/red replay button */}
