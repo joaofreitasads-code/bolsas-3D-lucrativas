@@ -1087,7 +1087,9 @@ export default function App() {
                 </div>
 
                 <button 
-                  onClick={() => handleOpenCheckout("completo")}
+                  onClick={() => {
+                    window.location.href = "https://checkout.wiven.com.br/checkout/cmrfreasu03hz01pw13vbxi28?offer=3GVBBZV";
+                  }}
                   className="w-full py-4 bg-gradient-to-r from-[#00f2fe] to-[#4facfe] hover:from-[#00d2de] hover:to-[#3fa8de] text-stone-950 font-black font-display uppercase tracking-wider rounded-xl transition-all cursor-pointer text-xs text-center shadow-lg shadow-[#00f2fe]/20 active:scale-[0.98]"
                 >
                   QUERO TODAS AS BOLSAS
@@ -1331,8 +1333,7 @@ export default function App() {
                     {/* Botão de Upgrade */}
                     <button
                       onClick={() => {
-                        setSelectedPack("diamante");
-                        setCheckoutStep("payment_method");
+                        window.location.href = "https://checkout.wiven.com.br/checkout/cmrfreasu03hz01pw13vbxi28?offer=P5EIBXM";
                       }}
                       className="w-full py-3.5 bg-gradient-to-r from-emerald-500 via-emerald-600 to-emerald-500 hover:from-emerald-600 hover:to-emerald-700 text-white font-black text-xs sm:text-sm uppercase tracking-wider rounded-xl flex flex-col items-center justify-center gap-0.5 cursor-pointer shadow-[0_6px_20px_rgba(16,185,129,0.3)] transform hover:scale-[1.02] active:scale-[0.98] transition-all hover:shadow-[0_8px_24px_rgba(16,185,129,0.4)] animate-pulse"
                     >
@@ -1348,8 +1349,7 @@ export default function App() {
                     {/* Botão para manter o básico */}
                     <button
                       onClick={() => {
-                        setSelectedPack("basico");
-                        setCheckoutStep("payment_method");
+                        window.location.href = "https://checkout.wiven.com.br/checkout/cmrfreasu03hz01pw13vbxi28?offer=KISQBO2";
                       }}
                       className="w-full py-2.5 bg-stone-100 hover:bg-stone-200 text-stone-500 hover:text-stone-700 font-bold text-[10px] uppercase rounded-xl cursor-pointer transition-all border border-stone-200/50"
                     >
