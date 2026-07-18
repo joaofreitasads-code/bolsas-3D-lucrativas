@@ -1021,7 +1021,7 @@ export default function App() {
 
               <button 
                 onClick={() => {
-                  window.location.href = "https://checkout.wiven.com.br/checkout/cmrfreasu03hz01pw13vbxi28?offer=3GVBBZV";
+                  window.location.href = "https://ggcheckout.app/checkout/v5/DlZTUavFROZtgejVqW41";
                 }}
                 className="w-full py-2.5 bg-stone-900 hover:bg-stone-850 text-white font-extrabold font-display uppercase tracking-wider rounded-xl transition-all cursor-pointer text-xs text-center shadow-sm active:scale-[0.98]"
               >
@@ -1094,7 +1094,7 @@ export default function App() {
 
                 <button 
                   onClick={() => {
-                    window.location.href = "https://checkout.wiven.com.br/checkout/cmrfreasu03hz01pw13vbxi28?offer=3GVBBZV";
+                    window.location.href = "https://ggcheckout.app/checkout/v5/sGcFhzWO0zFmnQWdnK5h";
                   }}
                   className="w-full py-4 bg-gradient-to-r from-[#00f2fe] to-[#4facfe] hover:from-[#00d2de] hover:to-[#3fa8de] text-stone-950 font-black font-display uppercase tracking-wider rounded-xl transition-all cursor-pointer text-xs text-center shadow-lg shadow-[#00f2fe]/20 active:scale-[0.98]"
                 >
@@ -1326,7 +1326,7 @@ export default function App() {
                     {/* Botão de Upgrade */}
                     <button
                       onClick={() => {
-                        window.location.href = "https://checkout.wiven.com.br/checkout/cmrfreasu03hz01pw13vbxi28?offer=P5EIBXM";
+                        window.location.href = "https://ggcheckout.app/checkout/v5/nlQGFSmIdG30ilfRquS5";
                       }}
                       className="w-full py-2.5 bg-gradient-to-r from-[#00f2fe] via-[#00c6ff] to-[#4facfe] hover:from-[#00d2de] hover:to-[#3fa8de] text-stone-950 font-black text-xs sm:text-sm uppercase tracking-wider rounded-lg flex flex-col items-center justify-center gap-0 cursor-pointer shadow-[0_4px_12px_rgba(0,198,255,0.25)] transform hover:scale-[1.01] active:scale-[0.99] transition-all hover:shadow-[0_5px_15px_rgba(0,198,255,0.3)] animate-pulse"
                     >
@@ -1339,7 +1339,7 @@ export default function App() {
                     {/* Botão para manter o básico */}
                     <button
                       onClick={() => {
-                        window.location.href = "https://checkout.wiven.com.br/checkout/cmrfreasu03hz01pw13vbxi28?offer=KISQBO2";
+                        window.location.href = "https://ggcheckout.app/checkout/v5/DlZTUavFROZtgejVqW41";
                       }}
                       className="w-full py-1.5 text-stone-400 hover:text-stone-600 font-bold text-[8px] uppercase rounded-lg cursor-pointer transition-all hover:underline"
                     >
