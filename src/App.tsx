@@ -1021,7 +1021,7 @@ export default function App() {
 
               <button 
                 onClick={() => {
-                  window.location.href = "https://ggcheckout.app/checkout/v5/DlZTUavFROZtgejVqW41";
+                  handleOpenCheckout("basico");
                 }}
                 className="w-full py-2.5 bg-stone-900 hover:bg-stone-850 text-white font-extrabold font-display uppercase tracking-wider rounded-xl transition-all cursor-pointer text-xs text-center shadow-sm active:scale-[0.98]"
               >
