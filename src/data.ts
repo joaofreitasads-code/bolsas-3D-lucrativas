@@ -84,7 +84,7 @@ export const FAQS: FAQItem[] = [
   {
     id: 6,
     question: "Qual pack vale mais a pena?",
-    answer: "Se você quer apenas testar com poucos modelos, o Pack Básico de R$10,90 já ajuda. No entanto, o Pack Completo por R$29,90 é incomparavelmente mais vantajoso, pois você ganha mais de 70 designs (contra apenas 10), suporte individual, atualizações futuras gratuitas e todos os 7 bônus de vendas para te ajudar a faturar."
+    answer: "Se você quer apenas os arquivos de bolsas, o Pack Básico de R$10,90 oferece os 70 modelos sem os bônus adicionais. No entanto, o Pack Completo por R$29,90 é incomparavelmente mais vantajoso, pois você ganha os mais de 70 designs, suporte individual, atualizações futuras gratuitas e todos os 6 bônus exclusivos (como Joias 3D, Estampas, Guia de Fatiamento, Caneca Premium, Kit Anéis e Guia de Cores) para impulsionar seu negócio."
   }
 ];
 
