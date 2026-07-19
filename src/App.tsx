@@ -318,17 +318,18 @@ export default function App() {
       </div>
 
       <main className="w-full max-w-lg md:max-w-2xl lg:max-w-5xl px-4 md:px-6 pt-6 flex flex-col gap-10 md:gap-14">
-               {/* =======================================
+        
+        {/* =======================================
             SECTION 1 & 2: HEADLINE & BADGES & VIDEO
            ======================================= */}
         <section id="headline" className="text-center mt-2 flex flex-col items-center gap-2.5">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold font-display leading-[1.15] text-stone-900 tracking-tight text-center max-w-5xl mt-1">
-            Cansada de fabricar peças que todos acham "bonitinhas" mas{" "}
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold font-display leading-[1.1] text-stone-900 tracking-tight text-center max-w-3xl mt-1">
+            Transforme sua impressora 3D em uma{" "}
             <span className="text-[#B45F4D] relative inline-block">
-              ninguém quer pagar
+              vitrine de bolsas
               <span className="absolute left-0 bottom-1 w-full h-1.5 bg-[#B45F4D]/15 rounded-full"></span>
             </span>{" "}
-            o valor justo? Descubra como Bolsas 3D de Grife são vendidas por <span className="text-emerald-600">R$ 180 a R$ 350 cada</span>, com desejo incontrolável das clientes!
+            prontas para vender
           </h1>
 
           <div className="relative w-full rounded-2xl overflow-hidden mt-1" onContextMenu={(e) => e.preventDefault()}>
@@ -458,8 +459,8 @@ export default function App() {
             </div>
           </div>
 
-          <p className="text-sm md:text-base text-[#5F5F5F] max-w-3xl leading-relaxed font-medium mt-3 px-4">
-            Acesso imediato à <strong className="text-stone-900 font-bold">Maior Coleção de Bolsas 3D do Brasil</strong> com mais de 70 modelos exclusivos de design diferenciado. Desenvolvido para mulheres e empreendedoras que querem sair da guerra de preços de artesanatos comuns e faturar alto com produtos físicos de grife que geram desejo imediato e são vendidos sem esforço!
+          <p className="text-sm md:text-base text-[#5F5F5F] max-w-2xl leading-relaxed font-medium mt-3 px-4">
+            Receba modelos prontos de bolsas e acessórios 3D para imprimir, divulgar e vender, sem precisar modelar absolutamente nada do zero.
           </p>
         </section>
 
@@ -485,14 +486,16 @@ export default function App() {
                 <Check className="w-4.5 h-4.5" /> Acesso imediato
               </span>
               <span className="flex items-center gap-1">
-                <Check className="w-4.5 h-4.5 text-[#B45F4D]" /> Coleção completa e vitalícia
+                <Check className="w-4.5 h-4.5 text-[#B45F4D]" /> Arquivos vitalícios
               </span>
               <span className="flex items-center gap-1">
-                <Check className="w-4.5 h-4.5 text-[#B45F4D]" /> Permissão de comercialização inclusa
+                <Check className="w-4.5 h-4.5 text-[#B45F4D]" /> Permissão comercial inclusa
               </span>
             </div>
           </div>
         </section>
+
+
 
         {/* =======================================
             SECTION 4 & 5: MARKETPLACES BESTSELLERS
@@ -501,10 +504,10 @@ export default function App() {
           <div className="max-w-2xl mx-auto flex flex-col gap-1.5 px-4">
             <span className="text-xs font-mono uppercase text-[#B45F4D] font-bold tracking-wider">Demanda Comprovada</span>
             <h2 className="text-lg md:text-xl font-bold font-display text-stone-900 leading-tight uppercase">
-              A Diferença Entre Quem Sofre Sem Vendas e Quem Fatura Alto Todo Dia
+              Os Produtos Que Mais Vendem no Mercado Livre, Shopee e Marketplaces
             </h2>
             <p className="text-xs text-[#5F5F5F] leading-relaxed">
-              Enquanto produtos comuns exigem um esforço gigante para convencer o cliente, as Bolsas 3D geram desejo imediato e são vendidas sem que você precise dar descontos.
+              Veja a altíssima procura e o sucesso de vendas desses produtos nos maiores marketplaces do Brasil.
             </p>
           </div>
 
@@ -516,12 +519,12 @@ export default function App() {
            ======================================= */}
         <section id="galeria-rotativa" className="flex flex-col gap-5 w-full py-2">
           <div className="text-center max-w-xl mx-auto flex flex-col gap-1 px-4">
-            <span className="text-xs font-mono uppercase text-[#B45F4D] font-bold tracking-wider">Acabamento que Gera Desejo</span>
+            <span className="text-xs font-mono uppercase text-[#B45F4D] font-bold tracking-wider">Catálogo de Modelos Reais</span>
             <h2 className="text-lg md:text-xl font-bold font-display text-stone-900 leading-tight">
-              Bolsas de Altíssimo Valor Percebido
+              Galeria de Modelos Premium
             </h2>
             <p className="text-xs text-[#5F5F5F] leading-relaxed">
-              Artesanato comum as pessoas acham bonito, mas não pagam muito. Já estas bolsas parecem itens de boutiques importadas de luxo!
+              Explore os detalhes e texturas dos modelos reais inclusos no pack completo.
             </p>
           </div>
 
@@ -547,13 +550,13 @@ export default function App() {
 
           <div className="text-center max-w-2xl mx-auto flex flex-col items-center z-10">
             <span className="text-xs font-mono uppercase text-[#B45F4D] font-extrabold tracking-widest bg-[#B45F4D]/10 px-3.5 py-1.5 rounded-full border border-[#B45F4D]/20">
-              Passo a Passo de Vendas
+              Plataforma VIP de Alunos
             </span>
             <h2 className="text-2xl md:text-3xl font-extrabold font-display text-stone-900 mt-4 leading-tight uppercase tracking-tight">
-              PORTAL EXCLUSIVO COM TUDO PRONTO PARA VENDER
+              ÁREA DE MEMBROS EXCLUSIVA & ORGANIZADA
             </h2>
             <p className="text-sm text-stone-600 mt-2 font-medium leading-relaxed max-w-lg">
-              Além de todos os arquivos de bolsas luxuosas, nossa área de membros foi pensada para quem tem dificuldade com vendas. Você recebe o material pronto para divulgar e atrair clientes sem esforço!
+              Veja por dentro como funciona o nosso portal de alunos. Uma experiência premium com acesso imediato e vitalício para você começar a faturar hoje!
             </p>
           </div>
 
@@ -645,89 +648,9 @@ export default function App() {
           </div>
         </section>
 
-        {/* =======================================
-            NEW SECTION: LICENÇA COMERCIAL EXCLUSIVA & VITALÍCIA
-           ======================================= */}
-        <section id="licenca-comercial" className="bg-stone-900 text-stone-100 rounded-3xl p-6 md:p-10 border border-stone-800 shadow-xl flex flex-col gap-6 md:gap-8 w-full relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-[#B45F4D]/10 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute bottom-0 left-0 w-64 h-64 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none" />
-
-          <div className="text-center max-w-2xl mx-auto flex flex-col items-center z-10">
-            <span className="text-xs font-mono uppercase text-[#B45F4D] font-extrabold tracking-widest bg-[#B45F4D]/15 px-3.5 py-1.5 rounded-full border border-[#B45F4D]/25">
-              Licença Vitalícia Inclusa
-            </span>
-            <h2 className="text-2xl md:text-3xl font-extrabold font-display text-white mt-4 leading-tight uppercase tracking-tight">
-              LICENÇA COMERCIAL LIVRE EXCLUSIVA
-            </h2>
-            <p className="text-sm text-stone-300 mt-2 font-medium leading-relaxed max-w-lg">
-              Sua permissão definitiva para produzir e vender as peças físicas de forma 100% legal, segura e lucrativa.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center z-10">
-            <div className="flex flex-col gap-4 text-left">
-              <div className="flex items-start gap-3 bg-stone-850 p-4 rounded-xl border border-stone-800 transition-all hover:bg-stone-800">
-                <div className="w-10 h-10 rounded-lg bg-[#B45F4D]/10 border border-[#B45F4D]/20 flex items-center justify-center text-[#B45F4D] shrink-0 font-bold">
-                  <ShieldCheck className="w-5 h-5" />
-                </div>
-                <div>
-                  <h4 className="text-sm font-extrabold text-white">Vendas 100% Autorizadas</h4>
-                  <p className="text-xs text-stone-300 mt-1 font-medium leading-relaxed">
-                    Você tem permissão oficial para imprimir as bolsas em sua impressora 3D e comercializar o produto físico final. Sem pagar royalties ou taxas por unidade vendida.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-3 bg-stone-850 p-4 rounded-xl border border-stone-800 transition-all hover:bg-stone-800">
-                <div className="w-10 h-10 rounded-lg bg-[#B45F4D]/10 border border-[#B45F4D]/20 flex items-center justify-center text-[#B45F4D] shrink-0 font-bold">
-                  <Coins className="w-5 h-5 text-emerald-500" />
-                </div>
-                <div>
-                  <h4 className="text-sm font-extrabold text-white">Retenha 100% do Lucro</h4>
-                  <p className="text-xs text-stone-300 mt-1 font-medium leading-relaxed">
-                    Cada venda de R$ 180 a R$ 350 é sua de forma integral. Sem intermediários, sem pegadinhas. Uma única venda de bolsa já cobre o investimento total da coleção hoje!
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="p-6 rounded-2xl bg-stone-850/50 border border-stone-800 flex flex-col gap-4 text-left">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-emerald-950/40 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
-                  <Award className="w-5 h-5" />
-                </div>
-                <div>
-                  <span className="text-[10px] font-mono text-emerald-400 font-bold uppercase tracking-wider">Certificado Autorizado</span>
-                  <h4 className="text-sm font-extrabold text-white">Direito Comercial Vitalício</h4>
-                </div>
-              </div>
-              <p className="text-xs text-stone-300 leading-relaxed font-medium">
-                Diferente de outros acervos que proíbem o comércio físico ou exigem licenças recorrentes caras, nossa permissão é vitalícia e inclusa sem custo adicional no seu pagamento único hoje.
-              </p>
-              <div className="border-t border-stone-800 pt-3 flex items-center justify-between">
-                <span className="text-[10px] text-stone-400 font-bold uppercase tracking-wider">Status do Documento</span>
-                <span className="text-[10px] font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2.5 py-1 rounded-full font-bold uppercase">
-                  ATIVADO PARA NOVOS MEMBROS
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <div className="flex flex-col items-center mt-2 z-10">
-            <button 
-              onClick={(e) => scrollToPricing(e)}
-              className="w-full sm:w-auto px-8 py-3.5 bg-[#B45F4D] hover:bg-[#a04e3e] active:scale-[0.98] transition-all text-white font-bold font-display uppercase tracking-wider rounded-xl text-xs cursor-pointer flex items-center justify-center gap-2 group"
-            >
-              <Zap className="w-4 h-4 fill-white animate-pulse" />
-              GARANTIR MEUS DIREITOS COMERCIAIS
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </button>
-          </div>
-        </section>
-
-        {/* =======================================
-            SECTION 13: BÔNUS
-           ======================================= */}
+          {/* =======================================
+              SECTION 13: BÔNUS
+             ======================================= */}
         <section id="bonus" className="bg-pink-50/50 rounded-2xl p-4 sm:p-5 md:p-8 border border-pink-100/85 shadow-xs flex flex-col gap-5 w-full">
           <div className="text-center max-w-xl mx-auto">
             <span className="text-[10px] sm:text-xs font-mono uppercase text-emerald-600 font-extrabold tracking-wider bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-100">
@@ -844,9 +767,9 @@ export default function App() {
             <div className="bg-gradient-to-tr from-cyan-100 via-[#B45F4D]/10 to-pink-100 p-2.5 rounded-full shadow-xs mb-3 flex items-center justify-center">
               <Gem className="w-5 h-5 text-cyan-600 animate-pulse" />
             </div>
-            <span className="text-[10px] xs:text-xs font-mono uppercase text-[#B45F4D] font-extrabold tracking-widest text-center">Design Exclusivo</span>
+            <span className="text-[10px] xs:text-xs font-mono uppercase text-[#B45F4D] font-extrabold tracking-widest text-center">Variedade Inclusa</span>
             <h2 className="text-lg xs:text-xl md:text-2xl font-black font-display text-stone-950 mt-1.5 uppercase text-center tracking-tight break-words px-1 leading-tight">
-              COLEÇÃO DE MODELOS ALTAMENTE DESEJÁVEIS
+              COLEÇÃO DE MODELOS 3D
             </h2>
           </div>
 
@@ -919,10 +842,10 @@ export default function App() {
           <div className="text-center max-w-2xl mx-auto mb-8">
             <span className="text-xs font-mono uppercase text-[#B45F4D] font-extrabold tracking-wider bg-[#B45F4D]/10 px-3 py-1 rounded-full">O Segredo Revelado</span>
             <h2 className="text-2xl md:text-3xl font-extrabold font-display text-stone-900 mt-3 leading-tight">
-              Por que é tão difícil vender artesanatos comuns e tão simples vender Bolsas 3D?
+              A Decisão que Separa Amadores de Profissionais Altamente Lucrativos
             </h2>
-            <p className="text-sm md:text-base text-stone-700 mt-3 font-semibold leading-relaxed">
-              Se você cansa de passar horas produzindo coisas que as pessoas acham bonitas, mas dizem que 'está caro', entenda como as Bolsas 3D de luxo quebram de vez essa barreira.
+            <p className="text-sm md:text-base text-stone-700 mt-3 font-medium leading-relaxed">
+              O mercado de impressão 3D tradicional está saturado de pessoas vendendo chaveiros e vasinhos por centavos. Descubra a rota do luxo e posicione-se no topo.
             </p>
           </div>
 
@@ -952,7 +875,7 @@ export default function App() {
               </div>
 
               <h3 className="text-xl md:text-2xl font-black font-display text-stone-900 leading-tight">
-                Chega de Tentar Vender de Tudo e Não Ter Resultados
+                Venda Menos Unidades, Ganhe Muito Mais Dinheiro
               </h3>
 
               <div className="flex flex-col gap-4">
@@ -961,9 +884,9 @@ export default function App() {
                     <TrendingUp className="w-4.5 h-4.5" />
                   </div>
                   <div>
-                    <h4 className="text-sm font-extrabold text-stone-900">Valorização Real do Seu Trabalho</h4>
+                    <h4 className="text-sm font-extrabold text-stone-900">Margens Brutais de Lucro</h4>
                     <p className="text-xs md:text-sm text-stone-600 mt-1 font-medium leading-relaxed">
-                      Se você já tentou vender crochê, doces, roupas ou produtos comuns e cansou de ver pessoas pedindo desconto em peças baratas, as Bolsas 3D mudam o jogo. Cada peça é vendida facilmente de <strong className="text-stone-900 font-bold">R$ 180 a R$ 350</strong> com custo de produção extremamente baixo.
+                      Enquanto peças genéricas geram centavos de lucro, cada Bolsa 3D do nosso Pack é vendida de <strong className="text-stone-900 font-bold">R$ 180 a R$ 350</strong> com custo de produção baixíssimo.
                     </p>
                   </div>
                 </div>
@@ -973,9 +896,9 @@ export default function App() {
                     <Sparkles className="w-4.5 h-4.5" />
                   </div>
                   <div>
-                    <h4 className="text-sm font-extrabold text-stone-900">Desejo Incontrolável e Compra Fácil</h4>
+                    <h4 className="text-sm font-extrabold text-stone-900">Mercado com Desejo Imediato</h4>
                     <p className="text-xs md:text-sm text-stone-600 mt-1 font-medium leading-relaxed">
-                      Diferente de outros produtos em que você precisa quase implorar para conseguir uma venda, as bolsas de design despertam desejo imediato no público feminino. Elas compram pelo impacto visual, status e exclusividade, sem questionar o preço.
+                      Bolsas de design despertam o desejo de compra imediato no público feminino. Elas compram pela exclusividade e beleza do produto final, não pelo preço.
                     </p>
                   </div>
                 </div>
@@ -985,9 +908,9 @@ export default function App() {
                     <ShieldCheck className="w-4.5 h-4.5" />
                   </div>
                   <div>
-                    <h4 className="text-sm font-extrabold text-stone-900">Destaque Único sem Saturação</h4>
+                    <h4 className="text-sm font-extrabold text-stone-900">Oceano Azul sem Concorrência</h4>
                     <p className="text-xs md:text-sm text-stone-600 mt-1 font-medium leading-relaxed">
-                      Chega de competir com outras milhares de pessoas vendendo exatamente as mesmas coisas na internet ou na sua cidade. Com as Bolsas 3D de luxo, você sai da mesmice e domina um mercado de altíssimo valor com concorrência zero.
+                      Quase ninguém produz ou sabe produzir essas bolsas no Brasil. Ao adquirir o nosso Pack, você dita os preços na sua região com zero concorrência.
                     </p>
                   </div>
                 </div>
@@ -996,89 +919,10 @@ export default function App() {
               <div className="mt-2 p-3 bg-emerald-50 border border-emerald-500/10 rounded-xl flex items-center gap-2.5">
                 <CheckCircle className="w-5 h-5 text-emerald-600 shrink-0" />
                 <span className="text-xs font-bold text-emerald-800">
-                  Pare de se desgastar com o que não dá lucro e comece a faturar com produtos de alto valor.
+                  Diferencie-se hoje mesmo e fature alto com a revolução da moda em 3D.
                 </span>
               </div>
             </div>
-          </div>
-        </section>
-
-        {/* =======================================
-            NEW SECTION: HOJE VOCÊ RECEBE & ANCORAGEM DE VALOR
-           ======================================= */}
-        <section id="ancoragem-resumo" className="bg-stone-50 rounded-3xl p-6 md:p-10 border border-stone-200/80 shadow-xs flex flex-col gap-6 md:gap-8 w-full text-center">
-          <div className="text-center max-w-2xl mx-auto flex flex-col items-center">
-            <span className="text-xs font-mono uppercase text-[#B45F4D] font-extrabold tracking-widest bg-[#B45F4D]/10 px-3.5 py-1.5 rounded-full border border-[#B45F4D]/20">
-              Acesso VIP Completo
-            </span>
-            <h2 className="text-2xl md:text-3xl font-extrabold font-display text-stone-900 mt-4 leading-tight uppercase tracking-tight">
-              VEJA TUDO O QUE VOCÊ VAI RECEBER POR APENAS R$ 29,90
-            </h2>
-            <p className="text-sm text-stone-600 mt-2 font-medium leading-relaxed max-w-lg">
-              Tudo o que você precisa para sair do zero e começar a faturar com bolsas e acessórios luxuosos.
-            </p>
-          </div>
-
-          <div className="max-w-2xl mx-auto w-full flex flex-col gap-3.5 text-left bg-white p-6 md:p-8 rounded-2xl border border-stone-200 shadow-sm">
-            <h3 className="text-sm font-bold text-stone-900 border-b border-stone-100 pb-3 flex items-center gap-2">
-              <span className="w-2 h-4 bg-[#B45F4D] rounded-xs"></span>
-              O que você vai receber:
-            </h3>
-            
-            <div className="flex flex-col gap-2.5">
-              {[
-                "Mais de 70 modelos de bolsas e acessórios",
-                "Licença comercial vitalícia inclusa",
-                "Bônus: Pack de Joias e Acessórios 3D",
-                "Bônus: Guia de Combinações de Cores",
-                "Bônus: Chaveiros em 3D Personalizados",
-                "Bônus: Guia Rápido de Organização de Arquivos",
-                "Bônus: Lista de Públicos para Vender",
-                "Bônus: Checklist de Postagem no Instagram e Redes Sociais",
-                "Bônus: Plano Prático de 7 Dias para Começar",
-                "Bônus: Tabela de Precificação de Bolsas 3D",
-                "Atualizações futuras 100% gratuitas",
-                "Suporte individual no WhatsApp",
-                "Download 100% imediato",
-              ].map((item, i) => (
-                <div key={i} className="flex items-center gap-3 text-xs md:text-sm py-1">
-                  <div className="w-5 h-5 rounded-full bg-emerald-50 border border-emerald-200 flex items-center justify-center shrink-0 text-emerald-600">
-                    <Check className="w-3.5 h-3.5 stroke-[2.5]" />
-                  </div>
-                  <span className="text-stone-700 font-semibold">{item}</span>
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-4 pt-4 border-t border-stone-100 flex flex-col sm:flex-row justify-between items-center gap-4 bg-emerald-50/50 -mx-6 md:-mx-8 px-6 md:px-8 py-4 rounded-b-2xl">
-              <div className="flex flex-col text-center sm:text-left">
-                <span className="text-[10px] uppercase text-[#B45F4D] font-extrabold tracking-wider font-mono">OPORTUNIDADE ÚNICA</span>
-                <span className="text-xs md:text-sm text-stone-600 font-medium">Leve todo esse ecossistema completo por apenas</span>
-              </div>
-              <div className="text-center sm:text-right">
-                <span className="text-2xl md:text-3xl font-black text-emerald-600 font-display">R$ 29,90 à vista!</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="flex flex-col items-center mt-2">
-            <button 
-              onClick={(e) => scrollToPricing(e)}
-              className="w-full max-w-md px-10 py-4 bg-[#B45F4D] hover:bg-[#a04e3e] active:scale-[0.98] transition-all text-white font-extrabold font-display uppercase tracking-wide rounded-xl shadow-md text-xs sm:text-sm cursor-pointer flex items-center justify-center gap-2 group"
-            >
-              <Zap className="w-4.5 h-4.5 fill-white animate-pulse" />
-              QUERO A OFERTA COMPLETA POR APENAS R$ 29,90
-              <ArrowRight className="w-4.5 h-4.5 group-hover:translate-x-1 transition-transform" />
-            </button>
-          </div>
-
-          <div className="bg-[#B45F4D]/5 rounded-2xl p-5 md:p-6 text-center max-w-2xl mx-auto border border-[#B45F4D]/15 flex flex-col gap-3">
-            <h3 className="text-base font-extrabold text-stone-900 uppercase">
-              Por que estamos cobrando um valor tão absurdamente baixo?
-            </h3>
-            <p className="text-xs md:text-sm text-stone-700 leading-relaxed font-medium">
-              Queremos que o maior número possível de mulheres e empreendedoras consiga começar um negócio lucrativo em impressão 3D de forma rápida e segura. Uma única venda de bolsa física de grife por R$ 180 já paga mais de 6 vezes o valor da nossa oferta completa hoje! O seu risco é absolutamente zero.
-            </p>
           </div>
         </section>
 
@@ -1087,12 +931,12 @@ export default function App() {
            ======================================= */}
         <section id="pricing" className="flex flex-col gap-5">
           <div className="text-center max-w-xl mx-auto">
-            <span className="text-xs font-mono uppercase text-[#B45F4D] font-bold">Inicie sua Nova Fase</span>
+            <span className="text-xs font-mono uppercase text-[#B45F4D] font-bold">Planos Disponíveis</span>
             <h2 className="text-lg md:text-xl font-bold font-display text-stone-950 mt-1">
-              Escolha o pack ideal e comece a vender de verdade hoje
+              Escolha o pack ideal para começar hoje
             </h2>
             <p className="text-xs text-[#5F5F5F] mt-1">
-              Diga adeus à frustração de não vender nada. Escolha o plano perfeito para você começar a faturar com produtos que as pessoas realmente desejam comprar.
+              Escolha a opção perfeita para o seu momento. O acesso é liberado em menos de 1 minuto.
             </p>
           </div>
 
@@ -1126,10 +970,11 @@ export default function App() {
                 <div className="flex flex-col gap-1.5">
                   <span className="text-[9px] font-bold text-stone-700 uppercase tracking-wider">Itens Inclusos:</span>
                   {[
-                    "10 modelos selecionados a dedo",
+                    "70 modelos selecionados a dedo",
                     "Licença comercial para venda física",
+                    "Sem os demais Bônus",
                     "Acesso vitalício aos arquivos STL",
-                    "Download 100% imediato pós Pix"
+                    "Download 100% imediato"
                   ].map((item, i) => (
                     <div key={i} className="flex items-start gap-1.5">
                       <Check className="w-3.5 h-3.5 text-[#B45F4D] shrink-0 mt-0.5" />
@@ -1230,23 +1075,20 @@ export default function App() {
         {/* =======================================
             SECTION 15: GARANTIA & SEGURANÇA
            ======================================= */}
-        <section id="garantia" className="bg-white rounded-3xl p-6 md:p-8 border-2 border-[#B45F4D]/20 shadow-lg max-w-2xl mx-auto flex flex-col sm:flex-row items-center gap-6 text-left relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-32 h-32 bg-[#B45F4D]/5 rounded-full blur-2xl pointer-events-none" />
-          
+        <section id="garantia" className="bg-stone-50 rounded-2xl p-5 border border-stone-200/80 shadow-sm max-w-xl mx-auto flex items-center gap-4 text-left">
           <img 
             src="https://i.imgur.com/8srQFdp.png" 
-            alt="Garantia de 7 dias de satisfação" 
-            className="w-20 sm:w-24 h-auto shrink-0 object-contain drop-shadow-[0_4px_10px_rgba(0,0,0,0.06)]"
+            alt="Garantia de 7 dias" 
+            className="w-16 sm:w-20 h-auto shrink-0 object-contain"
             referrerPolicy="no-referrer"
           />
 
-          <div className="flex flex-col gap-2">
-            <span className="text-[10px] font-mono font-extrabold text-[#B45F4D] uppercase tracking-widest">Compromisso de Satisfação</span>
-            <h3 className="text-base md:text-lg font-black font-display text-stone-950 leading-tight uppercase">
-              GARANTIA BLINDADA DE 7 DIAS - RISCO ZERO!
+          <div className="flex flex-col gap-1">
+            <h3 className="text-xs md:text-sm font-bold font-display text-stone-900 leading-tight">
+              Acesso imediato & Garantia incondicional de 7 dias
             </h3>
-            <p className="text-xs md:text-sm text-stone-600 leading-relaxed font-medium">
-              Queremos que você tome essa decisão com total tranquilidade. Se por qualquer motivo você achar que a coleção não é para você, basta solicitar o reembolso em até 7 dias após a compra. Devolvemos 100% do seu dinheiro de forma rápida e sem perguntas ou complicação. Seu sucesso está garantido ou o seu dinheiro de volta!
+            <p className="text-[10px] md:text-xs text-[#5F5F5F] leading-relaxed">
+              Você recebe na hora o acesso digital para baixar todos os arquivos organizados. Caso mude de ideia, garantimos reembolso total em até 7 dias sem qualquer complicação!
             </p>
           </div>
         </section>
@@ -1427,7 +1269,7 @@ export default function App() {
                       <div className="bg-stone-50/90 p-2 rounded-lg border border-stone-200 opacity-60 flex flex-col justify-center items-center text-center">
                         <span className="text-[7px] font-black text-stone-500 uppercase tracking-wider block">PLANO BÁSICO</span>
                         <span className="text-xs font-black text-stone-400 line-through mt-0.5">R$ 10,90</span>
-                        <span className="text-[8px] text-red-500 font-bold block mt-0.5">Apenas 10 Modelos</span>
+                        <span className="text-[8px] text-red-500 font-bold block mt-0.5">Apenas 70 Modelos (Sem Bônus)</span>
                       </div>
 
                       {/* Plano Diamante */}
@@ -1598,7 +1440,7 @@ export default function App() {
                     <span className="font-bold text-emerald-700 block mb-1">📦 Informações de Acesso Simuladas:</span>
                     <div>• <strong>Área de membros:</strong> link enviado no seu e-mail</div>
                     <div>• <strong>Acesso:</strong> joao.freitas.ads@gmail.com</div>
-                    <div>• <strong>Quantidade:</strong> {selectedPack === "basico" ? "10 arquivos selecionados" : selectedPack === "diamante" ? "Plano Diamante com todos os 70+ arquivos + bônus vitalícios!" : "Mais de 70 arquivos + todos os bônus desbloqueados!"}</div>
+                    <div>• <strong>Quantidade:</strong> {selectedPack === "basico" ? "70 arquivos selecionados" : selectedPack === "diamante" ? "Plano Diamante com todos os 70+ arquivos + bônus vitalícios!" : "Mais de 70 arquivos + todos os bônus desbloqueados!"}</div>
                   </div>
 
                   <div className="w-full flex flex-col gap-2.5">
