@@ -58,33 +58,43 @@ export const BONUSES: BonusItem[] = [
 export const FAQS: FAQItem[] = [
   {
     id: 1,
-    question: "Funciona mesmo na minha impressora?",
-    answer: "Sim! Os arquivos STL são universais e compatíveis com todas as marcas de impressoras 3D FDM do mercado (como Creality Ender, Bambu Lab, Anycubic, Artillery, etc.). Os modelos são fatiados e organizados de forma simples para facilitar a impressão."
+    question: "Posso vender as bolsas produzidas fisicamente?",
+    answer: "Sim, absolutamente! Ao adquirir nosso pack, você ganha a Licença Comercial Vitalícia de Venda Física. Você pode imprimir e vender as bolsas prontas em sua região, loja física ou redes sociais pelo preço que achar mais justo (recomendamos de R$ 180 a R$ 350) e ficar com 100% do lucro. Apenas a venda dos arquivos digitais é proibida."
   },
   {
     id: 2,
-    question: "Preciso ter experiência avançada ou saber modelar?",
-    answer: "Não! Você não precisa saber modelar absolutamente nada. Todos os modelos vêm prontos para download em formato STL. Basta colocar no seu fatiador de preferência, configurar de acordo com as instruções básicas e imprimir."
+    question: "Os arquivos funcionam na minha impressora 3D?",
+    answer: "Sim! Os arquivos STL são universais e totalmente compatíveis com todas as marcas de impressoras 3D FDM do mercado (como Ender 3, Bambu Lab, Anycubic, Artillery, Kywoo, etc.). Basta importar para o seu fatiador habitual (Cura, PrusaSlicer, Bambu Studio) e mandar imprimir."
   },
   {
     id: 3,
-    question: "Como e quando vou receber os arquivos?",
-    answer: "O envio é 100% imediato. Assim que o pagamento for confirmado (no Pix é instantâneo), você receberá um e-mail com seus dados de acesso exclusivos à nossa área de membros, onde poderá baixar todos os arquivos organizados por pastas."
+    question: "Receberei futuras atualizações sem custo adicional?",
+    answer: "Com certeza! Nosso acervo é dinâmico e continua crescendo. Toda vez que nossa equipe adicionar novos modelos de bolsas, acessórios ou designs exclusivos à área de membros, você terá acesso imediato e gratuito a eles, sem precisar pagar mensalidades ou taxas extras."
   },
   {
     id: 4,
-    question: "Posso vender as peças impressas fisicamente?",
-    answer: "Sim! Você tem permissão comercial vitalícia inclusa no pack. Isso significa que você pode imprimir quantas bolsas quiser e vendê-las como produto físico em sua região, loja física ou Instagram. Apenas a revenda ou distribuição dos arquivos digitais é proibida."
+    question: "Como e quando vou receber o acesso?",
+    answer: "O envio é 100% imediato e automático! Assim que o seu pagamento fictício ou real for realizado (no Pix a aprovação ocorre em menos de 1 minuto), você receberá um e-mail com os dados de acesso exclusivos para a nossa área de membros VIP, de onde poderá fazer o download de qualquer arquivo."
   },
   {
     id: 5,
-    question: "É difícil de imprimir ou gasta muito material?",
-    answer: "Os modelos foram selecionados estrategicamente por serem multipartes inteligentes. Isso significa que as peças se encaixam de forma otimizada para evitar o uso excessivo de suportes, o que economiza muito filamento e garante um acabamento limpo. No pack ensinamos os melhores parâmetros de fatiamento."
+    question: "Preciso de conhecimento avançado para começar?",
+    answer: "Não! Não é necessário ter conhecimento em modelagem 3D ou softwares complexos de engenharia. Todos os modelos já vêm 100% modelados, otimizados e prontos em formato STL. Se você sabe ligar a sua impressora 3D e usar um fatiador básico, você já consegue produzir peças luxuosas de alta qualidade."
   },
   {
     id: 6,
-    question: "Qual pack vale mais a pena?",
-    answer: "Se você quer apenas testar com poucos modelos, o Pack Básico de R$10,90 já ajuda. No entanto, o Pack Completo por R$29,90 é incomparavelmente mais vantajoso, pois você ganha mais de 70 designs (contra apenas 10), suporte individual, atualizações futuras gratuitas e todos os 7 bônus de vendas para te ajudar a faturar."
+    question: "Existe garantia se eu mudar de ideia?",
+    answer: "Sim! Oferecemos uma Garantia Incondicional Blindada de 7 Dias. Se por qualquer motivo você achar que a coleção não é para você, basta entrar em contato para receber o reembolso integral, sem ressentimentos. Seu risco é absolutamente ZERO!"
+  },
+  {
+    id: 7,
+    question: "Os arquivos são organizados de verdade?",
+    answer: "Sim, e esse é um dos nossos maiores diferenciais! Esqueça de vez aquelas pastas de drive confusas, com nomes genéricos e arquivos corrompidos. Em nossa área de membros, tudo está perfeitamente catalogado por modelo, com imagens correspondentes, arquivos complementares (fechos, alças) e instruções claras para facilitar sua vida."
+  },
+  {
+    id: 8,
+    question: "É difícil de imprimir ou gasta muito material?",
+    answer: "Não! Os designs foram selecionados por serem multipartes inteligentes, o que significa que o fatiador reduz ou até elimina o uso de suportes difíceis de remover. Isso poupa tempo, evita desperdício de filamento e garante um acabamento limpo e requintado digno de grife."
   }
 ];
 
@@ -93,9 +103,9 @@ export const TESTIMONIALS: Testimonial[] = [
     id: 1,
     name: "Ana Cláudia Martins",
     location: "Sorocaba - SP",
-    role: "Proprietária da Martins 3D Prints",
+    role: "Martins Ateliê 3D",
     avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=120&h=120",
-    text: "Eu estava cansada de imprimir só vasinho de planta e bonequinho. Quando postei a Bolsa Clutch Prismática, minha vizinha encomendou uma na hora por R$ 180,00! Paguei o pack logo na primeira venda e já tenho lista de espera para o Dia das Mães.",
+    text: "Eu estava extremamente frustrada. Já tinha tentado de tudo para ter uma renda extra: vendi crochê, doces gourmet e cosméticos, mas as pessoas só sabiam pedir desconto ou dizer que estava caro. Decidi arriscar nas Bolsas 3D. Quando postei a primeira foto, uma conhecida encomendou na hora por R$ 220,00! Sem pechinchar nada! Paguei o pack logo de cara e hoje vendo sem precisar ficar implorando.",
     rating: 5,
     date: "Há 3 dias"
   },
@@ -105,7 +115,7 @@ export const TESTIMONIALS: Testimonial[] = [
     location: "Curitiba - PR",
     role: "Entusiasta de Impressão 3D",
     avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=120&h=120",
-    text: "O grande diferencial do pack é o fatiamento facilitado. Muitas bolsas que baixamos na internet são mal modeladas e quebram na hora de montar. Essas aqui são realmente multipartes inteligentes, os encaixes são perfeitos e o gasto de suporte é mínimo.",
+    text: "Tenho uma impressora 3D há mais de um ano e ela só acumulava poeira porque eu simplesmente não conseguia vender nada. Fabricava vasinhos, chaveiros e bonecos, mas a concorrência na internet vende isso por preço de banana. O Pack de Bolsas 3D salvou meu negócio. Hoje fabrico algo de luxo que as pessoas pagam R$ 250 rindo porque nunca viram nada igual.",
     rating: 5,
     date: "Há 1 semana"
   },
@@ -113,9 +123,9 @@ export const TESTIMONIALS: Testimonial[] = [
     id: 3,
     name: "Camila Guimarães",
     location: "Belo Horizonte - MG",
-    role: "Criadora de Acessórios Criativos",
+    role: "Criadora de Acessórios",
     avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=120&h=120",
-    text: "Peguei a versão completa por causa dos bônus e valeu cada centavo. As legendas prontas me ajudaram muito a divulgar no Instagram de forma profissional. Em menos de 2 semanas vendi 4 bolsas completas. Super indico!",
+    text: "Eu tentava vender laços infantis e bijuterias, mas a concorrência é gigantesca e eu passava o mês inteiro sem vender quase nada. Com as Bolsas 3D de Luxo, as pessoas ficam chocadas quando veem nas minhas redes sociais. Não tenho concorrência na minha cidade! O produto gera desejo imediato de compra e as mulheres compram pela beleza, sem reclamar de preço.",
     rating: 5,
     date: "Há 4 dias"
   }
