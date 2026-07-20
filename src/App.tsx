@@ -854,12 +854,12 @@ export default function App() {
                   {/* Image placed on top, without borders */}
                   <div className="relative mb-3 mt-2 flex justify-center overflow-visible">
                     <img 
-                      src="https://i.imgur.com/fQfT8Uf.png"
+                      {...getOptimizedImageProps("https://i.imgur.com/fQfT8Uf.png", "h", "(max-width: 640px) 100vw, 400px")}
                       alt="Central de Bolsas Premium" 
                       referrerPolicy="no-referrer"
                       loading="eager"
                       fetchPriority="high"
-                      className="w-[85%] sm:w-full max-w-[280px] sm:max-w-[340px] md:max-w-[380px] h-auto block object-contain animate-float drop-shadow-[0_10px_20px_rgba(0,0,0,0.08)]"
+                      className="w-[85%] sm:w-full max-w-[280px] sm:max-w-[340px] md:max-w-[380px] h-auto block object-contain drop-shadow-[0_10px_20px_rgba(0,0,0,0.08)]"
                     />
                   </div>
 

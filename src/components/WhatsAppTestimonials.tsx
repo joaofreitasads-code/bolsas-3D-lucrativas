@@ -80,18 +80,24 @@ const TESTIMONIALS: TestimonialSlide[] = [
 export default function WhatsAppTestimonials() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Preload all testimonial images to make navigation completely instant
+  // Preload remaining testimonial images with a brief delay so they do not block initial rendering of above-the-fold content.
   useEffect(() => {
-    TESTIMONIALS.forEach((item) => {
-      if (item.type === "image" && item.url) {
-        const img = new Image();
-        const props = getOptimizedImageProps(item.url, "h", "(max-width: 640px) 100vw, 480px");
-        img.src = props.src;
-        if (props.srcSet) {
-          img.srcset = props.srcSet;
+    const timer = setTimeout(() => {
+      TESTIMONIALS.forEach((item) => {
+        if (item.type === "image" && item.url) {
+          const img = new Image();
+          // Use "l" size for background preloading to keep network requests lightweight, 
+          // while maintaining high-quality cached variants for the carousel.
+          const props = getOptimizedImageProps(item.url, "l", "(max-width: 640px) 100vw, 480px");
+          img.src = props.src;
+          if (props.srcSet) {
+            img.srcset = props.srcSet;
+          }
         }
-      }
-    });
+      });
+    }, 1800); // 1.8 second delay to let above-the-fold hero images/videos render completely first
+
+    return () => clearTimeout(timer);
   }, []);
 
   const handlePrev = () => {
@@ -237,21 +243,6 @@ export default function WhatsAppTestimonials() {
       <span className="text-[10px] font-mono text-stone-500 text-center uppercase tracking-wider">
         Toque nas setas laterais para navegar
       </span>
-
-      {/* Hidden preloading container to trigger fast parallel browser caching on load */}
-      <div className="hidden" aria-hidden="true" style={{ display: "none" }}>
-        {TESTIMONIALS.map((t) => (
-          t.type === "image" && t.url && (
-            <img 
-              key={t.id} 
-              {...getOptimizedImageProps(t.url, "h", "(max-width: 640px) 100vw, 480px")}
-              alt="preload" 
-              referrerPolicy="no-referrer"
-              loading="eager"
-            />
-          )
-        ))}
-      </div>
     </div>
   );
 }

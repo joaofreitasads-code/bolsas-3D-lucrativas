@@ -33,13 +33,13 @@ export function getImgurResponsiveProps(url: string, defaultSuffix: "m" | "l" | 
     return { src: url };
   }
 
-  // To guarantee the absolute best quality and crispness, the primary source should be the original uncompressed image (without suffix).
-  // This is especially crucial for PNGs with transparency or detailed text (like WhatsApp screenshots).
-  // Note: Imgur suffixes ONLY work correctly if they preserve the original extension (e.g. .png, .jpg), otherwise transparency/rendering breaks!
-  const srcSet = `https://i.imgur.com/${id}h.${ext} 1024w, https://i.imgur.com/${id}.${ext} 1200w`;
+  // Generate responsive sizes utilizing the original extension to preserve crisp quality, transparency and avoid format breakage.
+  // This allows mobile devices to load smaller, optimized variants (320px, 640px) instantly while high-res displays get the ultra-sharp version.
+  const srcSet = `https://i.imgur.com/${id}m.${ext} 320w, https://i.imgur.com/${id}l.${ext} 640w, https://i.imgur.com/${id}h.${ext} 1024w, https://i.imgur.com/${id}.${ext} 1200w`;
+  const defaultUrl = `https://i.imgur.com/${id}${defaultSuffix}.${ext}`;
 
   return {
-    src: url, // Always default to the pristine original URL to guarantee maximum sharpness and transparency
+    src: defaultUrl,
     srcSet,
     sizes
   };
