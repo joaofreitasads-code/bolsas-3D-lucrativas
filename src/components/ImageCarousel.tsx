@@ -19,7 +19,7 @@ export default function ImageCarousel() {
   const marqueeImages = [...CAROUSEL_IMAGES, ...CAROUSEL_IMAGES];
 
   return (
-    <div className="w-full max-w-full relative overflow-hidden py-4 select-none rounded-3xl border border-stone-200/80 bg-[#FAF9F6]">
+    <div className="w-full max-w-full relative overflow-hidden py-4 select-none rounded-3xl border border-stone-800 bg-[#121212]">
       <style>{`
         @keyframes marquee {
           0% {
@@ -50,15 +50,15 @@ export default function ImageCarousel() {
       `}</style>
 
       {/* Edge shadow gradient overlays for premium feel */}
-      <div className="absolute left-0 top-0 bottom-0 w-12 md:w-32 bg-gradient-to-r from-[#FAF9F6] via-[#FAF9F6]/50 to-transparent z-10 pointer-events-none" />
-      <div className="absolute right-0 top-0 bottom-0 w-12 md:w-32 bg-gradient-to-l from-[#FAF9F6] via-[#FAF9F6]/50 to-transparent z-10 pointer-events-none" />
+      <div className="absolute left-0 top-0 bottom-0 w-12 md:w-32 bg-gradient-to-r from-[#121212] via-[#121212]/50 to-transparent z-10 pointer-events-none" />
+      <div className="absolute right-0 top-0 bottom-0 w-12 md:w-32 bg-gradient-to-l from-[#121212] via-[#121212]/50 to-transparent z-10 pointer-events-none" />
 
       {/* Continuous Auto-Scrolling Track */}
       <div className="animate-marquee-track gap-4 md:gap-6 px-4">
         {marqueeImages.map((img, idx) => (
           <div
             key={idx}
-            className="relative flex-shrink-0 w-52 h-52 sm:w-64 sm:h-64 md:w-72 md:h-72 rounded-2xl overflow-hidden cursor-default border border-stone-200 bg-white shadow-md group transition-all duration-300 hover:scale-[1.03] hover:shadow-lg hover:border-[#B45F4D]/40"
+            className="relative flex-shrink-0 w-52 h-52 sm:w-64 sm:h-64 md:w-72 md:h-72 rounded-2xl overflow-hidden cursor-default border border-stone-800 bg-stone-900 shadow-md group transition-all duration-300 hover:scale-[1.03] hover:shadow-lg hover:border-[#D4AF37]/40"
           >
             {/* Background image - fully filling the square */}
             <img

@@ -79,12 +79,12 @@ export default function MarketplaceCarousel() {
 
   return (
     <div className="w-full max-w-[480px] mx-auto flex flex-col items-center">
-      <div className="relative w-full bg-white rounded-2xl border border-stone-200/80 shadow-md flex items-center justify-center overflow-hidden group">
+      <div className="relative w-full bg-stone-900 rounded-2xl border border-stone-800 shadow-md flex items-center justify-center overflow-hidden group">
         
         {/* Left Arrow */}
         <button
           onClick={handlePrev}
-          className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-stone-700 hover:text-stone-900 p-2 rounded-full border border-stone-200 shadow-md hover:shadow-lg transition-all duration-200 z-10 focus:outline-none cursor-pointer"
+          className="absolute left-2 top-1/2 -translate-y-1/2 bg-stone-950/90 hover:bg-stone-800 text-stone-300 hover:text-[#D4AF37] p-2 rounded-full border border-stone-800 shadow-md hover:shadow-lg transition-all duration-200 z-10 focus:outline-none cursor-pointer animate-pulse"
           aria-label="Imagem anterior"
         >
           <ChevronLeft className="w-5 h-5" />
@@ -118,7 +118,7 @@ export default function MarketplaceCarousel() {
         {/* Right Arrow */}
         <button
           onClick={handleNext}
-          className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-stone-700 hover:text-stone-900 p-2 rounded-full border border-stone-200 shadow-md hover:shadow-lg transition-all duration-200 z-10 focus:outline-none cursor-pointer"
+          className="absolute right-2 top-1/2 -translate-y-1/2 bg-stone-950/90 hover:bg-stone-800 text-stone-300 hover:text-[#D4AF37] p-2 rounded-full border border-stone-800 shadow-md hover:shadow-lg transition-all duration-200 z-10 focus:outline-none cursor-pointer animate-pulse"
           aria-label="Próxima imagem"
         >
           <ChevronRight className="w-5 h-5" />

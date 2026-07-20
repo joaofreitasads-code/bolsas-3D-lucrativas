@@ -101,40 +101,40 @@ export default function WhatsAppTestimonials() {
   const activeTestimonial = TESTIMONIALS[currentIndex];
 
   return (
-    <div className="w-full max-w-4xl mx-auto flex flex-col gap-6 bg-[#FAF9F6] p-4 md:p-6 rounded-2xl shadow-sm">
+    <div className="w-full max-w-4xl mx-auto flex flex-col gap-6 bg-[#121212] p-4 md:p-6 rounded-2xl border border-stone-800 shadow-xl">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
         {/* Left Side: Text and Benefits */}
         <div className="lg:col-span-5 flex flex-col gap-4 text-left">
-          <div className="inline-flex items-center gap-1.5 bg-emerald-50 text-emerald-800 border border-emerald-100 px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider self-start">
-            <CheckCheck className="w-4 h-4 text-emerald-600" />
+          <div className="inline-flex items-center gap-1.5 bg-emerald-950/40 text-emerald-400 border border-emerald-500/20 px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider self-start">
+            <CheckCheck className="w-4 h-4 text-emerald-400" />
             Depoimentos Reais do WhatsApp
           </div>
 
-          <h3 className="text-2xl md:text-3xl font-black font-display text-stone-950 leading-tight">
+          <h3 className="text-2xl md:text-3xl font-black font-display text-white leading-tight">
             Veja o sucesso de quem já imprime e vende!
           </h3>
 
-          <p className="text-sm md:text-base text-stone-800 leading-relaxed font-medium">
+          <p className="text-sm md:text-base text-stone-300 leading-relaxed font-medium">
             Nada fala mais alto do que resultados reais. Nossos clientes estão dominando as vendas locais de bolsas impressas em 3D, saindo de peças comuns para acessórios de alto valor agregado e alta lucratividade!
           </p>
 
-          <div className="flex flex-col gap-3.5 mt-1 bg-white p-4 rounded-xl shadow-sm">
+          <div className="flex flex-col gap-3.5 mt-1 bg-stone-900 p-4 rounded-xl shadow-md border border-stone-800">
             <div className="flex gap-2.5 items-start">
-              <span className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold text-xs shrink-0">✓</span>
-              <div className="text-xs md:text-sm text-stone-800 leading-relaxed">
-                <strong className="text-stone-950 font-extrabold">Retorno Rápido:</strong> Muitos alunos recuperam o valor total do Pack logo na primeira bolsa vendida.
+              <span className="w-5 h-5 rounded-full bg-emerald-950 text-emerald-400 flex items-center justify-center font-bold text-xs shrink-0">✓</span>
+              <div className="text-xs md:text-sm text-stone-300 leading-relaxed">
+                <strong className="text-white font-extrabold">Retorno Rápido:</strong> Muitos alunos recuperam o valor total do Pack logo na primeira bolsa vendida.
               </div>
             </div>
             <div className="flex gap-2.5 items-start">
-              <span className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold text-xs shrink-0">✓</span>
-              <div className="text-xs md:text-sm text-stone-800 leading-relaxed">
-                <strong className="text-stone-950 font-extrabold font-display">Designs Otimizados:</strong> Arquivos testados, criados para economizar filamento e evitar suportes chatos.
+              <span className="w-5 h-5 rounded-full bg-emerald-950 text-emerald-400 flex items-center justify-center font-bold text-xs shrink-0">✓</span>
+              <div className="text-xs md:text-sm text-stone-300 leading-relaxed">
+                <strong className="text-white font-extrabold font-display">Designs Otimizados:</strong> Arquivos testados, criados para economizar filamento e evitar suportes chatos.
               </div>
             </div>
             <div className="flex gap-2.5 items-start">
-              <span className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold text-xs shrink-0">✓</span>
-              <div className="text-xs md:text-sm text-stone-800 leading-relaxed">
-                <strong className="text-stone-950 font-extrabold">Pronto para Lucrar:</strong> Comece a faturar imediatamente com modelos exclusivos de alta costura.
+              <span className="w-5 h-5 rounded-full bg-emerald-950 text-emerald-400 flex items-center justify-center font-bold text-xs shrink-0">✓</span>
+              <div className="text-xs md:text-sm text-stone-300 leading-relaxed">
+                <strong className="text-white font-extrabold">Pronto para Lucrar:</strong> Comece a faturar imediatamente com modelos exclusivos de alta costura.
               </div>
             </div>
           </div>
@@ -147,14 +147,14 @@ export default function WhatsAppTestimonials() {
             {/* Left Arrow Button */}
             <button
               onClick={handlePrev}
-              className="absolute -left-3 md:-left-6 bg-white hover:bg-stone-50 text-stone-700 hover:text-stone-900 p-2 md:p-3 rounded-full border border-stone-200 shadow-md hover:shadow-lg transition-all duration-200 z-20 focus:outline-none cursor-pointer"
+              className="absolute -left-3 md:-left-6 bg-stone-950 hover:bg-stone-800 text-stone-300 hover:text-[#D4AF37] p-2 md:p-3 rounded-full border border-stone-800 shadow-md hover:shadow-lg transition-all duration-200 z-20 focus:outline-none cursor-pointer"
               aria-label="Depoimento anterior"
             >
               <ChevronLeft className="w-5 h-5 md:w-6 md:h-6" />
             </button>
 
             {/* Testimonial Container Box */}
-            <div className="w-full bg-white rounded-xl shadow-md flex flex-col justify-center items-center overflow-hidden">
+            <div className="w-full bg-stone-900 rounded-xl border border-stone-800 shadow-md flex flex-col justify-center items-center overflow-hidden">
               <AnimatePresence mode="wait" initial={false}>
                 <motion.div
                   key={currentIndex}
@@ -180,8 +180,8 @@ export default function WhatsAppTestimonials() {
                     </div>
                   ) : (
                     /* Clean High-Fidelity WhatsApp Style Styled Card */
-                    <div className="w-full flex flex-col justify-between h-full p-4 md:p-6 min-h-[340px] md:min-h-[400px] text-left">
-                      <div className="flex items-center gap-3 border-b border-stone-100 pb-3 mb-3">
+                    <div className="w-full flex flex-col justify-between h-full p-4 md:p-6 min-h-[340px] md:min-h-[400px] text-left bg-stone-900">
+                      <div className="flex items-center gap-3 border-b border-stone-800 pb-3 mb-3">
                         <img
                           {...getOptimizedImageProps(activeTestimonial.avatar || "", "m", "40px")}
                           alt={activeTestimonial.clientName}
@@ -193,31 +193,31 @@ export default function WhatsAppTestimonials() {
                           className="w-10 h-10 rounded-full object-cover border border-emerald-500/20 shadow-sm"
                         />
                         <div className="flex flex-col">
-                          <span className="text-sm font-bold text-stone-900 leading-tight">
+                          <span className="text-sm font-bold text-white leading-tight">
                             {activeTestimonial.clientName}
                           </span>
-                          <span className="text-[10px] text-emerald-600 font-mono font-medium">
+                          <span className="text-[10px] text-emerald-400 font-mono font-medium">
                             {activeTestimonial.location} • Cliente Ativo
                           </span>
                         </div>
                       </div>
 
                       <div className="flex-1 flex flex-col justify-center">
-                        <div className="bg-emerald-50/70 border border-emerald-100 p-4 rounded-xl relative">
+                        <div className="bg-emerald-950/40 border border-emerald-500/10 p-4 rounded-xl relative">
                           {/* WhatsApp Speech Bubble Pointer */}
-                          <div className="absolute top-4 -left-2 w-0 h-0 border-t-[8px] border-t-transparent border-r-[8px] border-r-emerald-50/70 border-b-[8px] border-b-transparent"></div>
-                          <p className="text-stone-800 text-xs md:text-sm leading-relaxed italic">
+                          <div className="absolute top-4 -left-2 w-0 h-0 border-t-[8px] border-t-transparent border-r-[8px] border-r-emerald-950/40 border-b-[8px] border-b-transparent"></div>
+                          <p className="text-stone-200 text-xs md:text-sm leading-relaxed italic">
                             &ldquo;{activeTestimonial.message}&rdquo;
                           </p>
                         </div>
                       </div>
 
-                      <div className="flex items-center justify-between mt-4 pt-3 border-t border-stone-50">
-                        <span className="text-[9px] font-mono text-stone-400 uppercase tracking-wider">
+                      <div className="flex items-center justify-between mt-4 pt-3 border-t border-stone-800">
+                        <span className="text-[9px] font-mono text-stone-500 uppercase tracking-wider">
                           Mensagem de Suporte Oficial
                         </span>
-                        <span className="text-emerald-500 text-xs font-bold flex items-center gap-1">
-                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span>
+                        <span className="text-emerald-400 text-xs font-bold flex items-center gap-1">
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
                           Verificado ✓
                         </span>
                       </div>
@@ -230,7 +230,7 @@ export default function WhatsAppTestimonials() {
             {/* Right Arrow Button */}
             <button
               onClick={handleNext}
-              className="absolute -right-3 md:-right-6 bg-white hover:bg-stone-50 text-stone-700 hover:text-stone-900 p-2 md:p-3 rounded-full border border-stone-200 shadow-md hover:shadow-lg transition-all duration-200 z-20 focus:outline-none cursor-pointer"
+              className="absolute -right-3 md:-right-6 bg-stone-950 hover:bg-stone-800 text-stone-300 hover:text-[#D4AF37] p-2 md:p-3 rounded-full border border-stone-800 shadow-md hover:shadow-lg transition-all duration-200 z-20 focus:outline-none cursor-pointer"
               aria-label="Próximo depoimento"
             >
               <ChevronRight className="w-5 h-5 md:w-6 md:h-6" />
@@ -245,14 +245,14 @@ export default function WhatsAppTestimonials() {
                 key={idx}
                 onClick={() => setCurrentIndex(idx)}
                 className={`w-2 h-2 rounded-full transition-all duration-300 cursor-pointer ${
-                  currentIndex === idx ? "bg-[#B45F4D] w-5" : "bg-stone-300 hover:bg-stone-400"
+                  currentIndex === idx ? "bg-[#D4AF37] w-5" : "bg-stone-700 hover:bg-stone-600"
                 }`}
                 aria-label={`Ir para o depoimento ${idx + 1}`}
               />
             ))}
           </div>
 
-          <span className="text-[10px] font-mono text-stone-400 mt-2">
+          <span className="text-[10px] font-mono text-stone-500 mt-2">
             Use as setas nas laterais para navegar instantaneamente entre os depoimentos
           </span>
         </div>
