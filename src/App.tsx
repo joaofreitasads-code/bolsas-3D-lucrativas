@@ -329,6 +329,17 @@ export default function App() {
             prontas para vender
           </h1>
 
+          <div className="w-full max-w-[280px] xs:max-w-[320px] sm:max-w-md md:max-w-xl mx-auto my-4 select-none">
+            <img 
+              {...getOptimizedImageProps("https://i.imgur.com/YUteAFe.png", "h", "(max-width: 768px) 100vw, 600px")}
+              alt="Vitrine de Bolsas 3D" 
+              width={600}
+              height={337}
+              referrerPolicy="no-referrer"
+              className="w-full h-auto rounded-2xl object-contain shadow-2xl shadow-black/50 border border-stone-800/60"
+            />
+          </div>
+
           <p className="text-sm md:text-base text-stone-300 max-w-2xl leading-relaxed font-medium mt-3 px-4">
             Receba modelos prontos de bolsas e acessórios 3D para imprimir, divulgar e vender, sem precisar modelar absolutamente nada do zero.
           </p>
