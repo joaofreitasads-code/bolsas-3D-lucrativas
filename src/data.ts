@@ -84,7 +84,7 @@ export const FAQS: FAQItem[] = [
   {
     id: 6,
     question: "Qual pack vale mais a pena?",
-    answer: "Se você quer apenas os arquivos de bolsas, o Pack Básico de R$10,90 oferece os 70 modelos sem os bônus adicionais. No entanto, o Pack Completo por R$19,90 é incomparavelmente mais vantajoso, pois você ganha os mais de 70 designs, suporte individual, atualizações futuras gratuitas e todos os 6 bônus exclusivos (como Joias 3D, Estampas, Guia de Fatiamento, Caneca Premium, Kit Anéis e Guia de Cores) para impulsionar seu negócio."
+    answer: "Se você quer apenas os arquivos de bolsas, o Pack Básico de R$10,90 oferece os 70 modelos sem os bônus adicionais. No entanto, a Central de Bolsas Premium por R$19,90 é incomparavelmente mais vantajosa, pois você ganha os mais de 70 designs, suporte individual, atualizações futuras gratuitas e todos os 6 bônus exclusivos (como Joias 3D, Alças Personalizadas, Guia de Fatiamento, Caneca Premium, Kit Anéis e Guia de Cores) para impulsionar seu negócio."
   }
 ];
 
@@ -175,16 +175,16 @@ export const BAG_MODELS: BagModel[] = [
 ];
 
 export const SIMULATED_PURCHASES = [
-  { name: "Juliana R.", city: "Niterói - RJ", pack: "Completo 🔥" },
+  { name: "Juliana R.", city: "Niterói - RJ", pack: "Premium 🔥" },
   { name: "Patrícia L.", city: "Porto Alegre - RS", pack: "Básico 👍" },
-  { name: "Amanda F.", city: "Salvador - BA", pack: "Completo 🔥" },
-  { name: "Mariana S.", city: "Belo Horizonte - MG", pack: "Completo 🔥" },
-  { name: "Camila M.", city: "Curitiba - PR", pack: "Completo 🔥" },
-  { name: "Beatriz C.", city: "Recife - PE", pack: "Completo 🔥" },
-  { name: "Fernanda O.", city: "Campinas - SP", pack: "Completo 🔥" },
-  { name: "Letícia V.", city: "Goiânia - GO", pack: "Completo 🔥" },
-  { name: "Larissa P.", city: "Blumenau - SC", pack: "Completo 🔥" },
-  { name: "Gabriela G.", city: "Fortaleza - CE", pack: "Completo 🔥" },
-  { name: "Bruna D.", city: "Florianópolis - SC", pack: "Completo 🔥" },
-  { name: "Caroline N.", city: "Manaus - AM", pack: "Completo 🔥" }
+  { name: "Amanda F.", city: "Salvador - BA", pack: "Premium 🔥" },
+  { name: "Mariana S.", city: "Belo Horizonte - MG", pack: "Premium 🔥" },
+  { name: "Camila M.", city: "Curitiba - PR", pack: "Premium 🔥" },
+  { name: "Beatriz C.", city: "Recife - PE", pack: "Premium 🔥" },
+  { name: "Fernanda O.", city: "Campinas - SP", pack: "Premium 🔥" },
+  { name: "Letícia V.", city: "Goiânia - GO", pack: "Premium 🔥" },
+  { name: "Larissa P.", city: "Blumenau - SC", pack: "Premium 🔥" },
+  { name: "Gabriela G.", city: "Fortaleza - CE", pack: "Premium 🔥" },
+  { name: "Bruna D.", city: "Florianópolis - SC", pack: "Premium 🔥" },
+  { name: "Caroline N.", city: "Manaus - AM", pack: "Premium 🔥" }
 ];

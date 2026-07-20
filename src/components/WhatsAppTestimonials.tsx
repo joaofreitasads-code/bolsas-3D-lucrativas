@@ -101,162 +101,138 @@ export default function WhatsAppTestimonials() {
   const activeTestimonial = TESTIMONIALS[currentIndex];
 
   return (
-    <div className="w-full max-w-4xl mx-auto flex flex-col gap-6 bg-[#121212] p-4 md:p-6 rounded-2xl border border-stone-800 shadow-xl">
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
-        {/* Left Side: Text and Benefits */}
-        <div className="lg:col-span-5 flex flex-col gap-4 text-left">
-          <div className="inline-flex items-center gap-1.5 bg-emerald-950/40 text-emerald-400 border border-emerald-500/20 px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider self-start">
-            <CheckCheck className="w-4 h-4 text-emerald-400" />
-            Depoimentos Reais do WhatsApp
+    <div className="w-full max-w-lg mx-auto flex flex-col items-center gap-5">
+      {/* Small Introductory Copy */}
+      <div className="text-center max-w-xs sm:max-w-sm mx-auto flex flex-col gap-1 px-4">
+        <span className="text-[10px] font-mono uppercase text-emerald-400 font-extrabold tracking-widest">
+          RESULTADOS REAIS
+        </span>
+        <p className="text-xs sm:text-sm text-stone-300 font-semibold leading-relaxed">
+          Veja as mensagens de quem já está faturando alto e dominando o mercado com nossas matrizes premium.
+        </p>
+      </div>
+
+      {/* Centered Smartphone Mockup Wrapper */}
+      <div className="relative w-full max-w-[290px] sm:max-w-[310px] flex items-center justify-center group mt-2">
+        
+        {/* Left Arrow Button */}
+        <button
+          onClick={handlePrev}
+          className="absolute -left-12 sm:-left-16 bg-stone-950/90 hover:bg-stone-900 text-stone-300 hover:text-[#D4AF37] p-3 rounded-full border border-stone-800 shadow-xl hover:shadow-2xl transition-all duration-200 z-30 focus:outline-none cursor-pointer hover:scale-105 active:scale-95"
+          aria-label="Depoimento anterior"
+        >
+          <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
+        </button>
+
+        {/* Premium Smartphone Bezel in White */}
+        <div className="relative w-full bg-[#111111] rounded-[42px] border-[10px] border-stone-100 shadow-[0_25px_60px_-15px_rgba(255,255,255,0.08)] overflow-hidden flex flex-col ring-4 ring-black/40">
+          {/* Dynamic Island / Speaker Line */}
+          <div className="absolute top-2 left-1/2 -translate-x-1/2 w-24 h-4.5 bg-black rounded-full z-40 flex items-center justify-between px-3">
+            <span className="w-1.5 h-1.5 rounded-full bg-stone-900"></span>
+            <div className="w-10 h-1 bg-stone-800/80 rounded-full"></div>
+            <span className="w-1 h-1 rounded-full bg-emerald-500/80 animate-pulse"></span>
           </div>
 
-          <h3 className="text-2xl md:text-3xl font-black font-display text-white leading-tight">
-            Veja o sucesso de quem já imprime e vende!
-          </h3>
-
-          <p className="text-sm md:text-base text-stone-300 leading-relaxed font-medium">
-            Nada fala mais alto do que resultados reais. Nossos clientes estão dominando as vendas locais de bolsas impressas em 3D, saindo de peças comuns para acessórios de alto valor agregado e alta lucratividade!
-          </p>
-
-          <div className="flex flex-col gap-3.5 mt-1 bg-stone-900 p-4 rounded-xl shadow-md border border-stone-800">
-            <div className="flex gap-2.5 items-start">
-              <span className="w-5 h-5 rounded-full bg-emerald-950 text-emerald-400 flex items-center justify-center font-bold text-xs shrink-0">✓</span>
-              <div className="text-xs md:text-sm text-stone-300 leading-relaxed">
-                <strong className="text-white font-extrabold">Retorno Rápido:</strong> Muitos alunos recuperam o valor total do Pack logo na primeira bolsa vendida.
-              </div>
-            </div>
-            <div className="flex gap-2.5 items-start">
-              <span className="w-5 h-5 rounded-full bg-emerald-950 text-emerald-400 flex items-center justify-center font-bold text-xs shrink-0">✓</span>
-              <div className="text-xs md:text-sm text-stone-300 leading-relaxed">
-                <strong className="text-white font-extrabold font-display">Designs Otimizados:</strong> Arquivos testados, criados para economizar filamento e evitar suportes chatos.
-              </div>
-            </div>
-            <div className="flex gap-2.5 items-start">
-              <span className="w-5 h-5 rounded-full bg-emerald-950 text-emerald-400 flex items-center justify-center font-bold text-xs shrink-0">✓</span>
-              <div className="text-xs md:text-sm text-stone-300 leading-relaxed">
-                <strong className="text-white font-extrabold">Pronto para Lucrar:</strong> Comece a faturar imediatamente com modelos exclusivos de alta costura.
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Right Side: Slider with Side Arrows */}
-        <div className="lg:col-span-7 flex flex-col items-center w-full">
-          <div className="relative w-full max-w-[350px] sm:max-w-[370px] flex items-center justify-center group">
-            
-            {/* Left Arrow Button */}
-            <button
-              onClick={handlePrev}
-              className="absolute -left-3 md:-left-6 bg-stone-950 hover:bg-stone-800 text-stone-300 hover:text-[#D4AF37] p-2 md:p-3 rounded-full border border-stone-800 shadow-md hover:shadow-lg transition-all duration-200 z-20 focus:outline-none cursor-pointer"
-              aria-label="Depoimento anterior"
-            >
-              <ChevronLeft className="w-5 h-5 md:w-6 md:h-6" />
-            </button>
-
-            {/* Testimonial Container Box */}
-            <div className="w-full bg-stone-900 rounded-xl border border-stone-800 shadow-md flex flex-col justify-center items-center overflow-hidden">
-              <AnimatePresence mode="wait" initial={false}>
-                <motion.div
-                  key={currentIndex}
-                  initial={{ opacity: 0, x: 15 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -15 }}
-                  transition={{ duration: 0.15, ease: "easeOut" }}
-                  className="w-full h-full flex flex-col items-center justify-center"
-                >
-                  {activeTestimonial.type === "image" ? (
-                    /* Literal Image Display (as requested, with no mobile frame or click-to-expand badges) */
-                    <div className="w-full flex flex-col items-center justify-center">
+          {/* Testimonial Image inside the phone */}
+          <div className="w-full bg-[#111111] flex flex-col justify-center items-center overflow-hidden pt-1.5">
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.div
+                key={currentIndex}
+                initial={{ opacity: 0, scale: 0.96 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.96 }}
+                transition={{ duration: 0.18, ease: "easeInOut" }}
+                className="w-full h-full flex flex-col items-center justify-center"
+              >
+                {activeTestimonial.type === "image" ? (
+                  <div className="w-full flex flex-col items-center justify-center">
+                    <img
+                      {...getOptimizedImageProps(activeTestimonial.url || "", "l", "(max-width: 640px) 100vw, 480px")}
+                      alt={activeTestimonial.caption}
+                      referrerPolicy="no-referrer"
+                      loading="lazy"
+                      decoding="async"
+                      width={480}
+                      height={640}
+                      className="w-full h-auto block select-none rounded-[32px] object-cover"
+                    />
+                  </div>
+                ) : (
+                  /* Styled card inside phone template */
+                  <div className="w-full flex flex-col justify-between p-4 min-h-[380px] text-left bg-stone-900 rounded-[32px]">
+                    <div className="flex items-center gap-3 border-b border-stone-800 pb-3 mb-3">
                       <img
-                        {...getOptimizedImageProps(activeTestimonial.url || "", "l", "(max-width: 640px) 100vw, 480px")}
-                        alt={activeTestimonial.caption}
+                        {...getOptimizedImageProps(activeTestimonial.avatar || "", "m", "40px")}
+                        alt={activeTestimonial.clientName}
                         referrerPolicy="no-referrer"
                         loading="lazy"
                         decoding="async"
-                        width={480}
-                        height={640}
-                        className="w-full h-auto block select-none rounded-xl"
+                        width={40}
+                        height={40}
+                        className="w-10 h-10 rounded-full object-cover border border-emerald-500/20 shadow-sm"
                       />
-                    </div>
-                  ) : (
-                    /* Clean High-Fidelity WhatsApp Style Styled Card */
-                    <div className="w-full flex flex-col justify-between h-full p-4 md:p-6 min-h-[340px] md:min-h-[400px] text-left bg-stone-900">
-                      <div className="flex items-center gap-3 border-b border-stone-800 pb-3 mb-3">
-                        <img
-                          {...getOptimizedImageProps(activeTestimonial.avatar || "", "m", "40px")}
-                          alt={activeTestimonial.clientName}
-                          referrerPolicy="no-referrer"
-                          loading="lazy"
-                          decoding="async"
-                          width={40}
-                          height={40}
-                          className="w-10 h-10 rounded-full object-cover border border-emerald-500/20 shadow-sm"
-                        />
-                        <div className="flex flex-col">
-                          <span className="text-sm font-bold text-white leading-tight">
-                            {activeTestimonial.clientName}
-                          </span>
-                          <span className="text-[10px] text-emerald-400 font-mono font-medium">
-                            {activeTestimonial.location} • Cliente Ativo
-                          </span>
-                        </div>
-                      </div>
-
-                      <div className="flex-1 flex flex-col justify-center">
-                        <div className="bg-emerald-950/40 border border-emerald-500/10 p-4 rounded-xl relative">
-                          {/* WhatsApp Speech Bubble Pointer */}
-                          <div className="absolute top-4 -left-2 w-0 h-0 border-t-[8px] border-t-transparent border-r-[8px] border-r-emerald-950/40 border-b-[8px] border-b-transparent"></div>
-                          <p className="text-stone-200 text-xs md:text-sm leading-relaxed italic">
-                            &ldquo;{activeTestimonial.message}&rdquo;
-                          </p>
-                        </div>
-                      </div>
-
-                      <div className="flex items-center justify-between mt-4 pt-3 border-t border-stone-800">
-                        <span className="text-[9px] font-mono text-stone-500 uppercase tracking-wider">
-                          Mensagem de Suporte Oficial
+                      <div className="flex flex-col">
+                        <span className="text-sm font-bold text-white leading-tight">
+                          {activeTestimonial.clientName}
                         </span>
-                        <span className="text-emerald-400 text-xs font-bold flex items-center gap-1">
-                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
-                          Verificado ✓
+                        <span className="text-[10px] text-emerald-400 font-mono font-medium">
+                          {activeTestimonial.location} • Cliente Ativo
                         </span>
                       </div>
                     </div>
-                  )}
-                </motion.div>
-              </AnimatePresence>
-            </div>
 
-            {/* Right Arrow Button */}
-            <button
-              onClick={handleNext}
-              className="absolute -right-3 md:-right-6 bg-stone-950 hover:bg-stone-800 text-stone-300 hover:text-[#D4AF37] p-2 md:p-3 rounded-full border border-stone-800 shadow-md hover:shadow-lg transition-all duration-200 z-20 focus:outline-none cursor-pointer"
-              aria-label="Próximo depoimento"
-            >
-              <ChevronRight className="w-5 h-5 md:w-6 md:h-6" />
-            </button>
+                    <div className="flex-1 flex flex-col justify-center">
+                      <div className="bg-emerald-950/40 border border-emerald-500/10 p-3 rounded-xl relative">
+                        <div className="absolute top-4 -left-2 w-0 h-0 border-t-[8px] border-t-transparent border-r-[8px] border-r-emerald-950/40 border-b-[8px] border-b-transparent"></div>
+                        <p className="text-stone-200 text-xs leading-relaxed italic">
+                          &ldquo;{activeTestimonial.message}&rdquo;
+                        </p>
+                      </div>
+                    </div>
 
+                    <div className="flex items-center justify-between mt-4 pt-3 border-t border-stone-800">
+                      <span className="text-[9px] font-mono text-stone-500 uppercase tracking-wider">
+                        Mensagem de Suporte Oficial
+                      </span>
+                      <span className="text-emerald-400 text-xs font-bold flex items-center gap-1">
+                        Verificado ✓
+                      </span>
+                    </div>
+                  </div>
+                )}
+              </motion.div>
+            </AnimatePresence>
           </div>
-
-          {/* Dots Indicator */}
-          <div className="flex gap-1.5 mt-4">
-            {TESTIMONIALS.map((_, idx) => (
-              <button
-                key={idx}
-                onClick={() => setCurrentIndex(idx)}
-                className={`w-2 h-2 rounded-full transition-all duration-300 cursor-pointer ${
-                  currentIndex === idx ? "bg-[#D4AF37] w-5" : "bg-stone-700 hover:bg-stone-600"
-                }`}
-                aria-label={`Ir para o depoimento ${idx + 1}`}
-              />
-            ))}
-          </div>
-
-          <span className="text-[10px] font-mono text-stone-500 mt-2">
-            Use as setas nas laterais para navegar instantaneamente entre os depoimentos
-          </span>
         </div>
+
+        {/* Right Arrow Button */}
+        <button
+          onClick={handleNext}
+          className="absolute -right-12 sm:-right-16 bg-stone-950/90 hover:bg-stone-900 text-stone-300 hover:text-[#D4AF37] p-3 rounded-full border border-stone-800 shadow-xl hover:shadow-2xl transition-all duration-200 z-30 focus:outline-none cursor-pointer hover:scale-105 active:scale-95"
+          aria-label="Próximo depoimento"
+        >
+          <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
+        </button>
+
       </div>
+
+      {/* Dots Indicator */}
+      <div className="flex gap-1.5 mt-2">
+        {TESTIMONIALS.map((_, idx) => (
+          <button
+            key={idx}
+            onClick={() => setCurrentIndex(idx)}
+            className={`w-2 h-2 rounded-full transition-all duration-300 cursor-pointer ${
+              currentIndex === idx ? "bg-emerald-500 w-5" : "bg-stone-800 hover:bg-stone-700"
+            }`}
+            aria-label={`Ir para o depoimento ${idx + 1}`}
+          />
+        ))}
+      </div>
+
+      <span className="text-[10px] font-mono text-stone-500 text-center uppercase tracking-wider">
+        Toque nas setas laterais para navegar
+      </span>
     </div>
   );
 }
