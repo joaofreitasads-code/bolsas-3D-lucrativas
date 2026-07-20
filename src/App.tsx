@@ -377,20 +377,9 @@ export default function App() {
               {!hasVideoStarted && !hasVideoEnded && (
                 <div 
                   onClick={handleStartWithSound}
-                  className="absolute inset-0 bg-black flex flex-col items-center justify-center cursor-pointer transition-all duration-300 z-20"
+                  className="absolute inset-0 bg-black/25 hover:bg-black/40 flex flex-col items-center justify-center cursor-pointer transition-all duration-300 z-20 backdrop-blur-3xs"
                   style={{ touchAction: "pan-y" }}
                 >
-                  {/* High Quality Video Preview Image of the Woman */}
-                  <img 
-                    src="https://i.imgur.com/mC573pR.jpg" 
-                    alt="Vídeo de Apresentação"
-                    referrerPolicy="no-referrer"
-                    loading="eager"
-                    fetchPriority="high"
-                    className="absolute inset-0 w-full h-full object-cover opacity-85 transition-opacity duration-300 pointer-events-none"
-                  />
-                  <div className="absolute inset-0 bg-black/30 pointer-events-none" />
-
                   <div className="flex flex-col items-center gap-4 relative z-10">
                     {/* Golden luxury Play Button */}
                     <div className="w-20 h-14 bg-[#D4AF37] rounded-2xl flex items-center justify-center shadow-2xl transition-all duration-300 scale-100 hover:scale-110 active:scale-95 relative group/btn">
@@ -401,7 +390,7 @@ export default function App() {
                         <path d="M8 5v14l11-7z" />
                       </svg>
                     </div>
-                    <span className="text-white font-extrabold text-xs tracking-widest uppercase px-4 py-1.5 rounded-full bg-black/60 shadow-md border border-white/10 backdrop-blur-xs">
+                    <span className="text-white font-extrabold text-xs tracking-widest uppercase px-4 py-1.5 rounded-full bg-black/75 shadow-md border border-white/10 backdrop-blur-xs">
                       CLIQUE PARA ASSISTIR
                     </span>
                   </div>
@@ -863,17 +852,14 @@ export default function App() {
                   </div>
 
                   {/* Image placed on top, without borders */}
-                  <div className="relative mb-1.5 mt-1 flex justify-center overflow-visible">
+                  <div className="relative mb-3 mt-2 flex justify-center overflow-visible">
                     <img 
-                      {...getOptimizedImageProps("https://i.imgur.com/fQfT8Uf.png", "h", "(max-width: 640px) 100vw, 400px")}
+                      src="https://i.imgur.com/fQfT8Uf.png"
                       alt="Central de Bolsas Premium" 
                       referrerPolicy="no-referrer"
                       loading="eager"
                       fetchPriority="high"
-                      width={400}
-                      height={250}
-                      className="w-full h-auto block object-contain animate-float mix-blend-multiply"
-                      style={{ mixBlendMode: "multiply" }}
+                      className="w-[85%] sm:w-full max-w-[280px] sm:max-w-[340px] md:max-w-[380px] h-auto block object-contain animate-float drop-shadow-[0_10px_20px_rgba(0,0,0,0.08)]"
                     />
                   </div>
 

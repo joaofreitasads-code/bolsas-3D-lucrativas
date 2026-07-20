@@ -138,7 +138,7 @@ export default function WhatsAppTestimonials() {
           </div>
 
           {/* Testimonial Image inside the phone - absolute full size to prevent any height jitter */}
-          <div className="w-full h-full bg-[#111111] flex flex-col justify-center items-center overflow-hidden pt-7 flex-1">
+          <div className="w-full h-full bg-[#111111] flex flex-col justify-center items-center overflow-hidden pt-3.5 flex-1">
             <AnimatePresence mode="wait" initial={false}>
               <motion.div
                 key={currentIndex}
@@ -158,7 +158,7 @@ export default function WhatsAppTestimonials() {
                       decoding="async"
                       width={480}
                       height={640}
-                      className="w-full h-full select-none rounded-[32px] object-contain p-1.5"
+                      className="w-full h-full select-none rounded-[32px] object-contain"
                     />
                   </div>
                 ) : (
@@ -237,6 +237,21 @@ export default function WhatsAppTestimonials() {
       <span className="text-[10px] font-mono text-stone-500 text-center uppercase tracking-wider">
         Toque nas setas laterais para navegar
       </span>
+
+      {/* Hidden preloading container to trigger fast parallel browser caching on load */}
+      <div className="hidden" aria-hidden="true" style={{ display: "none" }}>
+        {TESTIMONIALS.map((t) => (
+          t.type === "image" && t.url && (
+            <img 
+              key={t.id} 
+              {...getOptimizedImageProps(t.url, "h", "(max-width: 640px) 100vw, 480px")}
+              alt="preload" 
+              referrerPolicy="no-referrer"
+              loading="eager"
+            />
+          )
+        ))}
+      </div>
     </div>
   );
 }
