@@ -851,16 +851,17 @@ export default function App() {
                   </div>
 
                   {/* Image placed on top, without borders */}
-                  <div className="relative mb-1.5 mt-1 flex justify-center">
+                  <div className="relative mb-1.5 mt-1 flex justify-center overflow-visible">
                     <img 
-                      src="https://i.imgur.com/iWAU727.png"
+                      src="https://i.imgur.com/fQfT8Uf.png"
                       alt="Central de Bolsas Premium" 
                       referrerPolicy="no-referrer"
                       loading="eager"
                       fetchPriority="high"
                       width={400}
                       height={250}
-                      className="w-full h-auto block object-contain"
+                      className="w-full h-auto block object-contain animate-float mix-blend-multiply"
+                      style={{ mixBlendMode: "multiply" }}
                     />
                   </div>
 
