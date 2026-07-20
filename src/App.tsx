@@ -674,6 +674,26 @@ export default function App() {
         </section>
 
         {/* =======================================
+            SECTION 11: OPORTUNIDADE E LUCRATIVIDADE (REPLACED WITH COMPARISON INFOGRAPHIC)
+           ======================================= */}
+        <section id="comparacao" className="flex flex-col items-center gap-6 w-full">
+          <div className="relative rounded-3xl p-[3px] bg-gradient-to-br from-[#D4AF37] via-[#FFF3B0] to-[#D4AF37] shadow-2xl shadow-[#D4AF37]/20 w-full max-w-4xl mx-auto">
+            <div className="rounded-[22px] overflow-hidden bg-black">
+              <img 
+                {...getOptimizedImageProps("https://i.imgur.com/ASxkKxL.png", "l", "(max-width: 1024px) 100vw, 896px")}
+                alt="Comparação de Lucratividade" 
+                referrerPolicy="no-referrer"
+                loading="lazy"
+                decoding="async"
+                width={896}
+                height={560}
+                className="w-full h-auto block object-cover"
+              />
+            </div>
+          </div>
+        </section>
+
+        {/* =======================================
             SECTION 10: DEMONSTRAÇÃO VISUAL (CATALOGO DE IMAGENS)
            ======================================= */}
         <section id="demonstracao-visual" className="flex flex-col gap-5 bg-gradient-to-b from-stone-900/60 via-stone-950/60 to-stone-900/60 px-3.5 py-6 sm:p-6 md:p-8 rounded-3xl border border-stone-800 shadow-inner w-full overflow-hidden">
@@ -717,11 +737,11 @@ export default function App() {
                   <div className="relative w-full h-full bg-stone-950 rounded-xl overflow-hidden flex items-center justify-center">
                     {/* High luxury reflection overlay on hover */}
                     <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-white/30 pointer-events-none z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-
+ 
                     {/* Zooming Cover Image */}
                     <img 
                       {...getOptimizedImageProps(item.url, "m", "(max-width: 640px) 50vw, 240px")}
-                      alt={`Modelo exclusivo ${index + 1}`} 
+                      alt={`Modelo exclusive ${index + 1}`} 
                       referrerPolicy="no-referrer"
                       loading="lazy"
                       decoding="async"
@@ -746,26 +766,6 @@ export default function App() {
             <p className="text-xs text-stone-300 leading-relaxed font-medium">
               *Quanto mais modelos você tem no seu catálogo digital, mais possibilidades e nichos de mercado você consegue divulgar, testar e vender sem custos de modelagem.
             </p>
-          </div>
-        </section>
-
-        {/* =======================================
-            SECTION 11: OPORTUNIDADE E LUCRATIVIDADE (REPLACED WITH COMPARISON INFOGRAPHIC)
-           ======================================= */}
-        <section id="comparacao" className="flex flex-col items-center gap-6 w-full">
-          <div className="relative rounded-3xl p-[3px] bg-gradient-to-br from-[#D4AF37] via-[#FFF3B0] to-[#D4AF37] shadow-2xl shadow-[#D4AF37]/20 w-full max-w-4xl mx-auto">
-            <div className="rounded-[22px] overflow-hidden bg-black">
-              <img 
-                {...getOptimizedImageProps("https://i.imgur.com/ASxkKxL.png", "l", "(max-width: 1024px) 100vw, 896px")}
-                alt="Comparação de Lucratividade" 
-                referrerPolicy="no-referrer"
-                loading="lazy"
-                decoding="async"
-                width={896}
-                height={560}
-                className="w-full h-auto block object-cover"
-              />
-            </div>
           </div>
         </section>
 
