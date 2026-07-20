@@ -853,7 +853,7 @@ export default function App() {
                   {/* Image placed on top, without borders */}
                   <div className="relative mb-1.5 mt-1 flex justify-center">
                     <img 
-                      {...getOptimizedImageProps("https://i.imgur.com/iWAU727.png", "l", "(max-width: 640px) 100vw, 400px")}
+                      src="https://i.imgur.com/iWAU727.png"
                       alt="Central de Bolsas Premium" 
                       referrerPolicy="no-referrer"
                       loading="eager"

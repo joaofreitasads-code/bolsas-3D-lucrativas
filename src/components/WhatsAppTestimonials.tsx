@@ -80,15 +80,15 @@ const TESTIMONIALS: TestimonialSlide[] = [
 export default function WhatsAppTestimonials() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Preload only the next image in the sequence to save memory
+  // Preload all testimonial images to make navigation completely instant
   useEffect(() => {
-    const nextIndex = (currentIndex + 1) % TESTIMONIALS.length;
-    const nextItem = TESTIMONIALS[nextIndex];
-    if (nextItem && nextItem.type === "image" && nextItem.url) {
-      const img = new Image();
-      img.src = nextItem.url;
-    }
-  }, [currentIndex]);
+    TESTIMONIALS.forEach((item) => {
+      if (item.type === "image" && item.url) {
+        const img = new Image();
+        img.src = item.url;
+      }
+    });
+  }, []);
 
   const handlePrev = () => {
     setCurrentIndex((prev) => (prev === 0 ? TESTIMONIALS.length - 1 : prev - 1));
@@ -112,8 +112,8 @@ export default function WhatsAppTestimonials() {
         </p>
       </div>
 
-      {/* Centered Smartphone Mockup Wrapper */}
-      <div className="relative w-full max-w-[290px] sm:max-w-[310px] flex items-center justify-center group mt-2">
+      {/* Centered Smartphone Mockup Wrapper with fixed responsive dimensions */}
+      <div className="relative w-full max-w-[290px] sm:max-w-[310px] flex items-center justify-center group mt-2 h-[580px] sm:h-[620px] shrink-0">
         
         {/* Left Arrow Button */}
         <button
@@ -124,8 +124,8 @@ export default function WhatsAppTestimonials() {
           <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
         </button>
 
-        {/* Premium Smartphone Bezel in White */}
-        <div className="relative w-full bg-[#111111] rounded-[42px] border-[10px] border-stone-100 shadow-[0_25px_60px_-15px_rgba(255,255,255,0.08)] overflow-hidden flex flex-col ring-4 ring-black/40">
+        {/* Premium Smartphone Bezel in White - with perfectly constant height and aspect ratio */}
+        <div className="relative w-full h-full bg-[#111111] rounded-[42px] border-[10px] border-stone-100 shadow-[0_25px_60px_-15px_rgba(255,255,255,0.08)] overflow-hidden flex flex-col ring-4 ring-black/40">
           {/* Dynamic Island / Speaker Line */}
           <div className="absolute top-2 left-1/2 -translate-x-1/2 w-24 h-4.5 bg-black rounded-full z-40 flex items-center justify-between px-3">
             <span className="w-1.5 h-1.5 rounded-full bg-stone-900"></span>
@@ -133,39 +133,39 @@ export default function WhatsAppTestimonials() {
             <span className="w-1 h-1 rounded-full bg-emerald-500/80 animate-pulse"></span>
           </div>
 
-          {/* Testimonial Image inside the phone */}
-          <div className="w-full bg-[#111111] flex flex-col justify-center items-center overflow-hidden pt-1.5">
+          {/* Testimonial Image inside the phone - absolute full size to prevent any height jitter */}
+          <div className="w-full h-full bg-[#111111] flex flex-col justify-center items-center overflow-hidden pt-7 flex-1">
             <AnimatePresence mode="wait" initial={false}>
               <motion.div
                 key={currentIndex}
-                initial={{ opacity: 0, scale: 0.96 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.96 }}
-                transition={{ duration: 0.18, ease: "easeInOut" }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.08, ease: "linear" }}
                 className="w-full h-full flex flex-col items-center justify-center"
               >
                 {activeTestimonial.type === "image" ? (
-                  <div className="w-full flex flex-col items-center justify-center">
+                  <div className="w-full h-full flex flex-col items-center justify-center">
                     <img
                       {...getOptimizedImageProps(activeTestimonial.url || "", "l", "(max-width: 640px) 100vw, 480px")}
                       alt={activeTestimonial.caption}
                       referrerPolicy="no-referrer"
-                      loading="lazy"
+                      loading="eager"
                       decoding="async"
                       width={480}
                       height={640}
-                      className="w-full h-auto block select-none rounded-[32px] object-cover"
+                      className="w-full h-full select-none rounded-[32px] object-cover object-top"
                     />
                   </div>
                 ) : (
                   /* Styled card inside phone template */
-                  <div className="w-full flex flex-col justify-between p-4 min-h-[380px] text-left bg-stone-900 rounded-[32px]">
+                  <div className="w-full h-full flex flex-col justify-between p-4 text-left bg-stone-900 rounded-[32px]">
                     <div className="flex items-center gap-3 border-b border-stone-800 pb-3 mb-3">
                       <img
                         {...getOptimizedImageProps(activeTestimonial.avatar || "", "m", "40px")}
                         alt={activeTestimonial.clientName}
                         referrerPolicy="no-referrer"
-                        loading="lazy"
+                        loading="eager"
                         decoding="async"
                         width={40}
                         height={40}
