@@ -62,7 +62,7 @@ export default function ImageCarousel() {
           >
             {/* Background image - fully filling the square */}
             <img
-              {...getOptimizedImageProps(img.url, "m", "(max-width: 640px) 208px, (max-width: 768px) 256px, 288px")}
+              {...getOptimizedImageProps(img.url, "l", "(max-width: 640px) 208px, (max-width: 768px) 256px, 288px")}
               alt={img.caption}
               referrerPolicy="no-referrer"
               loading="lazy"

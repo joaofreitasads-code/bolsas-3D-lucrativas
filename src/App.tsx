@@ -336,6 +336,7 @@ export default function App() {
                 ref={videoRef}
                 autoPlay={false}
                 preload="auto"
+                poster="https://i.imgur.com/mC573pR.jpg"
                 muted={isMuted}
                 loop={false}
                 controls={false}
@@ -376,10 +377,21 @@ export default function App() {
               {!hasVideoStarted && !hasVideoEnded && (
                 <div 
                   onClick={handleStartWithSound}
-                  className="absolute inset-0 bg-black/45 flex flex-col items-center justify-center cursor-pointer transition-all duration-300 z-20"
+                  className="absolute inset-0 bg-black flex flex-col items-center justify-center cursor-pointer transition-all duration-300 z-20"
                   style={{ touchAction: "pan-y" }}
                 >
-                  <div className="flex flex-col items-center gap-4">
+                  {/* High Quality Video Preview Image of the Woman */}
+                  <img 
+                    src="https://i.imgur.com/mC573pR.jpg" 
+                    alt="Vídeo de Apresentação"
+                    referrerPolicy="no-referrer"
+                    loading="eager"
+                    fetchPriority="high"
+                    className="absolute inset-0 w-full h-full object-cover opacity-85 transition-opacity duration-300 pointer-events-none"
+                  />
+                  <div className="absolute inset-0 bg-black/30 pointer-events-none" />
+
+                  <div className="flex flex-col items-center gap-4 relative z-10">
                     {/* Golden luxury Play Button */}
                     <div className="w-20 h-14 bg-[#D4AF37] rounded-2xl flex items-center justify-center shadow-2xl transition-all duration-300 scale-100 hover:scale-110 active:scale-95 relative group/btn">
                       {/* Pulsing golden ring for organic video touch engagement */}
@@ -680,7 +692,7 @@ export default function App() {
           <div className="relative rounded-3xl p-[3px] bg-gradient-to-br from-[#D4AF37] via-[#FFF3B0] to-[#D4AF37] shadow-2xl shadow-[#D4AF37]/20 w-full max-w-4xl mx-auto">
             <div className="rounded-[22px] overflow-hidden bg-black">
               <img 
-                {...getOptimizedImageProps("https://i.imgur.com/ASxkKxL.png", "l", "(max-width: 1024px) 100vw, 896px")}
+                {...getOptimizedImageProps("https://i.imgur.com/ASxkKxL.png", "h", "(max-width: 1024px) 100vw, 896px")}
                 alt="Comparação de Lucratividade" 
                 referrerPolicy="no-referrer"
                 loading="lazy"
@@ -740,7 +752,7 @@ export default function App() {
  
                     {/* Zooming Cover Image */}
                     <img 
-                      {...getOptimizedImageProps(item.url, "m", "(max-width: 640px) 50vw, 240px")}
+                      {...getOptimizedImageProps(item.url, "l", "(max-width: 640px) 50vw, 240px")}
                       alt={`Modelo exclusive ${index + 1}`} 
                       referrerPolicy="no-referrer"
                       loading="lazy"
@@ -853,7 +865,7 @@ export default function App() {
                   {/* Image placed on top, without borders */}
                   <div className="relative mb-1.5 mt-1 flex justify-center overflow-visible">
                     <img 
-                      src="https://i.imgur.com/fQfT8Uf.png"
+                      {...getOptimizedImageProps("https://i.imgur.com/fQfT8Uf.png", "h", "(max-width: 640px) 100vw, 400px")}
                       alt="Central de Bolsas Premium" 
                       referrerPolicy="no-referrer"
                       loading="eager"
@@ -923,7 +935,7 @@ export default function App() {
            ======================================= */}
         <section id="garantia" className="bg-[#121212] rounded-2xl p-5 border border-stone-800 shadow-sm max-w-xl mx-auto flex items-center gap-4 text-left">
           <img 
-            src="https://i.imgur.com/8srQFdp.png" 
+            {...getOptimizedImageProps("https://i.imgur.com/8srQFdp.png", "l", "80px")}
             alt="Garantia de 7 dias" 
             className="w-16 sm:w-20 h-auto shrink-0 object-contain"
             referrerPolicy="no-referrer"

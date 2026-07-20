@@ -85,7 +85,11 @@ export default function WhatsAppTestimonials() {
     TESTIMONIALS.forEach((item) => {
       if (item.type === "image" && item.url) {
         const img = new Image();
-        img.src = item.url;
+        const props = getOptimizedImageProps(item.url, "h", "(max-width: 640px) 100vw, 480px");
+        img.src = props.src;
+        if (props.srcSet) {
+          img.srcset = props.srcSet;
+        }
       }
     });
   }, []);
@@ -147,14 +151,14 @@ export default function WhatsAppTestimonials() {
                 {activeTestimonial.type === "image" ? (
                   <div className="w-full h-full flex flex-col items-center justify-center">
                     <img
-                      {...getOptimizedImageProps(activeTestimonial.url || "", "l", "(max-width: 640px) 100vw, 480px")}
+                      {...getOptimizedImageProps(activeTestimonial.url || "", "h", "(max-width: 640px) 100vw, 480px")}
                       alt={activeTestimonial.caption}
                       referrerPolicy="no-referrer"
                       loading="eager"
                       decoding="async"
                       width={480}
                       height={640}
-                      className="w-full h-full select-none rounded-[32px] object-cover object-top"
+                      className="w-full h-full select-none rounded-[32px] object-contain p-1.5"
                     />
                   </div>
                 ) : (
