@@ -123,28 +123,28 @@ export default function WhatsAppTestimonials() {
       </div>
 
       {/* Centered Smartphone Mockup Wrapper with fixed responsive dimensions */}
-      <div className="relative w-full max-w-[290px] sm:max-w-[310px] flex items-center justify-center group mt-2 h-[580px] sm:h-[620px] shrink-0">
+      <div className="relative w-full max-w-[240px] xs:max-w-[280px] sm:max-w-[310px] flex items-center justify-center group mt-2 h-[480px] xs:h-[560px] sm:h-[620px] shrink-0">
         
         {/* Left Arrow Button */}
         <button
           onClick={handlePrev}
-          className="absolute -left-12 sm:-left-16 bg-stone-950/90 hover:bg-stone-900 text-stone-300 hover:text-[#D4AF37] p-3 rounded-full border border-stone-800 shadow-xl hover:shadow-2xl transition-all duration-200 z-30 focus:outline-none cursor-pointer hover:scale-105 active:scale-95"
+          className="absolute -left-3 xs:-left-6 sm:-left-16 md:-left-20 bg-stone-950/90 hover:bg-stone-900 text-stone-300 hover:text-[#D4AF37] p-2.5 xs:p-3 rounded-full border border-stone-800 shadow-xl hover:shadow-2xl transition-all duration-200 z-30 focus:outline-none cursor-pointer hover:scale-105 active:scale-95 backdrop-blur-md"
           aria-label="Depoimento anterior"
         >
-          <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
+          <ChevronLeft className="w-4 h-4 xs:w-5 xs:h-5 sm:w-6 sm:h-6" />
         </button>
 
         {/* Premium Smartphone Bezel in White - with perfectly constant height and aspect ratio */}
-        <div className="relative w-full h-full bg-[#111111] rounded-[42px] border-[10px] border-stone-100 shadow-[0_25px_60px_-15px_rgba(255,255,255,0.08)] overflow-hidden flex flex-col ring-4 ring-black/40">
+        <div className="relative w-full h-full bg-[#111111] rounded-[32px] xs:rounded-[42px] border-[6px] xs:border-[10px] border-stone-100 shadow-[0_25px_60px_-15px_rgba(255,255,255,0.08)] overflow-hidden flex flex-col ring-4 ring-black/40">
           {/* Dynamic Island / Speaker Line */}
-          <div className="absolute top-2 left-1/2 -translate-x-1/2 w-24 h-4.5 bg-black rounded-full z-40 flex items-center justify-between px-3">
-            <span className="w-1.5 h-1.5 rounded-full bg-stone-900"></span>
-            <div className="w-10 h-1 bg-stone-800/80 rounded-full"></div>
-            <span className="w-1 h-1 rounded-full bg-emerald-500/80 animate-pulse"></span>
+          <div className="absolute top-1.5 xs:top-2 left-1/2 -translate-x-1/2 w-20 xs:w-24 h-3.5 xs:h-4.5 bg-black rounded-full z-40 flex items-center justify-between px-2 xs:px-3">
+            <span className="w-1 h-1 xs:w-1.5 xs:h-1.5 rounded-full bg-stone-900"></span>
+            <div className="w-8 xs:w-10 h-0.5 xs:h-1 bg-stone-800/80 rounded-full"></div>
+            <span className="w-0.5 h-0.5 xs:w-1 xs:h-1 rounded-full bg-emerald-500/80 animate-pulse"></span>
           </div>
 
           {/* Testimonial Image inside the phone - absolute full size to prevent any height jitter */}
-          <div className="w-full h-full bg-[#111111] flex flex-col justify-center items-center overflow-hidden pt-3.5 flex-1">
+          <div className="w-full h-full bg-[#111111] flex flex-col justify-center items-center overflow-hidden pt-3 xs:pt-3.5 flex-1">
             <AnimatePresence mode="wait" initial={false}>
               <motion.div
                 key={currentIndex}
@@ -164,12 +164,12 @@ export default function WhatsAppTestimonials() {
                       decoding="async"
                       width={480}
                       height={640}
-                      className="w-full h-full select-none rounded-[32px] object-contain"
+                      className="w-full h-full select-none rounded-[24px] xs:rounded-[32px] object-contain"
                     />
                   </div>
                 ) : (
                   /* Styled card inside phone template */
-                  <div className="w-full h-full flex flex-col justify-between p-4 text-left bg-stone-900 rounded-[32px]">
+                  <div className="w-full h-full flex flex-col justify-between p-4 text-left bg-stone-900 rounded-[24px] xs:rounded-[32px]">
                     <div className="flex items-center gap-3 border-b border-stone-800 pb-3 mb-3">
                       <img
                         {...getOptimizedImageProps(activeTestimonial.avatar || "", "m", "40px")}
@@ -218,10 +218,10 @@ export default function WhatsAppTestimonials() {
         {/* Right Arrow Button */}
         <button
           onClick={handleNext}
-          className="absolute -right-12 sm:-right-16 bg-stone-950/90 hover:bg-stone-900 text-stone-300 hover:text-[#D4AF37] p-3 rounded-full border border-stone-800 shadow-xl hover:shadow-2xl transition-all duration-200 z-30 focus:outline-none cursor-pointer hover:scale-105 active:scale-95"
+          className="absolute -right-3 xs:-right-6 sm:-right-16 md:-right-20 bg-stone-950/90 hover:bg-stone-900 text-stone-300 hover:text-[#D4AF37] p-2.5 xs:p-3 rounded-full border border-stone-800 shadow-xl hover:shadow-2xl transition-all duration-200 z-30 focus:outline-none cursor-pointer hover:scale-105 active:scale-95 backdrop-blur-md"
           aria-label="Próximo depoimento"
         >
-          <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
+          <ChevronRight className="w-4 h-4 xs:w-5 xs:h-5 sm:w-6 sm:h-6" />
         </button>
 
       </div>

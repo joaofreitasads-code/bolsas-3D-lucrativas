@@ -335,7 +335,7 @@ export default function App() {
               <video 
                 ref={videoRef}
                 autoPlay={false}
-                preload="auto"
+                preload="metadata"
                 poster="https://i.imgur.com/mC573pR.jpg"
                 muted={isMuted}
                 loop={false}
@@ -859,6 +859,8 @@ export default function App() {
                       referrerPolicy="no-referrer"
                       loading="eager"
                       fetchPriority="high"
+                      width={380}
+                      height={250}
                       className="w-[85%] sm:w-full max-w-[280px] sm:max-w-[340px] md:max-w-[380px] h-auto block object-contain drop-shadow-[0_10px_20px_rgba(0,0,0,0.08)]"
                     />
                   </div>
@@ -923,6 +925,8 @@ export default function App() {
           <img 
             {...getOptimizedImageProps("https://i.imgur.com/8srQFdp.png", "l", "80px")}
             alt="Garantia de 7 dias" 
+            width={80}
+            height={80}
             className="w-16 sm:w-20 h-auto shrink-0 object-contain"
             referrerPolicy="no-referrer"
           />

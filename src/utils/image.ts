@@ -33,10 +33,11 @@ export function getImgurResponsiveProps(url: string, defaultSuffix: "m" | "l" | 
     return { src: url };
   }
 
-  // Generate responsive sizes utilizing the original extension to preserve crisp quality, transparency and avoid format breakage.
-  // This allows mobile devices to load smaller, optimized variants (320px, 640px) instantly while high-res displays get the ultra-sharp version.
-  const srcSet = `https://i.imgur.com/${id}m.${ext} 320w, https://i.imgur.com/${id}l.${ext} 640w, https://i.imgur.com/${id}h.${ext} 1024w, https://i.imgur.com/${id}.${ext} 1200w`;
-  const defaultUrl = `https://i.imgur.com/${id}${defaultSuffix}.${ext}`;
+  // For maximum PageSpeed, force .webp extension on Imgur because Imgur will dynamically
+  // convert PNG/JPG to WebP on-the-fly, giving incredible compression and quality.
+  const targetExt = ext.toLowerCase() === "gif" ? ext : "webp";
+  const srcSet = `https://i.imgur.com/${id}m.${targetExt} 320w, https://i.imgur.com/${id}l.${targetExt} 640w, https://i.imgur.com/${id}h.${targetExt} 1024w, https://i.imgur.com/${id}.${targetExt} 1200w`;
+  const defaultUrl = `https://i.imgur.com/${id}${defaultSuffix}.${targetExt}`;
 
   return {
     src: defaultUrl,
