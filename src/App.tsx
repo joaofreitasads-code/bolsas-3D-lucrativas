@@ -1105,11 +1105,11 @@ export default function App() {
                     </div>
 
                     <h4 className="text-xs sm:text-sm font-black text-white font-display tracking-tight leading-tight z-10 uppercase">
-                      Leve o <span className="text-[#D4AF37] font-extrabold underline decoration-[#FFF3B0] underline-offset-2">Plano Diamante</span> completo por só <span className="text-emerald-400 font-black bg-emerald-500/10 px-1 py-0.5 rounded border border-emerald-500/20">R$ 18,90</span>!
+                      Leve o <span className="text-[#D4AF37] font-extrabold underline decoration-[#FFF3B0] underline-offset-2">Plano Diamante</span> completo por só <span className="text-emerald-400 font-black bg-emerald-500/10 px-1 py-0.5 rounded border border-emerald-500/20">R$ 14,90</span>!
                     </h4>
 
                     <p className="text-[10px] sm:text-[11px] text-stone-200 leading-tight text-center font-semibold max-w-sm mx-auto z-10">
-                      Adicione todos os <strong className="text-white font-black bg-stone-850 px-1 rounded">70+ modelos de bolsas</strong> + <strong className="text-white font-black bg-stone-850 px-1 rounded">+300 Vasos de Luxo</strong> por <span className="text-[#D4AF37] font-black">apenas R$ 8,00 a mais</span>!
+                      Adicione todos os <strong className="text-white font-black bg-stone-850 px-1 rounded">70+ modelos de bolsas</strong> + <strong className="text-white font-black bg-stone-850 px-1 rounded">+300 Vasos de Luxo</strong> por <span className="text-[#D4AF37] font-black">apenas R$ 4,00 a mais</span>!
                     </p>
 
                     <div className="grid grid-cols-2 gap-2 my-0.5 text-left z-10">
@@ -1127,8 +1127,8 @@ export default function App() {
                         </div>
                         <span className="text-[7px] font-black text-[#D4AF37] uppercase tracking-wider block font-sans">PLANO DIAMANTE</span>
                         <div className="flex items-center gap-1 mt-0.5">
-                          <span className="text-xs font-black text-white">R$ 18,90</span>
-                          <span className="text-[7px] text-white font-black bg-emerald-600 px-0.5 rounded-sm">SÓ +R$ 8!</span>
+                          <span className="text-xs font-black text-white">R$ 14,90</span>
+                          <span className="text-[7px] text-white font-black bg-emerald-600 px-0.5 rounded-sm">SÓ +R$ 4!</span>
                         </div>
                         <span className="text-[8px] text-[#D4AF37] font-bold block mt-0.5">70+ Modelos &amp; Bônus</span>
                       </div>
@@ -1145,7 +1145,7 @@ export default function App() {
                     >
                       <span className="flex items-center gap-1 font-black text-black">
                         <Sparkles className="w-3 h-3 text-black fill-black" />
-                        ADICIONAR PLANO DIAMANTE R$ 18,90
+                        ADICIONAR PLANO COMPLETO R$ 14,90
                       </span>
                     </button>
 
@@ -1171,7 +1171,7 @@ export default function App() {
                       {selectedPack === "basico" 
                         ? "BÁSICO (R$ 10,90)" 
                         : selectedPack === "diamante" 
-                        ? "PLANO DIAMANTE (R$ 18,90)" 
+                        ? "PLANO DIAMANTE (R$ 14,90)" 
                         : "CENTRAL DE BOLSAS PREMIUM (R$ 19,90)"}
                     </span>
                   </div>
