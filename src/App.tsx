@@ -337,14 +337,14 @@ export default function App() {
             prontas para vender
           </h1>
  
-          <div className="w-full max-w-[340px] xs:max-w-[380px] sm:max-w-lg md:max-w-xl mx-auto my-4 select-none">
+          <div className="w-full max-w-[440px] xs:max-w-[480px] sm:max-w-xl md:max-w-2xl mx-auto my-4 select-none">
             <img 
-              {...getOptimizedImageProps("https://i.imgur.com/niXuFpj.jpeg", "h", "(max-width: 768px) 100vw, 600px")}
+              {...getOptimizedImageProps("https://i.imgur.com/niXuFpj.jpeg", "h", "(max-width: 768px) 100vw, 700px")}
               alt="Vitrine de Bolsas 3D" 
-              width={600}
-              height={337}
+              width={700}
+              height={394}
               referrerPolicy="no-referrer"
-              className="w-full h-auto rounded-2xl object-contain shadow-2xl shadow-black/15"
+              className="w-full h-auto object-contain"
             />
           </div>
  
