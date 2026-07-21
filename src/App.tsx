@@ -339,7 +339,7 @@ export default function App() {
  
           <div className="w-full max-w-[280px] xs:max-w-[320px] sm:max-w-md md:max-w-xl mx-auto my-4 select-none">
             <img 
-              {...getOptimizedImageProps("https://i.imgur.com/YUteAFe.png", "h", "(max-width: 768px) 100vw, 600px")}
+              {...getOptimizedImageProps("https://i.imgur.com/niXuFpj.jpeg", "h", "(max-width: 768px) 100vw, 600px")}
               alt="Vitrine de Bolsas 3D" 
               width={600}
               height={337}
