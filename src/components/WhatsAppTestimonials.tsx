@@ -117,7 +117,7 @@ export default function WhatsAppTestimonials() {
         <span className="text-[10px] font-mono uppercase text-emerald-400 font-extrabold tracking-widest">
           RESULTADOS REAIS
         </span>
-        <p className="text-xs sm:text-sm text-stone-300 font-semibold leading-relaxed">
+        <p className="text-xs sm:text-sm text-stone-600 font-semibold leading-relaxed">
           Veja as mensagens de quem já está faturando alto e dominando o mercado com nossas matrizes premium.
         </p>
       </div>
@@ -135,7 +135,7 @@ export default function WhatsAppTestimonials() {
         </button>
 
         {/* Premium Smartphone Bezel in White - with perfectly constant height and aspect ratio */}
-        <div className="relative w-full h-full bg-[#111111] rounded-[32px] xs:rounded-[42px] border-[6px] xs:border-[10px] border-stone-100 shadow-[0_25px_60px_-15px_rgba(255,255,255,0.08)] overflow-hidden flex flex-col ring-4 ring-black/40">
+        <div className="relative w-full h-full bg-[#111111] rounded-[32px] xs:rounded-[42px] border-[6px] xs:border-[10px] border-stone-100 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.15)] overflow-hidden flex flex-col ring-4 ring-black/40">
           {/* Dynamic Island / Speaker Line */}
           <div className="absolute top-1.5 xs:top-2 left-1/2 -translate-x-1/2 w-20 xs:w-24 h-3.5 xs:h-4.5 bg-black rounded-full z-40 flex items-center justify-between px-2 xs:px-3">
             <span className="w-1 h-1 xs:w-1.5 xs:h-1.5 rounded-full bg-stone-900"></span>
@@ -233,7 +233,7 @@ export default function WhatsAppTestimonials() {
             key={idx}
             onClick={() => setCurrentIndex(idx)}
             className={`w-2 h-2 rounded-full transition-all duration-300 cursor-pointer ${
-              currentIndex === idx ? "bg-emerald-500 w-5" : "bg-stone-800 hover:bg-stone-700"
+              currentIndex === idx ? "bg-emerald-500 w-5" : "bg-stone-200 hover:bg-stone-300"
             }`}
             aria-label={`Ir para o depoimento ${idx + 1}`}
           />
